@@ -1019,7 +1019,7 @@
         choices: "NO_KEYS",
         on_start: function() {
             // save Data
-            saveData("/session1/ganzfeld_1_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+            saveData("/ganzfeld/session1/ganzfeld_1_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
         }
     }
 

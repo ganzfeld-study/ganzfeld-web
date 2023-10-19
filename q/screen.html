@@ -93,15 +93,15 @@
             `<h1>Welcome to the research project "Ganzfeld"!</h1>
             
             <h3>What?</h3>
-            <p>We are selecting participants for an experiment on sensory homogenization (ganzfeld) and parapsychological (psi) phenomena. In these phenomena, it seems as if the person gets information on an event that s/he could not have anticipated through the senses or reason. For instance, unexpectedly thinking of a person s/he had not been in contact for a long time before getting an sms, call, or email from them that day, or having a dream about something unexpected that happens the next day. Even if such experiences might be quite compelling, it is difficult to rule out alternative explanations, such as chance, in everyday life. We are therefore interested in examining these experiences systematically using the scientific method.</p>
+            <p>This experiment is directed to those who are interested in participating and have not had any serious psychological problems (e.g., depression or psychosis) or neurological disorders (e.g., epilepsy) in the past 12 months. The experiment evaluates potential parapsychological (psi) phenomena and changes in states of consciousness. In psi phenomena, it seems as if the person gets information on an event that s/he could not have anticipated through the senses or reason. For instance, unexpectedly thinking of a person s/he had not been in contact for a long time before getting a text/sms, call, or email from them that day, or having a dream about something unexpected that happens the next day. Even if such experiences might be quite compelling, it is difficult to rule out alternative explanations, such as chance, in everyday life. We are therefore interested in examining these experiences systematically using the scientific method.</p>
 
             <h3>Who?</h3>
             <p>Interested people with varying experiences, beliefs, and habits.</p>
 
             <h3>How?</h3>
-            <p>Answering the few questions below. If mailed or called back, you will be invited to take part in two experimental sessions for a total of around 2.5 hours. Those involved in the sessions will get xx for each session.</p>
+            <p>Answering the few questions below. If called back, you will be invited to take part in two sessions for a total of around 2-2.5 hours. Those involved in the sessions will get xx for each session. In the sessions, participants will be asked to look at a red light and listening to pink noise, a procedure called ganzfeld (or sensory homogenization).</p>
             
-            <p>Please click Next to answer the questions.</p>`
+            <p>Please click Next to answer some questions.</p>`
             ],
         show_clickable_nav: true
     };
@@ -122,24 +122,24 @@
                 type: 'multi-choice',
                 name: 'mentality',
                 prompt: 'Do you engage in an artistic/creative activity or mental discipline?', 
-                options: ['Never', 'Rarely', 'Sometimes', 'On a monthly basis', 'On a weekly basis'], 
+                options: ['(1) Never', '(2) Rarely', '(3) Sometimes', '(4) On a monthly basis', '(5) On a weekly basis'], 
                 required: true
             },
             {
                 type: 'multi-choice',
                 name: 'psi',
-                prompt: 'Regardless of how you interpreted them, have you had experiences parapsychological (psi)?', 
-                options: ['Never', 'Rarely', 'Sometimes', 'On a monthly basis', 'On a weekly basis'], 
+                prompt: 'Regardless of how you interpreted them, have you had experiences that could be seen as parapsychological (psi)?', 
+                options: ['(1) Never', '(2) Rarely', '(3) Sometimes', '(4) On a monthly basis', '(5) On a weekly basis'], 
                 required: true
             },
             {
                 type: 'multi-choice',
                 name: 'succeed',
                 prompt: 'Do you believe that you may succeed in a psi experiment?', 
-                options: ['Not at all', 'Probably not', 'Do not know', 'Probably yes', 'Yes'], 
+                options: ['(1) Not at all', '(2) Probably not', '(3) Do not know', '(4) Probably yes', '(5) Yes'], 
                 required: true
             },
-            {
+            /*{
                 type: 'multi-choice',
                 name: 'trackoftime',
                 prompt: 'Do you lose track of time when engaged in a fun or artistic activity?', 
@@ -157,7 +157,7 @@
                     'Omnivore: a person who regularly eats most meats, seafood, eggs, dairy products, fruits, vegetables, and grains.'
                 ], 
                 required: true
-            },
+            },*/
             {
                 type: 'html',
                 name: 'contact',
@@ -185,7 +185,7 @@
     /* save data to csv */
     function saveData(name, data){
       var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'save-data6.php');
+      xhr.open('POST', '../save-data6.php');
       xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
       xhr.send(JSON.stringify({filename: name, filedata: data}));
     }
@@ -198,7 +198,7 @@
         choices: "NO_KEYS",
         on_start: function() {
             // save Data
-            saveData("/screening/" + lab + "/ganzfeld_screening_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+            saveData("/ganzfeld/screening/" + lab + "/ganzfeld_screening_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
         }
     }
 
