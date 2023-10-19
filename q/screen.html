@@ -185,7 +185,7 @@
     /* save data to csv */
     function saveData(name, data){
       var xhr = new XMLHttpRequest();
-      xhr.open('POST', '../save-data6.php');
+      xhr.open('POST', 'save-data6.php');
       xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
       xhr.send(JSON.stringify({filename: name, filedata: data}));
     }
@@ -198,7 +198,7 @@
         choices: "NO_KEYS",
         on_start: function() {
             // save Data
-            saveData("/ganzfeld/screening/" + lab + "/ganzfeld_screening_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+            saveData("/screening/" + lab + "/ganzfeld_screening_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
         }
     }
 
