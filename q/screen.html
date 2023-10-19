@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Ganzfeld Screening</title>
+    <script src="../jspsych/jspsych.js"></script>
+    <script src="../jspsych/plugin-preload.js"></script>
+    <script src="../jspsych/plugin-fullscreen.js"></script>
+    <script src="../jspsych/plugin-call-function.js"></script>
+    <!--<script src="../jspsych/plugin-instructions.js"></script>-->
+    <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.3"></script>
+    <script src="../jspsych/plugin-survey.js"></script>
+    <script src="../jspsych/plugin-survey-multi-choice.js"></script>
+    <script src="../jspsych/plugin-html-keyboard-response.js"></script>
+    <script src="../jspsych/plugin-html-button-response.js"></script>
+    <script src="../jspsych/plugin-html-slider-response.js"></script>
+    <script src="../jspsych/plugin-audio-keyboard-response.js"></script>
+    <link href="../jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+    <!--<link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css">-->
+    <link rel="stylesheet" href="../jspsych/survey.css"></link>
+    <link rel="stylesheet" href="../consent/consent.css"></link>
+
+
+  </head>
+  <body></body>
+  <script>
+
+    /* define parameters */
+    //initialize Experiment
+    const jsPsych = initJsPsych({
+        /* on_finish: function() {
+        jsPsych.data.displayData();
+      } */
+    });
+
+    // Labd
+    var labs = []
+    let lab = jsPsych.data.urlVariables()['l'];
+
+    while(!["1","2","3","4","5","6"].includes(lab)) {
+        lab = prompt("Lab not found!\nPlease state lab (1-6)");
+        console.log("Lab: " + lab);
+    }
+
+    // SONA & subject ID
+    let sona_id = jsPsych.data.urlVariables()['sonaid'];
+    
+    if(!sona_id){
+        var subject_id = jsPsych.randomization.randomID(16);
+    } else {
+        var subject_id = sona_id;
+        var TXT_ending = 
+            '<hr><p><a href="https://lmu-psy.sona-systems.com/webstudy_credit.aspx?experiment_id=261&credit_token=c7e045b2f2b545b996b9c3148b21530d&survey_code=' + subject_id + '">Klicken Sie bitte hier, um Ihre Versuchspersonenstunde in SONA zu erhalten.</a></p>';
+  }
+
+    // specify starting time
+    var start_time = new Date();
+
+    // add to data file
+    jsPsych.data.addProperties({ 
+        lab: lab,
+        subject: subject_id, 
+        time: start_time.toISOString()
+    });
+
+
+    /*
+    // consent to participate.
+        var check_consent = function(elem) {
+        if (document.getElementById('consent_checkbox').checked) {
+            return true;
+        }
+        else {
+            alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
+            return false;
+        }
+        return false;
+    };
+
+    // declare the block.
+    var informedConsent = {
+        type: jsPsychExternalHtml,
+        url: "../consent/pana_consent.html",
+        cont_btn: "start",
+        check_fn: check_consent
+    };*/
+
+    /* welcome message & instructions */
+    var welcome = {
+        type: jsPsychInstructions,
+        data: { test_part: "instruction" },
+        pages: [
+            `<h1>Welcome to the research project "Ganzfeld"!</h1>
+            
+            <h3>What?</h3>
+            <p>We are selecting participants for an experiment on sensory homogenization (ganzfeld) and parapsychological (psi) phenomena. In these phenomena, it seems as if the person gets information on an event that s/he could not have anticipated through the senses or reason. For instance, unexpectedly thinking of a person s/he had not been in contact for a long time before getting an sms, call, or email from them that day, or having a dream about something unexpected that happens the next day. Even if such experiences might be quite compelling, it is difficult to rule out alternative explanations, such as chance, in everyday life. We are therefore interested in examining these experiences systematically using the scientific method.</p>
+
+            <h3>Who?</h3>
+            <p>Interested people with varying experiences, beliefs, and habits.</p>
+
+            <h3>How?</h3>
+            <p>Answering the few questions below. If mailed or called back, you will be invited to take part in two experimental sessions for a total of around 2.5 hours. Those involved in the sessions will get xx for each session.</p>
+            
+            <p>Please click Next to answer the questions.</p>`
+            ],
+        show_clickable_nav: true
+    };
+
+
+    /* Screening */
+    var screening = {
+        type: jsPsychSurvey,
+        data: { test_part: "screening" },
+        pages: [
+        [
+            {
+                type: 'html',
+                name: 'intro',
+                prompt: '<p>Please indicate the most appropriate answer by clicking on the circle or the answer.</p>',
+            },
+            {
+                type: 'multi-choice',
+                name: 'mentality',
+                prompt: 'Do you engage in an artistic/creative activity or mental discipline?', 
+                options: ['Never', 'Rarely', 'Sometimes', 'On a monthly basis', 'On a weekly basis'], 
+                required: true
+            },
+            {
+                type: 'multi-choice',
+                name: 'psi',
+                prompt: 'Regardless of how you interpreted them, have you had experiences parapsychological (psi)?', 
+                options: ['Never', 'Rarely', 'Sometimes', 'On a monthly basis', 'On a weekly basis'], 
+                required: true
+            },
+            {
+                type: 'multi-choice',
+                name: 'succeed',
+                prompt: 'Do you believe that you may succeed in a psi experiment?', 
+                options: ['Not at all', 'Probably not', 'Do not know', 'Probably yes', 'Yes'], 
+                required: true
+            },
+            {
+                type: 'multi-choice',
+                name: 'trackoftime',
+                prompt: 'Do you lose track of time when engaged in a fun or artistic activity?', 
+                options: ['Never', 'Rarely', 'Sometimes', 'Often', 'Always'], 
+                required: true
+            },
+            {
+                type: 'multi-choice',
+                name: 'diet',
+                prompt: 'Which of the following best describes your diet?', 
+                options: [
+                    'Vegan (or plant-based): a person who eats fruits, vegetables, and grains but no animal or seafood products',
+                    'Non-vegan vegetarian: a person who eats dairy products and/or eggs, fruits, vegetables, grains, but no other animal or seafood products',
+                    'Meat reducer: a person who eats dairy products, eggs, fruits, vegetables, grains, but reduces the amount of animal or seafood products. For example, a ”pescetarian.”',
+                    'Omnivore: a person who regularly eats most meats, seafood, eggs, dairy products, fruits, vegetables, and grains.'
+                ], 
+                required: true
+            },
+            {
+                type: 'html',
+                name: 'contact',
+                prompt: '<p>Please provide your email address and/or phone number to be contacted if you are eligible for the study.</p>',
+            },
+            {
+                type: 'text',
+                prompt: 'Email address', 
+                //placeholder: 'Email',
+                name: 'email',
+                input_type: 'email',
+            },
+            {
+                type: 'text',
+                prompt: 'Phone number', 
+                //placeholder: 'Email',
+                name: 'phone',
+                input_type: 'tel',
+            },
+        ]
+        ],
+        //button_label_finish: 'Finish'
+    };
+
+    /* save data to csv */
+    function saveData(name, data){
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '../save-data6.php');
+      xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+      xhr.send(JSON.stringify({filename: name, filedata: data}));
+    }
+
+    /* end message */
+    var ending = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: '<p>Thank you!</p><p>Your responses were recorded, you may close the window now.</p>',
+        //choices: "ALL_KEYS",
+        choices: "NO_KEYS",
+        on_start: function() {
+            // save Data
+            saveData("/ganzfeld/screening/" + lab + "/ganzfeld_screening_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+        }
+    }
+
+
+
+
+    /* create timeline */
+    
+    //control condition
+    var timeline = [];
+    timeline.push(welcome);
+    //timeline.push(informedConsent);
+    timeline.push(screening);
+    timeline.push(ending);
+
+
+    /* start the experiment */
+    jsPsych.run(timeline);
+
+
+  </script>
+</html>
