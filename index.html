@@ -1,3 +1,146 @@
+<!DOCTYPE html>
 <html>
-<h1>Welcome to the Ganzfeld project!</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ganzfeld Project</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Ganzfeld Project</h1>
+
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#participate">Participate</a></li>
+            <li><a href="#locations">Locations</a></li>
+        </ul>
+    </nav>
+
+    </header>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Where would you like to participate?</h3>
+            <ul>
+                <li><a href="q/screen.html?l=1">Linnaeus</a></li>
+                <li><a href="q/screen.html?l=2">Northampton</a></li>
+                <li><a href="q/screen.html?l=3">IONS</a></li>
+                <li><a href="q/screen.html?l=4">West Georgia</a></li>
+                <li><a href="q/screen.html?l=5">IGGP</a></li>
+                <li><a href="q/screen.html?l=6">LMU Munich</a></li>
+            </ul>
+        </div>
+    </div>
+    
+
+    <section id="about">
+        <h2>About the Ganzfeld Project</h2>
+        <p>
+            The Ganzfeld Project is an academic research initiative focused on evaluating potential parapsychological (psi) phenomena and changes in states of consciousness. Our multi-site project brings together researchers from around the world to explore the uncharted territory of human consciousness.
+        </p>
+    </section>
+
+    <section id="participate">
+        <h2>Participate in the Ganzfeld Project</h2>
+        <p>
+            Are you interested in participating in our research project? To determine if you are a suitable candidate, please complete our screening questionnaire. Click the button below to get started.
+        </p>
+        <div id="participate-btn">
+            <button class="btn">Participate</button>
+        </div>
+    </section>
+
+    <section id="locations">
+        <h2>Participating Locations</h2>
+        <div class="location-tiles">
+
+            <div class="location-tile">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2181.4951046814613!2d14.82779731338962!3d56.85460387340144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465723d9b1eabc17%3A0x4d95d1c909047ca2!2zTGlubsOpdW5pdmVyc2l0w6R0!5e0!3m2!1sde!2sde!4v1697797632930!5m2!1sde!2sde" width="100%" height="200" frameborder="0" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <div class="location-info">
+                    <h3>Linnaeus University</h3>
+                    <p>Address: Universitetsplatsen 1, 352 52 Växjö, Sweden</p>
+                    <p>Research Lead: David Marcusson-Clavertz</p>
+                </div>
+            </div>
+
+            <div class="location-tile">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d9774.840893819046!2d-0.8869818!3d52.2304823!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48770ec7832a01f1%3A0x965dedc9c5712ba8!2sUniversity%20of%20Northampton!5e0!3m2!1sde!2sde!4v1697797534494!5m2!1sde!2sde" width="100%" height="200" frameborder="0" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <div class="location-info">
+                    <h3>University of Northampton</h3>
+                    <p>Address: Waterside Campus, University Dr, Northampton NN1 5PH, UK</p>
+                    <p>Research Lead: Chris Roe</p>
+                </div>
+            </div>
+            
+            <div class="location-tile">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3139.5378341042947!2d-122.57259682410096!3d38.10442017190412!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085b10b4ef2b407%3A0x4d7f90f3c47029db!2sInstitute%20of%20Noetic%20Sciences!5e0!3m2!1sde!2sde!4v1697797842927!5m2!1sde!2sde" width="100%" height="200" frameborder="0" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <div class="location-info">
+                    <h3>Institute of Noetic Sciences</h3>
+                    <p>Address: 7250 Redwood Blvd Ste 208, Novato, CA 94945, USA</p>
+                    <p>Research Lead: Helané Wahbeh</p>
+                </div>
+            </div>
+
+            <div class="location-tile">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3324.154177074095!2d-85.10599990145123!3d33.575345985818615!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x888b2f7ce998788f%3A0x8889b02b838110f7!2sUniversity%20of%20West%20Georgia!5e0!3m2!1sde!2sde!4v1697798099556!5m2!1sde!2sde" width="100%" height="200" frameborder="0" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <div class="location-info">
+                    <h3>University of West Georgia</h3>
+                    <p>Address: 1601 Maple St, Carrollton, GA 30118, USA</p>
+                    <p>Research Lead: Christine Simmonds-Moore</p>
+                </div>
+            </div>
+
+            <div class="location-tile">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10680.255501735735!2d7.8426076!3d47.9931527!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47911b60185247f5%3A0xcb020799b5bd8667!2sInstitut%20f%C3%BCr%20Grenzgebiete%20der%20Psychologie%20und%20Psychohygiene!5e0!3m2!1sde!2sde!4v1697798218443!5m2!1sde!2sde" width="100%" height="200" frameborder="0" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <div class="location-info">
+                    <h3>Institut für Grenzgebiete der Psychologie und Psychohygiene</h3>
+                    <p>Address: Wilhelmstraße 3A, 79098 Freiburg im Breisgau, Germany</p>
+                    <p>Research Lead: Marc Wittmann</p>
+                </div>
+            </div>
+
+            <div class="location-tile">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2661.899145141685!2d11.57795127642385!3d48.150749571244845!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479e729397ad5701%3A0xba12f0c33bd5bf34!2sLudwig-Maximilians-Universit%C3%A4t%20M%C3%BCnchen!5e0!3m2!1sde!2sde!4v1697798305616!5m2!1sde!2sde" width="100%" height="200" frameborder="0" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <div class="location-info">
+                    <h3>LMU Munich</h3>
+                    <p>Address: Geschwister-Scholl-Platz 1, 80539 Munich, Germany</p>
+                    <p>Research Lead: Moritz Dechamps</p>
+                </div>
+            </div>
+    
+        </div>
+    </section>
+    
+    <script>
+        // Get the button and the modal
+        var btn = document.querySelector('.btn');
+        var modal = document.getElementById('myModal');
+
+        // When the button is clicked, display the modal
+        btn.addEventListener('click', function() {
+            modal.style.display = 'block';
+        });
+
+        // When the user clicks the "x" to close the modal
+        var closeBtn = document.querySelector('.close');
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        // When the user clicks anywhere outside the modal, close it
+        window.addEventListener('click', function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+    </script>
+
+    <footer>
+        <p>&copy; 2023 Ganzfeld Project</p>
+    </footer>
+</body>
 </html>

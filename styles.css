@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+
+/* Reset some default styles for consistency */
+body, h1, h2, p, ul, li, a {
+    margin: 0;
+    padding: 0;
+}
+
+/* Set a background color and text color */
+body {
+    background-color: #f7f7f7;
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+/* Style the header */
+header {
+    background-image: linear-gradient(to right top, #219ebc, #00b6bf, #24cdb4);
+    color: #fff;
+    text-align: center;
+    min-height: 15vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space between the h1 and nav */
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-family: 'Montserrat', sans-serif;
+    padding-top: 1.2em; /* Add padding at the top */
+}
+
+/* Style the navigation menu */
+nav {
+    padding-bottom: 20px; /* Add padding at the bottom */
+    margin: 0 auto; /* Center the nav horizontally */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+    margin: 0;
+    width: 100%;
+}
+
+nav li {
+    margin: 0 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #b1ef83; /* Change the color on hover */
+}
+
+/* Style sections and content */
+section {
+    padding: 40px;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+/* Updated CSS to center the "Start Questionnaire" button only */
+.btn {
+    display: inline-block;
+    background-color: #219ebc;
+    color: #fff;
+    padding: 15px 30px; /* Increased padding */
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s; /* Smooth transition for all properties */
+    margin-top: 25px; /* Added margin to create space */
+    font-size: 1.2rem; /* Slightly larger font size */
+    cursor:pointer;
+}
+
+.btn:hover {
+    background-color: #fff;
+    color: #219ebc;
+    border: 3px solid #219ebc;
+    padding: 18px 33px; /* Increased padding on hover */
+    font-size: 1.3rem; /* Larger font size on hover */
+}
+
+/* Center the "Start Questionnaire" button within the section */
+#participate-btn {
+    text-align: center;
+}
+
+
+/* Style the footer */
+footer {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+}
+
+/* Make the website responsive */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    nav li {
+        margin: 10px 0;
+    }
+}
+
+/* Increase padding and center content on wider screens */
+@media (min-width: 1024px) {
+    section {
+        padding: 60px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}
+
+
+/* Updated CSS for location tiles with two columns and same width as content */
+#locations {
+    display: flex;
+    flex-direction: column;
+}
+
+.location-tiles {
+    max-width: 1200px; /* Set a maximum width for the tiles */
+    width: 100%; /* Make it the same width as the content */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.location-tile {
+    flex-basis: calc(50% - 10px);
+    margin: 10px 0;
+    background: #fff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.location-image {
+    min-height: 150px;
+    background-size: cover;
+    background-position: center;
+}
+
+.location-info {
+    padding: 20px;
+}
+
+/* Additional styles for responsiveness */
+@media (max-width: 768px) {
+    .location-tiles {
+        max-width: 100%; /* Adjust for smaller screens */
+    }
+
+    .location-tile {
+        flex-basis: calc(100% - 10px);
+    }
+}
+
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+
+/* CSS for styling the list of links in the modal */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #0078d4;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #023047;
+}
