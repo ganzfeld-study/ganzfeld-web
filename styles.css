@@ -84,28 +84,26 @@ ul {
 
 /* Updated CSS to center the "Start Questionnaire" button only */
 .btn {
-    display: inline-block;
+    margin-top:2em;
     background-color: #219ebc;
-    color: #fff;
-    padding: 15px 30px; /* Increased padding */
-    text-align: center;
+    display: inline-block;
+    font-size: 1.2em;
+    outline: 0;
+    cursor: pointer;
     border: none;
-    border-radius: 4px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s; /* Smooth transition for all properties */
-    margin-top: 25px; /* Added margin to create space */
-    font-size: 1.2rem; /* Slightly larger font size */
-    cursor:pointer;
+    padding: 15px 50px;
+    border-radius: 7px;
+    color: white;
+    font-weight: 400;
+    box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
+    transition: background 0.2s ease,color 0.2s ease,box-shadow 0.2s ease;
 }
 
 .btn:hover {
-    background-color: #fff;
-    color: #219ebc;
-    border: 3px solid #219ebc;
-    padding: 18px 33px; /* Increased padding on hover */
-    font-size: 1.3rem; /* Larger font size on hover */
+    background: #24cdb4;
+    box-shadow: 0 6px 20px rgb(0 118 255 / 23%);
 }
+
 
 /* Center the "Start Questionnaire" button within the section */
 #participate-btn {
