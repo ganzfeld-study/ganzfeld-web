@@ -216,7 +216,7 @@
         choices: "NO_KEYS",
         on_start: function() {
             // save Data
-            saveData("/ganzfeld/screening/" + lab + "/ganzfeld_screening_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+            saveData("/screening/" + lab + "/ganzfeld_screening_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
         }
     }
 
