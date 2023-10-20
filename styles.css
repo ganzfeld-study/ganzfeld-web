@@ -26,11 +26,31 @@ header {
     justify-content: space-between; /* Space between the h1 and nav */
 }
 
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2.5rem; /* Add padding at the top */
+}
+
 header h1 {
     font-size: 2.5rem;
     font-family: 'Montserrat', sans-serif;
-    padding-top: 1.2em; /* Add padding at the top */
+    color: #b1ef83;
 }
+
+.logo {
+    max-width: 2.8rem; /* Set a fixed size matching the h1's font size */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 15px; /* Add space between the logo and h1 */
+}
+
+.vl {
+    border-left: 2px solid #b1ef83;
+    border-radius: 2px;
+    height: 2.5rem;
+    margin-right: 15px;
+  }
 
 /* Style the navigation menu */
 nav {
