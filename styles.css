@@ -1,6 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
 
+/* colors */
+/*  #219ebc
+    #00b6bf
+    #24cdb4
+    #6ee09d
+    #b1ef83
+    #f9f871
+*/
+
 /* Reset some default styles for consistency */
 body, h1, h2, p, ul, li, a {
     margin: 0;
@@ -79,7 +88,7 @@ nav a {
 }
 
 nav a:hover {
-    color: #b1ef83; /* Change the color on hover */
+    color: #000; /* Change the color on hover */
 }
 
 /* Style sections and content */
@@ -115,13 +124,13 @@ ul {
     border-radius: 7px;
     color: white;
     font-weight: 400;
-    box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
-    transition: background 0.2s ease,color 0.2s ease,box-shadow 0.2s ease;
+    box-shadow: 0 4px 14px 0 rgb(19 93 111 / 39%);
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn:hover {
     background: #24cdb4;
-    box-shadow: 0 6px 20px rgb(0 118 255 / 23%);
+    box-shadow: 0 6px 20px rgb(19 93 111 / 23%);
 }
 
 
