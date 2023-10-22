@@ -61,6 +61,27 @@ header h1 {
     margin-right: 15px;
   }
 
+/* Media query for screens smaller than a specific width (e.g., 768px) */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column; /* Stack elements vertically */
+        text-align: center; /* Center align text within the title */
+    }
+
+    .vl {
+        display: none; /* Hide the vertical line on smaller screens */
+    }
+
+    .logo {
+        max-width: 75px; /* Adjust the logo size for smaller screens */
+        margin-bottom: 1rem; /* Add spacing between logo and title */
+    }
+
+    h1 {
+        margin: 0; /* Remove margin from the title */
+    }
+}
+
 /* Style the navigation menu */
 nav {
     padding-bottom: 20px; /* Add padding at the bottom */
@@ -88,7 +109,7 @@ nav a {
 }
 
 nav a:hover {
-    color: #000; /* Change the color on hover */
+    color: #333; /* Change the color on hover */
 }
 
 /* Style sections and content */
