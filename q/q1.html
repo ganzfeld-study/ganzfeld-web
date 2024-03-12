@@ -7,7 +7,7 @@
     <script src="jspsych/plugin-preload.js"></script>
     <script src="jspsych/plugin-fullscreen.js"></script>
     <script src="jspsych/plugin-call-function.js"></script>
-    <!--<script src="../jspsych/plugin-instructions.js"></script>-->
+    <!--<script src="jspsych/plugin-instructions.js"></script>-->
     <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.3"></script>
     <script src="jspsych/plugin-survey.js"></script>
     <script src="jspsych/plugin-survey-multi-choice.js"></script>
@@ -18,18 +18,18 @@
     <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
     <!--<link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css">-->
     <link rel="stylesheet" href="jspsych/survey.css"></link>
-    <link rel="stylesheet" href="consent/consent.css"></link>
+    <!--<link rel="stylesheet" href="consent/consent.css"></link>-->
 
     <style>
         /* Spinner for Audio Playback */
-        .loader {
+        .playaudio {
         width: 48px;
         height: 48px;
         display: inline-block;
         position: relative;
         }
-        .loader::after,
-        .loader::before {
+        .playaudio::after,
+        .playaudio::before {
         content: '';  
         box-sizing: border-box;
         width: 48px;
@@ -41,7 +41,7 @@
         top: 0;
         animation: animloader 2s linear infinite;
         }
-        .loader::after {
+        .playaudio::after {
         animation-delay: 1s;
         }
 
@@ -126,6 +126,7 @@
 
 
     /* Surveys */
+    /* The Boundary Questionnaire */
     var surveyBQ = {
         type: jsPsychSurvey,
         data: { test_part: "BQ" },
@@ -163,6 +164,7 @@
         button_label_finish: 'Next'
     };
 
+    /* The Tellegen Absorption Scale */
     var surveyTAS = {
         type: jsPsychSurvey,
         data: { test_part: "TAS" },
@@ -231,6 +233,7 @@
         button_label_finish: 'Next'
     };
 
+    /* The Big Five Inventory */
     var surveyBFI2 = {
         type: jsPsychSurvey,
         data: { test_part: "BFI2" },
@@ -279,6 +282,7 @@
         button_label_finish: 'Next'
     };
 
+    /* The Dissociative Experiences Scale */
     var surveyDESScaleValues = [
                 {value: '0%'},
                 {value: '10%'},
@@ -293,7 +297,7 @@
                 {value: '100%'},
                 ];
 
-    var surveyDES = {
+                var surveyDES = {
         type: jsPsychSurvey,
         data: { test_part: "DES" },
         pages: [
@@ -305,6 +309,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES1',
                 prompt: '1.	Some people have the experience of driving or riding in a car or bus or subway and suddenly realizing that they don\'t remember what has happened during all or part of the trip. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -313,6 +318,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES2',
                 prompt: '2.	Some people find that sometimes they are listening to someone talk and they suddenly realize that they did not hear part or all of what was said. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -321,6 +327,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES3',
                 prompt: '3.	Some people have the experience of finding themselves in a place and having no idea how they got there. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -329,6 +336,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES4',
                 prompt: '4.	Some people have the experience of finding themselves dressed in clothes that they don\'t remember putting on. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -337,6 +345,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES5',
                 prompt: '5.	Some people have the experience of finding new things among their belongings that they do not remember buying. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -345,6 +354,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES6',
                 prompt: '6.	Some people sometimes find that they are approached by people whom they do not know, who call them by another name or insist that they have met them before. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -353,6 +363,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES7',
                 prompt: '7.	Some people sometimes have the experience of feeling as though they are standing next to themselves or watching themselves do something and they actually see themselves as if they were looking at another person. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -361,6 +372,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES8',
                 prompt: '8.	Some people are told that they sometimes do not recognize friends or family members. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -369,6 +381,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES9',
                 prompt: '9.	Some people find that they have no memory for some important events in their lives (for example, a wedding or graduation). Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -377,6 +390,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES10',
                 prompt: '10. Some people have the experience of being accused of lying when they do not think that they have lied. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -385,6 +399,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES11',
                 prompt: '11. Some people have the experience of looking in a mirror and not recognizing themselves. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -393,6 +408,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES12',
                 prompt: '12. Some people have the experience of feeling that other people, objects, and the world around them are not real. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -401,6 +417,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES13',
                 prompt: '13. Some people have the experience of feeling that their body does not seem to belong to them. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -409,6 +426,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES14',
                 prompt: '14. Some people have the experience of sometimes remembering a past event so vividly that they feel as if they were reliving that event. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -417,6 +435,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES15',
                 prompt: '15. Some people have the experience of not being sure whether things that they remember happening really did happen or whether they just dreamed them. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -425,6 +444,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES16',
                 prompt: '16. Some people have the experience of being in a familiar place but finding it strange and unfamiliar. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -433,6 +453,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES17',
                 prompt: '17. Some people find that when they are watching television or a movie they become so absorbed in the story that they are unaware of other events happening around them. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -441,6 +462,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES18',
                 prompt: '18. Some people find that they become so involved in a fantasy or daydream that it feels as though it were really happening to them. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -449,6 +471,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES19',
                 prompt: '19. Some people find that they sometimes are able to ignore pain. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -457,6 +480,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES20',
                 prompt: '20. Some people find that they sometimes sit staring off into space, thinking of nothing, and are not aware of the passage of time. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -465,6 +489,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES21',
                 prompt: '21. Some people sometimes find that when they are alone they talk out loud to themselves. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -473,6 +498,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES22',
                 prompt: '22. Some people find that in one situation they may act so differently compared with another situation that they feel almost as if they were two different people. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -481,6 +507,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES23',
                 prompt: '23. Some people sometimes find that in certain situations they are able to do things with amazing ease and spontaneity that would usually be difficult for them (for example, sports, work, social situation, etc.). Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -489,6 +516,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES24',
                 prompt: '24. Some people sometimes find that they cannot remember whether they have done something or have just thought about doing that thing (for example, not knowing whether they have mailed a letter or have just thought about mailing it). Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -497,6 +525,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES25',
                 prompt: '25. Some people find evidence that they have done things that they do not remember doing. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -505,6 +534,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES26',
                 prompt: '26. Some people sometimes find writings, drawings, or notes among their belongings that they must have done but cannot remember doing. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -513,6 +543,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES27',
                 prompt: '27. Some people sometimes find that they hear voices inside their head that tell them to do things or comment on things that they are doing. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -521,6 +552,7 @@
             },
             {
                 type: 'likert',
+                name: 'DES28',
                 prompt: '28. Some people sometimes feel as if they are looking at the world through a fog so that people and objects appear far awry or unclear. Please indicate the percentage of the time this happens to you.',
                 likert_scale_min_label: 'Never',
                 likert_scale_max_label: 'Always',
@@ -532,6 +564,7 @@
         button_label_finish: 'Next'
     };
 
+    /* The Brief Sensation Seeking Scale */
     var surveyBSSS = {
         type: jsPsychSurvey,
         data: { test_part: "BSSS" },
@@ -587,6 +620,7 @@
     
     var surveyASGSTrial = {
         type: jsPsychHtmlSliderResponse,
+        data: { test_part: "ASGS" },
         stimulus: function() { 
             return `<div style="width:50em; max-width:100%;">
             <p><i>Please read both ends of the following rating-scales, and move the slider to the point on the line which best corresponds to your opinion.</i></p>
@@ -646,6 +680,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI1',
                 prompt: '1.',
                 likert_scale_min_label: 'I was forever distracted and unable to concentrate on anything.',
                 likert_scale_max_label: 'I was able to concentrate quite well and was not distracted.',
@@ -655,6 +690,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI2',
                 prompt: '2.',
                 likert_scale_min_label: 'My body ended at the boundary between my skin and the world.',
                 likert_scale_max_label: 'I felt my body greatly expanded beyond the boundaries of my skin.',
@@ -664,6 +700,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI3',
                 prompt: '3.',
                 likert_scale_min_label: 'My perception of the flow of time changed drastically.',
                 likert_scale_max_label: 'I noticed no changes in my perception of the flow of time.',
@@ -673,6 +710,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI4',
                 prompt: '4.',
                 likert_scale_min_label: 'The muscles of my body felt very tense and tight.',
                 likert_scale_max_label: 'The muscles of my body felt very loose and relaxed.',
@@ -682,6 +720,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI5',
                 prompt: '5.',
                 likert_scale_min_label: 'My state of consciousness was not any different or unusual from what it ordinarily is.',
                 likert_scale_max_label: 'I felt in an extremely different and unusual state of consciousness.',
@@ -691,6 +730,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI6',
                 prompt: '6.',
                 likert_scale_min_label: 'My bodily feelings seemed to expand into the world around me.',
                 likert_scale_max_label: 'My bodily feelings were confined to the area within my skin.',
@@ -700,6 +740,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI7',
                 prompt: '7.',
                 likert_scale_min_label: 'Time seemed to greatly speed up or slow down.',
                 likert_scale_max_label: 'Time was experienced with no changes in its rate of passage.',
@@ -709,6 +750,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI8',
                 prompt: '8.',
                 likert_scale_min_label: 'I was not distracted, but was able to be completely absorbed in what I was experiencing.',
                 likert_scale_max_label: 'I was continually distracted by extraneous impressions or events.',
@@ -718,6 +760,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI9',
                 prompt: '9.',
                 likert_scale_min_label: 'I felt no feelings of tension or tightness at all.',
                 likert_scale_max_label: 'I felt tense and tight.',
@@ -727,6 +770,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI10',
                 prompt: '10.',
                 likert_scale_min_label: 'My state of awareness was very different from what I usually experience',
                 likert_scale_max_label: 'My state of awareness was no different than usual.',
@@ -736,6 +780,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI11',
                 prompt: '11.',
                 likert_scale_min_label: 'I felt no sense of timelessness; time flowed as I usually experienced it.',
                 likert_scale_max_label: 'Time stood still; there was no movement of time at all.',
@@ -745,6 +790,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI12',
                 prompt: '12.',
                 likert_scale_min_label: 'I continually maintained a very strong sense of separation between myself and the environment.',
                 likert_scale_max_label: 'I experienced intense unity with the world; the boundaries between me and the environment dissolved away.',
@@ -754,6 +800,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI13',
                 prompt: '13.',
                 likert_scale_min_label: 'My state of awareness was not unusual or different from what it ordinarily is.',
                 likert_scale_max_label: 'I felt in an extraordinarily unusual and non-ordinary state of awareness.',
@@ -779,6 +826,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI1',
                 prompt: '1.',
                 likert_scale_min_label: 'I was forever distracted and unable to concentrate on anything.',
                 likert_scale_max_label: 'I was able to concentrate quite well and was not distracted.',
@@ -788,6 +836,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI2',
                 prompt: '2.',
                 likert_scale_min_label: 'My body ended at the boundary between my skin and the world.',
                 likert_scale_max_label: 'I felt my body greatly expanded beyond the boundaries of my skin.',
@@ -797,6 +846,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI3',
                 prompt: '3.',
                 likert_scale_min_label: 'My perception of the flow of time changed drastically.',
                 likert_scale_max_label: 'I noticed no changes in my perception of the flow of time.',
@@ -806,6 +856,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI4',
                 prompt: '4.',
                 likert_scale_min_label: 'The muscles of my body felt very tense and tight.',
                 likert_scale_max_label: 'The muscles of my body felt very loose and relaxed.',
@@ -815,6 +866,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI5',
                 prompt: '5.',
                 likert_scale_min_label: 'My state of consciousness was not any different or unusual from what it ordinarily is.',
                 likert_scale_max_label: 'I felt in an extremely different and unusual state of consciousness.',
@@ -824,6 +876,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI6',
                 prompt: '6.',
                 likert_scale_min_label: 'My bodily feelings seemed to expand into the world around me.',
                 likert_scale_max_label: 'My bodily feelings were confined to the area within my skin.',
@@ -833,6 +886,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI7',
                 prompt: '7.',
                 likert_scale_min_label: 'Time seemed to greatly speed up or slow down.',
                 likert_scale_max_label: 'Time was experienced with no changes in its rate of passage.',
@@ -842,6 +896,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI8',
                 prompt: '8.',
                 likert_scale_min_label: 'I was not distracted, but was able to be completely absorbed in what I was experiencing.',
                 likert_scale_max_label: 'I was continually distracted by extraneous impressions or events.',
@@ -851,6 +906,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI9',
                 prompt: '9.',
                 likert_scale_min_label: 'I felt no feelings of tension or tightness at all.',
                 likert_scale_max_label: 'I felt tense and tight.',
@@ -860,6 +916,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI10',
                 prompt: '10.',
                 likert_scale_min_label: 'My state of awareness was very different from what I usually experience',
                 likert_scale_max_label: 'My state of awareness was no different than usual.',
@@ -869,6 +926,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI11',
                 prompt: '11.',
                 likert_scale_min_label: 'I felt no sense of timelessness; time flowed as I usually experienced it.',
                 likert_scale_max_label: 'Time stood still; there was no movement of time at all.',
@@ -878,6 +936,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI12',
                 prompt: '12.',
                 likert_scale_min_label: 'I continually maintained a very strong sense of separation between myself and the environment.',
                 likert_scale_max_label: 'I experienced intense unity with the world; the boundaries between me and the environment dissolved away.',
@@ -887,6 +946,7 @@
             },
             {
                 type: 'likert',
+                name: 'PCI13',
                 prompt: '13.',
                 likert_scale_min_label: 'My state of awareness was not unusual or different from what it ordinarily is.',
                 likert_scale_max_label: 'I felt in an extraordinarily unusual and non-ordinary state of awareness.',
@@ -980,7 +1040,7 @@
         type: jsPsychAudioKeyboardResponse,
         stimulus: '../audio/christineRelax.mp3',
         choices: "NO_KEYS",
-        prompt: '<span class="loader"></span>',
+        prompt: '<span class="playaudio"></span>',
         trial_ends_after_audio: true
     };
 
