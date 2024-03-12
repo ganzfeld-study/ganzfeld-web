@@ -15,6 +15,8 @@
     <script src="jspsych/plugin-html-button-response.js"></script>
     <script src="jspsych/plugin-html-slider-response.js"></script>
     <script src="jspsych/plugin-audio-keyboard-response.js"></script>
+    <script src="jspsych/plugin-video-keyboard-response.js"></script>
+    <script src="jspsych/quantis.js"></script>
     <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
     <!--<link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css">-->
     <link rel="stylesheet" href="jspsych/survey.css"></link>
@@ -571,8 +573,41 @@
 
     /* Play random videos */
     // load video stimuli
-    var vidStimuli = ['video/1 A Hypnotic Snake.mp4', 'video/1 B Drowning Woman.mp4', 'video/1 C Futuristic Interrogation.mp4', 'video/1 D City Zoom.mp4', 'video/10 A Travelling through Dreams.mp4', 'video/10 B We are going to need a bigger boat.mp4', 'video/10 C Sichuan Opera.mp4', 'video/10 D Rifle Prayer.mp4', 'video/11 A Airport Shooting.mp4', 'video/11 B Light Cycles.mp4', 'video/11 C Subterranean Homsick Blues.mp4', 'video/11 D Underwater Baby.mp4', 'video/12 A The Good The Bad and the Ugly.mp4', 'video/12 B Stork baby.mp4', 'video/12 C Battle Preparations.mp4', 'video/12 D Meeting the Holy Guardian Angel.mp4', 'video/13 A Alien Contact.mp4', 'video/13 B Toothache.mp4', 'video/13 C The Third Man.mp4', 'video/13 D Meeting the Devil.mp4', 'video/14 A The Mist.mp4', 'video/14 B Surfing.mp4', 'video/14 C Car Crash.mp4', 'video/14 D Tiger Cubs.mp4', 'video/15 A City Biking.mp4', 'video/15 B Lightsabre Duel.mp4', 'video/15 C Falling Frogs.mp4', 'video/15 D Mushroom Taking.mp4', 'video/16 A Glacier Falling.mp4', 'video/16 B Cheetah hunt.mp4', 'video/16 C Caynon Run.mp4', 'video/16 D Bubbles.mp4', 'video/17 A Shoal of Fish.mp4', 'video/17 B Saturn V.mp4', 'video/17 C Bookshop.mp4', 'video/17 D Whirling dervish.mp4', 'video/18 A The Bear Necessities.mp4', 'video/18 B Bank Robbery.mp4', 'video/18 C Mountian Crash.mp4', 'video/18 D Painted Villa.mp4', 'video/19 A La Haine.mp4', 'video/19 B LV-436 Approach.mp4', 'video/19 C Flat Block Marina.mp4', 'video/19 D Modern Times.mp4', 'video/2 A Gift Giving.mp4', 'video/2 B Mozart Symphony.mp4', 'video/2 C Insect Typewriter.mp4', 'video/2 D See.mp4', 'video/20 A Saloon Tension.mp4', 'video/20 B Slurm River.mp4', 'video/20 C The Terror.mp4', 'video/20 D The Sorcerer’s Apprentice.mp4', 'video/21 A Children of the Hydra Teeth.mp4', 'video/21 B Into the Storm.mp4', 'video/21 C Carpe diem.mp4', 'video/21 D Swing Time.mp4', 'video/22 A Braveheart.mp4', 'video/22 B Must go faster.mp4', 'video/22 C The paparazzi.mp4', 'video/22 D Pencil Magic.mp4', 'video/23 A Church swing.mp4', 'video/23 B The Well of Sherif.mp4', 'video/23 C Custard battle.mp4', 'video/23 D Aberfan disaster.mp4', 'video/24 A Tears in the rain.mp4', 'video/24 B Flying Frog.mp4', 'video/24 C Who dares to boo their own Chieftain.mp4', 'video/24 D Dropping.mp4', 'video/25 A The Derelict.mp4', 'video/25 B Subway Breeze.mp4', 'video/25 C Goldfish.mp4', 'video/25 D Pyramid Flyby.mp4', 'video/26 A Underworld explorers.mp4', 'video/26 B Affectionate Monkeys.mp4', 'video/26 C Neo Interrogation.mp4', 'video/26 D Chaise Longue.mp4', 'video/27 A Meeting BeetleJuice.mp4', 'video/27 B ISS timelapse.mp4', 'video/27 C Steam Engine.mp4', 'video/27 D Mustang Sally.mp4', 'video/28 A St Crispin’s day.mp4', 'video/28 B Tsunami.mp4', 'video/28 C The Cantina.mp4', 'video/28 D Friendly Penguins.mp4', 'video/29 A Glow worms in motion.mp4', 'video/29 B Chariots of Fire.mp4', 'video/29 C Jumping from Cylons.mp4', 'video/29 D Time Warp.mp4'];
+    var vidStimuli = ['../../video/1 A Hypnotic Snake.mp4', '../../video/1 B Drowning Woman.mp4', '../../video/1 C Futuristic Interrogation.mp4', '../../video/1 D City Zoom.mp4', '../../video/10 A Travelling through Dreams.mp4', '../../video/10 B We are going to need a bigger boat.mp4', '../../video/10 C Sichuan Opera.mp4', '../../video/10 D Rifle Prayer.mp4', '../../video/11 A Airport Shooting.mp4', '../../video/11 B Light Cycles.mp4', '../../video/11 C Subterranean Homsick Blues.mp4', '../../video/11 D Underwater Baby.mp4', '../../video/12 A The Good The Bad and the Ugly.mp4', '../../video/12 B Stork baby.mp4', '../../video/12 C Battle Preparations.mp4', '../../video/12 D Meeting the Holy Guardian Angel.mp4', '../../video/13 A Alien Contact.mp4', '../../video/13 B Toothache.mp4', '../../video/13 C The Third Man.mp4', '../../video/13 D Meeting the Devil.mp4', '../../video/14 A The Mist.mp4', '../../video/14 B Surfing.mp4', '../../video/14 C Car Crash.mp4', '../../video/14 D Tiger Cubs.mp4', '../../video/15 A City Biking.mp4', '../../video/15 B Lightsabre Duel.mp4', '../../video/15 C Falling Frogs.mp4', '../../video/15 D Mushroom Taking.mp4', '../../video/16 A Glacier Falling.mp4', '../../video/16 B Cheetah hunt.mp4', '../../video/16 C Caynon Run.mp4', '../../video/16 D Bubbles.mp4', '../../video/17 A Shoal of Fish.mp4', '../../video/17 B Saturn V.mp4', '../../video/17 C Bookshop.mp4', '../../video/17 D Whirling dervish.mp4', '../../video/18 A The Bear Necessities.mp4', '../../video/18 B Bank Robbery.mp4', '../../video/18 C Mountian Crash.mp4', '../../video/18 D Painted Villa.mp4', '../../video/19 A La Haine.mp4', '../../video/19 B LV-436 Approach.mp4', '../../video/19 C Flat Block Marina.mp4', '../../video/19 D Modern Times.mp4', '../../video/2 A Gift Giving.mp4', '../../video/2 B Mozart Symphony.mp4', '../../video/2 C Insect Typewriter.mp4', '../../video/2 D See.mp4', '../../video/20 A Saloon Tension.mp4', '../../video/20 B Slurm River.mp4', '../../video/20 C The Terror.mp4', '../../video/20 D The Sorcerer’s Apprentice.mp4', '../video/21 A Children of the Hydra Teeth.mp4', '../video/21 B Into the Storm.mp4', '../video/21 C Carpe diem.mp4', '../video/21 D Swing Time.mp4', '../video/22 A Braveheart.mp4', '../video/22 B Must go faster.mp4', '../video/22 C The paparazzi.mp4', '../video/22 D Pencil Magic.mp4', '../video/23 A Church swing.mp4', '../video/23 B The Well of Sherif.mp4', '../video/23 C Custard battle.mp4', '../video/23 D Aberfan disaster.mp4', '../video/24 A Tears in the rain.mp4', '../video/24 B Flying Frog.mp4', '../video/24 C Who dares to boo their own Chieftain.mp4', '../video/24 D Dropping.mp4', '../video/25 A The Derelict.mp4', '../video/25 B Subway Breeze.mp4', '../video/25 C Goldfish.mp4', '../video/25 D Pyramid Flyby.mp4', '../video/26 A Underworld explorers.mp4', '../video/26 B Affectionate Monkeys.mp4', '../video/26 C Neo Interrogation.mp4', '../video/26 D Chaise Longue.mp4', '../video/27 A Meeting BeetleJuice.mp4', '../video/27 B ISS timelapse.mp4', '../video/27 C Steam Engine.mp4', '../video/27 D Mustang Sally.mp4', '../video/28 A St Crispin’s day.mp4', '../video/28 B Tsunami.mp4', '../video/28 C The Cantina.mp4', '../video/28 D Friendly Penguins.mp4', '../video/29 A Glow worms in motion.mp4', '../video/29 B Chariots of Fire.mp4', '../video/29 C Jumping from Cylons.mp4', '../video/29 D Time Warp.mp4'];
 
+    // number of sets
+    var sets = vidStimuli.length / 4;
+
+    var videoIntro = {
+        type: jsPsychInstructions,
+        data: { test_part: "videoIntro" },
+        pages: [
+            `<p>Now we would like you to watch a short video.</p>
+            <p>Please click "Next" when you are ready.</p>`
+            ],
+        show_clickable_nav: true,
+        on_finish: function(data) {
+            // select video set
+            var rndSet = parseInt(Zufallswert(sets-1), 10);
+
+            // select two different videos from set
+            var rndV1 = parseInt(Zufallswert(3), 10);
+            var rndV2;
+            do {
+                rndV2 = parseInt(Zufallswert(3), 10);
+            } while (rndV2 == rndV1);
+
+            // shuffle order
+            var videos = jsPsych.randomization.shuffle([rndV1, rndV2]);
+
+            // save to data
+            data.rndSet = rndSet;
+            data.rndV1 = videos[0];
+            data.rndV2 = videos[1];
+
+            console.log("Set: " + rndSet + " Video 1: " + rndV1 + " Video 2: " + rndV2);
+        }
+    };
 
     var video = {
         type: jsPsychVideoKeyboardResponse,
@@ -583,6 +618,15 @@
         choices: "NO_KEYS",
         trial_ends_after_video: true,
         on_start: function(trial) {
+            //get last trial data
+            var lastTrial = jsPsych.data.get().last(1).values()[0];
+
+            // video 1 index
+            var rnd = lastTrial.rndSet * 4 + lastTrial.rndV1;
+            console.log("set: " + lastTrial.rndSet + " Video from set: " + lastTrial.rndV1 + " Video total: " + rnd)
+            console.log(vidStimuli[rnd]);
+
+            // set video stimulus
             trial.stimulus = [ vidStimuli[rnd] ];
         }
     };
@@ -644,6 +688,8 @@
     
     //control condition
     var timeline = [];
+    timeline.push(videoIntro);
+    timeline.push(video);
     timeline.push(preload);
     timeline.push(surveyDSSQ);
     timeline.push(welcome);
