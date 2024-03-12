@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Ganzfeld 2</title>
+    <script src="jspsych/jspsych.js"></script>
+    <script src="jspsych/plugin-preload.js"></script>
+    <script src="jspsych/plugin-fullscreen.js"></script>
+    <script src="jspsych/plugin-call-function.js"></script>
+    <!--<script src="../jspsych/plugin-instructions.js"></script>-->
+    <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.3"></script>
+    <script src="jspsych/plugin-survey.js"></script>
+    <script src="jspsych/plugin-survey-multi-choice.js"></script>
+    <script src="jspsych/plugin-html-keyboard-response.js"></script>
+    <script src="jspsych/plugin-html-button-response.js"></script>
+    <script src="jspsych/plugin-html-slider-response.js"></script>
+    <script src="jspsych/plugin-audio-keyboard-response.js"></script>
+    <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+    <!--<link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css">-->
+    <link rel="stylesheet" href="jspsych/survey.css"></link>
+    <link rel="stylesheet" href="consent/consent.css"></link>
+
+    <style>
+        /* Spinner for Audio Playback */
+        .loader {
+        width: 48px;
+        height: 48px;
+        display: inline-block;
+        position: relative;
+        }
+        .loader::after,
+        .loader::before {
+        content: '';  
+        box-sizing: border-box;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 2px solid #000;
+        position: absolute;
+        left: 0;
+        top: 0;
+        animation: animloader 2s linear infinite;
+        }
+        .loader::after {
+        animation-delay: 1s;
+        }
+
+        @keyframes animloader {
+        0% {
+            transform: scale(0);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 0;
+        }
+        }
+
+    </style>
+
+  </head>
+  <body></body>
+  <script>
+
+    /* define parameters */
+    //initialize Experiment
+    const jsPsych = initJsPsych({
+        /* on_finish: function() {
+        jsPsych.data.displayData();
+      } */
+    });
+
+    // SONA & subject ID
+    let sona_id = jsPsych.data.urlVariables()['sonaid'];
+    
+    if(!sona_id){
+        var subject_id = jsPsych.randomization.randomID(16);
+    } else {
+        var subject_id = sona_id;
+        var TXT_ending = 
+            '<hr><p><a href="https://lmu-psy.sona-systems.com/webstudy_credit.aspx?experiment_id=261&credit_token=c7e045b2f2b545b996b9c3148b21530d&survey_code=' + subject_id + '">Klicken Sie bitte hier, um Ihre Versuchspersonenstunde in SONA zu erhalten.</a></p>';
+  }
+
+    // specify starting time
+    var start_time = new Date();
+
+    // add to data file
+    jsPsych.data.addProperties({ 
+        subject: subject_id, 
+        time: start_time.toISOString()
+    });
+
+
+    /*
+    // consent to participate.
+        var check_consent = function(elem) {
+        if (document.getElementById('consent_checkbox').checked) {
+            return true;
+        }
+        else {
+            alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
+            return false;
+        }
+        return false;
+    };
+
+    // declare the block.
+    var informedConsent = {
+        type: jsPsychExternalHtml,
+        url: "../consent/pana_consent.html",
+        cont_btn: "start",
+        check_fn: check_consent
+    };*/
+
+    /* welcome message & instructions */
+    var welcome = {
+        type: jsPsychInstructions,
+        data: { test_part: "instruction" },
+        pages: [
+            `<p style="font-weight:bold;">Welcome to the research project "Ganzfeld"!</p>
+            <p>In this first session, we would like to ask you to fill out some questionnaires and participate in a relaxation exercise.</p>
+            <p>Please click <i>Next</i> to begin by providing some information about you.</p>`
+            ],
+        show_clickable_nav: true
+    };
+
+
+    /* Surveys */
+    var surveyBQ = {
+        type: jsPsychSurvey,
+        data: { test_part: "BQ" },
+        pages: [
+        [
+            {
+                type: 'html',
+                name: 'BQIntro',
+                prompt: '<p>Please rate each of the statements from 0 to 4 (0 indicates <i>"not at all true of me"</i>; 4 indicates <i>"very true of me"</i>).  Try to respond to all of the statements as quickly as you can.</p>',
+            },
+            {
+                type: 'likert-table',
+                name: 'BQ',
+                prompt: ' ',
+                statements: [
+                {prompt: 'My feelings blend into one another.', name: 'BQ01'},
+                {prompt: 'I am very close to my childhood feelings.', name: 'BQ02'},
+                {prompt: 'I am easily hurt.', name: 'BQ03'},
+                {prompt: 'I spend a lot of time daydreaming, fantasizing or in reverie.', name: 'BQ04'},
+                {prompt: 'Sometimes it\'s scary when one gets too involved with another person.', name: 'BQ05'},
+                {prompt: 'A good parent has to be a bit of a child, too.', name: 'BQ06'},
+                {prompt: 'I can easily imagine myself as an animal or what it might be like to be an animal.', name: 'BQ07'},
+                {prompt: 'When I work on a project, I don\'t like to tie myself down to a definite outline.  I rather like to let my mind wander.', name: 'BQ08'},
+                {prompt: 'In my dreams, people sometimes merge into each other or become other people.', name: 'BQ09'},
+                {prompt: 'I believe I am influenced by forces that no one can understand.', name: 'BQ10'},
+                {prompt: 'There are no sharp dividing lines between normal people, people with problems and people who are considered psychotic or crazy.', name: 'BQ11'},
+                {prompt: 'I think I would enjoy being some kind of creative artist.', name: 'BQ12'},
+                {prompt: 'I have had the experience of someone calling me or speaking my name and not being sure whether it was really happening or whether I was imagining it.', name: 'BQ13'}
+                ],
+                options: ['0', '1', '2', '3', '4'],
+                required: true
+            }
+        ]
+        ],
+        button_label_finish: 'Next'
+    };
+
+    var surveyTAS = {
+        type: jsPsychSurvey,
+        data: { test_part: "TAS" },
+        pages: [
+        [
+            {
+                type: 'html',
+                name: 'TASIntro',
+                prompt: `
+                <p>This questionnaire consists of questions about experiences that you may have had in your life. We are interested in how often you have these experiences. It is important, however, that your answers show how often these experiences happen to you when you are not under the influence of alcohol or drugs.</p>
+                <p>Please indicate whether each statement applies to you by using the following response scale:</p>
+                <ul>
+                    <li>1=strongly disagree</li>
+                    <li>2=moderately disagree</li>
+                    <li>3=slightly disagree</li>
+                    <li>4=slightly agree</li>
+                    <li>5=moderately agree</li>
+                    <li>6=strongly agree</li>
+                </ul>`
+            },
+            {
+                type: 'likert-table',
+                name: 'TAS',
+                prompt: ' ',
+                statements: [
+                {prompt: 'Sometimes I feel and experience things as I did as a child.', name: 'TAS01'},
+                {prompt: 'I can be greatly moved by eloquent or poetic language.', name: 'TAS02'},
+                {prompt: 'While watching a movie, a TV show, or a play, I may become so involved that I may forget about myself and my surroundings and experience the story as if it were real and as if I were taking part in it.', name: 'TAS03'},
+                {prompt: 'If I stare at a picture and then look away from it, I can sometimes “see” an image of the picture almost as if I were still looking at it.', name: 'TAS04'},
+                {prompt: 'Sometimes I feel as if my mind could envelop the whole world.', name: 'TAS05'},
+                {prompt: 'I like to watch cloud shapes change in the sky.', name: 'TAS06'},
+                {prompt: 'If I wish, I can imagine (or daydream) some things so vividly that they hold my attention as a good movie or story does.', name: 'TAS07'},
+                {prompt: 'I think I really know what some people mean when they talk about mystical experiences.', name: 'TAS08'},
+                {prompt: 'I sometimes “step outside” my usual self and experience an entirely different state of being.', name: 'TAS09'},
+                {prompt: 'Textures—such as wool, sand, wood—sometimes remind me of colors or music.', name: 'TAS10'},
+                {prompt: 'Sometimes I experience things as if they were “doubly” real.', name: 'TAS11'},
+                {prompt: 'When I listen to music I can get so caught up in it that I don\'t notice anything else.', name: 'TAS12'},
+                {prompt: 'If I wish I can imagine that my body is so heavy that I could not move it if I wanted to.', name: 'TAS13'},
+                {prompt: 'I can often somehow sense the presence of another person before I actually see or hear her/him.', name: 'TAS14'},
+                {prompt: 'The crackle and flames of a wood fire stimulate my imagination.', name: 'TAS15'},
+                {prompt: 'It is sometimes possible for me to be completely immersed in nature or art and to feel as if my whole state of consciousness has somehow been temporarily altered.', name: 'TAS16'},
+                {prompt: 'Different colors have distinctive and special meanings for me.', name: 'TAS17'},
+                {prompt: 'I am able to wander off into my thoughts while doing a routine task and then find a few minutes later that I have completed it.', name: 'TAS18'},
+                {prompt: 'I can sometimes recollect certain past experiences in my life with such clarity and vividness that it is like living them again or almost so.', name: 'TAS19'},
+                {prompt: 'Things that might seem meaningless to others often make sense to me.', name: 'TAS20'},
+                {prompt: 'While acting in a play I think I could really feel the emotions of the character and “become” her/him for the time being, forgetting both myself and the audience.', name: 'TAS21'},
+                {prompt: 'My thoughts often don\'t occur as words but as visual images.', name: 'TAS22'},
+                {prompt: 'I often take delight in small things (like the five-pointed star shape that appears when you cut an apple across the core or the colors in soap bubbles).', name: 'TAS23'},
+                {prompt: 'When listening to organ music or other powerful music I sometimes feel as if I am being lifted into the air.', name: 'TAS24'},
+                {prompt: 'Sometimes I can change noise into music by the way I listen to it.', name: 'TAS25'},
+                {prompt: 'Some of my most vivid memories are called up by scents and smells.', name: 'TAS26'},
+                {prompt: 'Some music reminds me of pictures or changing color patterns.', name: 'TAS27'},
+                {prompt: 'I often know what someone is going to say before he or she says it.', name: 'TAS28'},
+                {prompt: 'I often have “physical memories”: for example, after I have been swimming I may still feel as if I am in the water.', name: 'TAS29'},
+                {prompt: 'The sound of a voice can be so fascinating to me that I can just go on listening to it.', name: 'TAS30'},
+                {prompt: 'At times I somehow feel the presence of someone who is not physically there.', name: 'TAS31'},
+                {prompt: 'Sometimes thoughts and images come to me without the slightest effort on my part.', name: 'TAS32'},
+                {prompt: 'I find that different odors have different colors.', name: 'TAS33'},
+                {prompt: 'I can be deeply moved by a sunset.', name: 'TAS34'},
+                ],
+                options: ['1', '2', '3', '4', '5', '6'],
+                required: true
+            }
+        ]
+        ],
+        button_label_finish: 'Next'
+    };
+
+    var surveyBFI2 = {
+        type: jsPsychSurvey,
+        data: { test_part: "BFI2" },
+        pages: [
+        [
+            {
+                type: 'html',
+                name: 'BFIIntro',
+                prompt: '<p>Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please write a number next to each statement to indicate the extent to which you agree or disagree with that statement.</p>',
+            },
+            {
+                type: 'likert-table',
+                name: 'BFI',
+                prompt: 'I am someone who...',
+                statements: [
+                {prompt: 'Sometimes I feel and experience things as I did as a child.', name: 'BFI01'},
+                {prompt: 'I can be greatly moved by eloquent or poetic language.', name: 'BFI02'},
+                {prompt: 'While watching a movie, a TV show, or a play, I may become so involved that I may forget about myself and my surroundings and experience the story as if it were real and as if I were taking part in it.', name: 'BFI03'},
+                {prompt: 'If I stare at a picture and then look away from it, I can sometimes “see” an image of the picture almost as if I were still looking at it.', name: 'BFI04'},
+                {prompt: 'Sometimes I feel as if my mind could envelop the whole world.', name: 'BFI05'},
+                {prompt: 'I like to watch cloud shapes change in the sky.', name: 'BFI06'},
+                {prompt: 'If I wish, I can imagine (or daydream) some things so vividly that they hold my attention as a good movie or story does.', name: 'BFI07'},
+                {prompt: 'I think I really know what some people mean when they talk about mystical experiences.', name: 'BFI08'},
+                {prompt: 'I sometimes “step outside” my usual self and experience an entirely different state of being.', name: 'BFI09'},
+                {prompt: 'Textures—such as wool, sand, wood—sometimes remind me of colors or music.', name: 'BFI10'},
+                {prompt: 'Sometimes I experience things as if they were “doubly” real.', name: 'BFI11'},
+                {prompt: 'When I listen to music I can get so caught up in it that I don\'t notice anything else.', name: 'BFI12'},
+                {prompt: 'If I wish I can imagine that my body is so heavy that I could not move it if I wanted to.', name: 'BFI13'},
+                {prompt: 'I can often somehow sense the presence of another person before I actually see or hear her/him.', name: 'BFI14'},
+                {prompt: 'The crackle and flames of a wood fire stimulate my imagination.', name: 'BFI15'},
+                {prompt: 'It is sometimes possible for me to be completely immersed in nature or art and to feel as if my whole state of consciousness has somehow been temporarily altered.', name: 'BFI16'},
+                {prompt: 'Different colors have distinctive and special meanings for me.', name: 'BFI17'},
+                {prompt: 'I am able to wander off into my thoughts while doing a routine task and then find a few minutes later that I have completed it.', name: 'BFI18'},
+                {prompt: 'I can sometimes recollect certain past experiences in my life with such clarity and vividness that it is like living them again or almost so.', name: 'BFI19'},
+                {prompt: 'Things that might seem meaningless to others often make sense to me.', name: 'BFI20'},
+                {prompt: 'While acting in a play I think I could really feel the emotions of the character and “become” her/him for the time being, forgetting both myself and the audience.', name: 'BFI21'},
+                {prompt: 'My thoughts often don\'t occur as words but as visual images.', name: 'BFI22'},
+                {prompt: 'I often take delight in small things (like the five-pointed star shape that appears when you cut an apple across the core or the colors in soap bubbles).', name: 'BFI23'},
+                {prompt: 'When listening to organ music or other powerful music I sometimes feel as if I am being lifted into the air.', name: 'BFI24'},
+                ],
+                options: ['1', '2', '3', '4', '5', '6'],
+                required: true
+            }
+        ]
+        ],
+        button_label_finish: 'Next'
+    };
+
+    var surveyDESScaleValues = [
+                {value: '0%'},
+                {value: '10%'},
+                {value: '20%'},
+                {value: '30%'},
+                {value: '40%'},
+                {value: '50%'},
+                {value: '60%'},
+                {value: '70%'},
+                {value: '80%'},
+                {value: '90%'},
+                {value: '100%'},
+                ];
+
+    var surveyDES = {
+        type: jsPsychSurvey,
+        data: { test_part: "DES" },
+        pages: [
+        [
+            {
+                type: 'html',
+                name: 'DESIntro',
+                prompt: '<p>This questionnaire consists of twenty eight questions about experiences that you may have in your daily life.  We are interested in how often you have had these experiences during the last two weeks.  It is important, however, that your answers show how often these experiences happen to you when you are not under the influence of alcohol or drugs.  To answer the questions, please determine to what degree the experience described in the question applies to you and mark the square to show what percentage of the time you have the experience.</p>',
+            },
+            {
+                type: 'likert',
+                prompt: '1.	Some people have the experience of driving or riding in a car or bus or subway and suddenly realizing that they don\'t remember what has happened during all or part of the trip. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '2.	Some people find that sometimes they are listening to someone talk and they suddenly realize that they did not hear part or all of what was said. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '3.	Some people have the experience of finding themselves in a place and having no idea how they got there. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '4.	Some people have the experience of finding themselves dressed in clothes that they don\'t remember putting on. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '5.	Some people have the experience of finding new things among their belongings that they do not remember buying. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '6.	Some people sometimes find that they are approached by people whom they do not know, who call them by another name or insist that they have met them before. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '7.	Some people sometimes have the experience of feeling as though they are standing next to themselves or watching themselves do something and they actually see themselves as if they were looking at another person. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '8.	Some people are told that they sometimes do not recognize friends or family members. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '9.	Some people find that they have no memory for some important events in their lives (for example, a wedding or graduation). Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '10. Some people have the experience of being accused of lying when they do not think that they have lied. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '11. Some people have the experience of looking in a mirror and not recognizing themselves. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '12. Some people have the experience of feeling that other people, objects, and the world around them are not real. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '13. Some people have the experience of feeling that their body does not seem to belong to them. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '14. Some people have the experience of sometimes remembering a past event so vividly that they feel as if they were reliving that event. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '15. Some people have the experience of not being sure whether things that they remember happening really did happen or whether they just dreamed them. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '16. Some people have the experience of being in a familiar place but finding it strange and unfamiliar. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '17. Some people find that when they are watching television or a movie they become so absorbed in the story that they are unaware of other events happening around them. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '18. Some people find that they become so involved in a fantasy or daydream that it feels as though it were really happening to them. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '19. Some people find that they sometimes are able to ignore pain. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '20. Some people find that they sometimes sit staring off into space, thinking of nothing, and are not aware of the passage of time. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '21. Some people sometimes find that when they are alone they talk out loud to themselves. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '22. Some people find that in one situation they may act so differently compared with another situation that they feel almost as if they were two different people. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '23. Some people sometimes find that in certain situations they are able to do things with amazing ease and spontaneity that would usually be difficult for them (for example, sports, work, social situation, etc.). Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '24. Some people sometimes find that they cannot remember whether they have done something or have just thought about doing that thing (for example, not knowing whether they have mailed a letter or have just thought about mailing it). Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '25. Some people find evidence that they have done things that they do not remember doing. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '26. Some people sometimes find writings, drawings, or notes among their belongings that they must have done but cannot remember doing. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '27. Some people sometimes find that they hear voices inside their head that tell them to do things or comment on things that they are doing. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '28. Some people sometimes feel as if they are looking at the world through a fog so that people and objects appear far awry or unclear. Please indicate the percentage of the time this happens to you.',
+                likert_scale_min_label: 'Never',
+                likert_scale_max_label: 'Always',
+                likert_scale_values: surveyDESScaleValues,
+                required: true
+            }
+        ]
+        ],
+        button_label_finish: 'Next'
+    };
+
+    var surveyBSSS = {
+        type: jsPsychSurvey,
+        data: { test_part: "BSSS" },
+        pages: [
+        [
+            {
+                type: 'html',
+                name: 'BSSSIntro',
+                prompt: '<p>Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please write a number next to each statement to indicate the extent to which you agree or disagree with that statement.</p>',
+            },
+            {
+                type: 'likert-table',
+                name: 'BSSS',
+                prompt: ' ',
+                statements: [
+                {prompt: 'I would like to explore strange places.', name: 'BSSI01'},
+                {prompt: 'I get restless when I spend too much time at home.', name: 'BSSI02'},
+                {prompt: 'I like to do frightening things.', name: 'BSSI03'},
+                {prompt: 'I like wild parties.', name: 'BSSI04'},
+                {prompt: 'I would like to take off on a trip with no pre-planned routes or timetables.', name: 'BSSI05'},
+                {prompt: 'I prefer friends who are excitingly unpredictable.', name: 'BSSI06'},
+                {prompt: 'I would like to try bungee jumping.', name: 'BSSI07'},
+                {prompt: 'I would love to have new and exciting experiences, even if they are illegal.', name: 'BSSI08'}
+                ],
+                options: ['Strongly disagree', 'Disagree', 'Neither disagree nor agree', 'Agree', 'Strongly agree'],
+                required: true
+            }
+        ]
+        ],
+        button_label_finish: 'Next'
+    };
+
+    /* Australian Sheep Goat Scale */
+    var i = 0;
+    var ASGSItem = [
+        ['I am completely convinced that Extrasensory Perception (ESP) does not exist.', 'I am completely convinced that ESP exists.'],
+        ['I am completely convinced that I have never  had a personal experience of ESP.', 'I am completely convinced that I have had a personal experience of ESP.'],
+        ['I am completely convinced that I am not psychic.', 'I am completely convinced that I am psychic.'],
+        ['I am completely convinced that it is impossible to gain information about the future before it happens in ways that do not depend on rational prediction or normal sensory channels.', 'I am completely convinced that it is possible to gain information about the future before it happens in ways that do not depend on rational prediction or normal sensory channels.'],
+        ['I am completely convinced that I have never had a hunch that turned out to be correct and which (I believe) was anything other than coincidence.', 'I am completely convinced that I have had a hunch that turned out to be correct and which (I believe) was not just a coincidence.'],
+        ['I am completely convinced that I have never had a premonition about the future that came true and which (I believe) was anything other than coincidence.','I am completely convinced that I have had at least one premonition about the future that came true and which (I believe) was not just a coincidence.'],
+        ['I am completely convinced that I have never had a dream that came true and which was anything other than coincidence.','I am completely convinced that I have had at least one dream that came true and which (I believe) was not just a coincidence.'],
+        ['I am completely convinced that I have never had a vision that was not an hallucination and from which I received information that I could not have otherwise gained at that time and place.','I am completely convinced that I have had at least one vision that was not an hallucination and from which I received information that I could not have otherwise gained at that time and place.'],
+        ['I am completely convinced that it is impossible to gain information about the thoughts, feelings or circumstances of another person, in a way that does not depend on rational prediction or normal sensory channels.','I am completely convinced that it is possible to gain information about the thoughts, feelings or circumstances of another person, in a way that does not depend on rational prediction or normal sensory channels.'],
+        ['I am completely convinced that it is impossible to send a "mental message" to another person, or in some way influence them at a distance, by means other than the normal channels of communication.','I am completely convinced that it is possible to send a "mental message" to another person, or in some way influence them at a distance, by means other than the normal channels of communication.'],
+        ['I am completely convinced that I have never had an experience of telepathy between myself and another person.','I am completely convinced that I have had at least one experience of telepathy between myself and another person.'],
+        ['I am completely convinced that there is no such thing as psychokinesis (or "PK"), that is, the direct influence of mind on a physical system, without the mediation of any known physical energy.','I am completely convinced that psychokinesis (or "PK") exists, that is, the direct influence of mind on a physical system, without the mediation of any known physical energy.'],
+        ['I am completely convinced that I have never personally exerted PK on any occasion.','I am completely convinced that I have personally exerted PK on at least one occasion.'],
+        ['I am completely convinced that I do not have marked psychokinetic ability.','I am completely convinced that I have marked psychokinetic ability.'],
+        ['I am completely convinced that never on any occasion has an inexplicable (but non-recurrent) physical event of an apparently psychokinetic origin occurred in my presence.','I am completely convinced that, on at least one occasion, an inexplicable (but non-recurrent) physical event of an apparently psychokinetic origin has occurred in my presence.'],
+        ['I am completely convinced that persistent inexplicable physical disturbances, of an apparently psychokinetic origin (as for example a “poltergeist”) have never occurred in my presence.','I am completely convinced that persistent inexplicable physical disturbances, of an apparently psychokinetic origin (as for example a “poltergeist”) have occurred in my presence at some time in the past.']
+    ]
+    
+    var surveyASGSTrial = {
+        type: jsPsychHtmlSliderResponse,
+        stimulus: function() { 
+            return `<div style="width:50em; max-width:100%;">
+            <p><i>Please read both ends of the following rating-scales, and move the slider to the point on the line which best corresponds to your opinion.</i></p>
+            <p><b>${i+1} / ${ASGSItem.length}</b></p>
+            <div style="width:24em; max-width:48%; float: left;">
+                <p>${ASGSItem[i][0]}</p>
+            </div>
+            <div style="width:24em; max-width:48%; float: right;">
+                <p>${ASGSItem[i][1]}</p>
+            </div>
+            </div>`;
+        },
+        require_movement: true,
+        on_finish: function() { i++; }
+        //labels: ['100% chance', '50% chance', '0% chance']
+    };
+
+    // create timeline with multiple copies of ASGSTrial for each question
+    var surveyASGS = {
+        timeline: Array(ASGSItem.length).fill(surveyASGSTrial)
+    }
+
+    /* Phenomenology of consciousness ivnentory */
+    // Change css for this questionnaire only
+    var addPCICss = {
+         type: jsPsychCallFunction,
+         func: function(){
+            document.querySelector('head').insertAdjacentHTML('beforeEnd', 
+            `<style id="PCI">
+                .sv_q_rating_min_text, .sv_q_rating_max_text {
+                    display: inline-block;
+                    width: calc(50% - 10em);
+                    vertical-align: middle;
+                }
+            </style>`
+            );
+         }
+      };
+  
+    var removePCICss = {
+         type: jsPsychCallFunction,
+         func: function(){
+            document.querySelector('#PCI').remove();
+         }
+      };
+
+    // 1. Rest
+    var surveyPCIRestTrial = {
+        type: jsPsychSurvey,
+        data: { test_part: "PCIRest" },
+        pages: [
+        [
+            {
+                type: 'html',
+                name: 'PCIIntro',
+                prompt: '<p>Please read each statement carefully and answer as accurately as you can by indicating the number between “0” and “6” that best corresponds to your subjective experience <b>while resting</b>.</p>',
+            },
+            {
+                type: 'likert',
+                prompt: '1.',
+                likert_scale_min_label: 'I was forever distracted and unable to concentrate on anything.',
+                likert_scale_max_label: 'I was able to concentrate quite well and was not distracted.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '2.',
+                likert_scale_min_label: 'My body ended at the boundary between my skin and the world.',
+                likert_scale_max_label: 'I felt my body greatly expanded beyond the boundaries of my skin.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '3.',
+                likert_scale_min_label: 'My perception of the flow of time changed drastically.',
+                likert_scale_max_label: 'I noticed no changes in my perception of the flow of time.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '4.',
+                likert_scale_min_label: 'The muscles of my body felt very tense and tight.',
+                likert_scale_max_label: 'The muscles of my body felt very loose and relaxed.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '5.',
+                likert_scale_min_label: 'My state of consciousness was not any different or unusual from what it ordinarily is.',
+                likert_scale_max_label: 'I felt in an extremely different and unusual state of consciousness.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '6.',
+                likert_scale_min_label: 'My bodily feelings seemed to expand into the world around me.',
+                likert_scale_max_label: 'My bodily feelings were confined to the area within my skin.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '7.',
+                likert_scale_min_label: 'Time seemed to greatly speed up or slow down.',
+                likert_scale_max_label: 'Time was experienced with no changes in its rate of passage.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '8.',
+                likert_scale_min_label: 'I was not distracted, but was able to be completely absorbed in what I was experiencing.',
+                likert_scale_max_label: 'I was continually distracted by extraneous impressions or events.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '9.',
+                likert_scale_min_label: 'I felt no feelings of tension or tightness at all.',
+                likert_scale_max_label: 'I felt tense and tight.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '10.',
+                likert_scale_min_label: 'My state of awareness was very different from what I usually experience',
+                likert_scale_max_label: 'My state of awareness was no different than usual.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '11.',
+                likert_scale_min_label: 'I felt no sense of timelessness; time flowed as I usually experienced it.',
+                likert_scale_max_label: 'Time stood still; there was no movement of time at all.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '12.',
+                likert_scale_min_label: 'I continually maintained a very strong sense of separation between myself and the environment.',
+                likert_scale_max_label: 'I experienced intense unity with the world; the boundaries between me and the environment dissolved away.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '13.',
+                likert_scale_min_label: 'My state of awareness was not unusual or different from what it ordinarily is.',
+                likert_scale_max_label: 'I felt in an extraordinarily unusual and non-ordinary state of awareness.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            }
+        ]
+        ],
+        button_label_finish: 'Next'
+    };
+
+    // 2. Relaxation
+    var surveyPCIRelaxTrial = {
+        type: jsPsychSurvey,
+        data: { test_part: "PCIRelaxation" },
+        pages: [
+        [
+            {
+                type: 'html',
+                name: 'PCIIntro',
+                prompt: '<p>Please read each statement carefully and answer as accurately as you can by indicating the number between “0” and “6” that best corresponds to your subjective experience <b>during the relaxation exercise</b>.</p>',
+            },
+            {
+                type: 'likert',
+                prompt: '1.',
+                likert_scale_min_label: 'I was forever distracted and unable to concentrate on anything.',
+                likert_scale_max_label: 'I was able to concentrate quite well and was not distracted.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '2.',
+                likert_scale_min_label: 'My body ended at the boundary between my skin and the world.',
+                likert_scale_max_label: 'I felt my body greatly expanded beyond the boundaries of my skin.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '3.',
+                likert_scale_min_label: 'My perception of the flow of time changed drastically.',
+                likert_scale_max_label: 'I noticed no changes in my perception of the flow of time.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '4.',
+                likert_scale_min_label: 'The muscles of my body felt very tense and tight.',
+                likert_scale_max_label: 'The muscles of my body felt very loose and relaxed.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '5.',
+                likert_scale_min_label: 'My state of consciousness was not any different or unusual from what it ordinarily is.',
+                likert_scale_max_label: 'I felt in an extremely different and unusual state of consciousness.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '6.',
+                likert_scale_min_label: 'My bodily feelings seemed to expand into the world around me.',
+                likert_scale_max_label: 'My bodily feelings were confined to the area within my skin.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '7.',
+                likert_scale_min_label: 'Time seemed to greatly speed up or slow down.',
+                likert_scale_max_label: 'Time was experienced with no changes in its rate of passage.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '8.',
+                likert_scale_min_label: 'I was not distracted, but was able to be completely absorbed in what I was experiencing.',
+                likert_scale_max_label: 'I was continually distracted by extraneous impressions or events.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '9.',
+                likert_scale_min_label: 'I felt no feelings of tension or tightness at all.',
+                likert_scale_max_label: 'I felt tense and tight.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '10.',
+                likert_scale_min_label: 'My state of awareness was very different from what I usually experience',
+                likert_scale_max_label: 'My state of awareness was no different than usual.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '11.',
+                likert_scale_min_label: 'I felt no sense of timelessness; time flowed as I usually experienced it.',
+                likert_scale_max_label: 'Time stood still; there was no movement of time at all.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '12.',
+                likert_scale_min_label: 'I continually maintained a very strong sense of separation between myself and the environment.',
+                likert_scale_max_label: 'I experienced intense unity with the world; the boundaries between me and the environment dissolved away.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                prompt: '13.',
+                likert_scale_min_label: 'My state of awareness was not unusual or different from what it ordinarily is.',
+                likert_scale_max_label: 'I felt in an extraordinarily unusual and non-ordinary state of awareness.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            }
+        ]
+        ],
+        button_label_finish: 'Next'
+    };
+
+    // create PCI timelines
+    var surveyPCIRest = {
+        timeline: [addPCICss, surveyPCIRestTrial, removePCICss]
+    }
+
+    var surveyPCIRelax = {
+        timeline: [addPCICss, surveyPCIRelaxTrial, removePCICss]
+    }
+
+    /* Demographics */
+    var surveyDemo = {
+        type: jsPsychSurvey,
+        data: { test_part: "survey" },
+        pages: [
+        [
+        {
+                type: 'html',
+                prompt: '<p>First, we would like to ask yopu for some personal information:</p>',
+            },
+            {
+                type: 'text',
+                prompt: "How old are you?", 
+                name: 'age', 
+                textbox_columns: 5,
+                required: true,
+                input_type: "number"
+            },
+            {
+                type: 'multi-choice',
+                prompt: "What gender do you identify with?", 
+                name: 'gender', 
+                options: ['female', 'male', 'other / con-conforming'],
+                required: true
+            },
+            /*{
+                type: 'drop-down',
+                prompt: "Was ist dein höchster Bildungsabschluss?", 
+                name: 'education', 
+                options: [
+                    "Kein Schulabschluss",
+                    "Grund-/Hauptschulabschluss",
+                    "Mittlere Reife",
+                    "Fachhochschulreife",
+                    "Abitur",
+                    "Abgeschlossene Ausbildung",
+                    "Bachelor-Abschluss",
+                    "Master-Abschluss/Diplom",
+                    "Promotion"
+                ],
+                required: true
+            }*/
+        ]
+        ],
+        button_label_finish: 'Next'
+    };
+
+    /* Rest for 2 mins */
+    var rest = {
+        type: jsPsychHtmlButtonResponse,
+        data: { test_part: "rest" },
+        stimulus: '<p>Thank you!</p><p>Please rest in the comfortable chair for 2 minutes before you continue.</p>',
+        choices: ['Continue']
+    };
+
+    /* Relaxation exercise */
+    // Relaxation Intro
+    var relaxIntro = {
+        type: jsPsychInstructions,
+        data: { test_part: "relaxIntro" },
+        pages: [
+            `<p>Now we would like you to listen to a relaxation exercise.</p>
+            <p>Please put on the headphones and click "Next" when you are ready.</p>`
+            ],
+        show_clickable_nav: true
+    };
+
+    // Relaxation Playback
+    var relaxPlay = {
+        type: jsPsychAudioKeyboardResponse,
+        stimulus: '../audio/christineRelax.mp3',
+        choices: "NO_KEYS",
+        prompt: '<span class="loader"></span>',
+        trial_ends_after_audio: true
+    };
+
+    /* Time Estimation */
+    var timeEstimate1 = {
+        type: jsPsychHtmlSliderResponse,
+        stimulus: `
+        <p><i>Please answer the following two questions about your experiences during the relaxation exercise.</i></p>
+        <p>1. How often did you think about time <b>during the exercise</b>?</p>`,
+        require_movement: true,
+        labels: ['Not at all', 'Extremely often']
+    };
+
+    var timeEstimate2 = {
+        type: jsPsychHtmlSliderResponse,
+        stimulus: `
+        <p><i>Please answer the following two questions about your experiences during the relaxation exercise.</i></p>
+        <p>2. How fast did time pass for you <b>during the exercise</b>?</p>`,
+        require_movement: true,
+        labels: ['Extremely slowly', 'Extremely fast']
+    };
+
+    /* save data to csv */
+    function saveData(name, data){
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'save-data6.php');
+      xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+      xhr.send(JSON.stringify({filename: name, filedata: data}));
+    }
+
+    /* end message */
+    var ending = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: '<p>Thank you!</p><p>Your responses were recorded, you may close the window now.</p>',
+        //choices: "ALL_KEYS",
+        choices: "NO_KEYS",
+        on_start: function() {
+            // save Data
+            saveData("/ganzfeld/session1/ganzfeld_1_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+        }
+    }
+
+    /* helper */
+    // preload
+    var preload = {
+        type: jsPsychPreload,
+        auto_preload: true
+    }
+    // fullscreen
+    var enterFullscreen = {
+        type: jsPsychFullscreen,
+        fullscreen_mode: true
+    }
+
+    var exitFullscreen = {
+        type: jsPsychFullscreen,
+        fullscreen_mode: false,
+        delay_after: 0
+    }
+
+    /*// Hide and Show cursor 
+    var hide_cursor = {
+         type: jsPsychCallFunction,
+         func: function(){
+            document.querySelector('head').insertAdjacentHTML('beforeEnd', '<style id="hide-cursor">body { cursor: none; }</style>');
+         }
+      };
+  
+      var show_cursor = {
+         type: jsPsychCallFunction,
+         func: function(){
+            document.querySelector('#hide-cursor').remove();
+         }
+      };*/
+
+    /* create timeline */
+    
+    //control condition
+    var timeline = [];
+    timeline.push(preload);
+    timeline.push(welcome);
+    //timeline.push(informedConsent);
+    timeline.push(surveyDemo);
+    timeline.push(surveyBQ);
+    timeline.push(surveyTAS);
+    timeline.push(surveyDES);
+    timeline.push(surveyBSSS);
+    timeline.push(surveyASGS);
+    timeline.push(rest);
+    timeline.push(surveyPCIRest);
+    timeline.push(relaxIntro);
+    timeline.push(relaxPlay);
+    timeline.push(surveyPCIRelax);
+    timeline.push(timeEstimate1);
+    timeline.push(timeEstimate2);
+    timeline.push(ending);
+
+
+    /* start the experiment */
+    jsPsych.run(timeline);
+
+
+  </script>
+</html>
