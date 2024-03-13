@@ -753,14 +753,22 @@
         stimulus: `
         <p>How similar was the video to your Ganzfeld experience?</p>`,
         require_movement: true,
-        labels: ['Not at all similar', 'Extremely similar']
+        labels: ['Not at all similar', 'Extremely similar'],
+        on_finish: function(data) {
+            var ratingData = jsPsych.data.get().filter({test_part: "videoRating"}).values()[0];
+            // see it ratings are identical
+            if(ratingData.response == data.response) {
+                // if so, repeat the trial
+                alert("Please rate the videos differently.");
+            }
+        }
     };
 
     var videoTargetIntro = {
         type: jsPsychHtmlKeyboardResponse,
         data: { test_part: 'videoTargetIntro'},
         stimulus: '<p>We will now select the target video.</p><p>Please watch the selected video a second time.</p>',
-        choices: ['Next']
+        choices: ['Continue']
     }
     var videoTarget = {
         type: jsPsychVideoKeyboardResponse,
