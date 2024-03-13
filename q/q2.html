@@ -753,22 +753,31 @@
         }
     };
 
-    var video2Rating = {
+    var video2RatingInt = {
         type: jsPsychHtmlSliderResponse,
         data: { test_part: 'videoRating'},
         stimulus: `
         <p>How similar was the video to your Ganzfeld experience?</p>`,
         require_movement: true,
-        labels: ['Not at all similar', 'Extremely similar'],
-        on_finish: function(data) {
-            var ratingData = jsPsych.data.get().filter({test_part: "videoRating"}).values()[0];
-            // see it ratings are identical
-            if(ratingData.response == data.response) {
-                // if so, repeat the trial
-                alert("Please rate the videos differently.");
+        labels: ['Not at all similar', 'Extremely similar']
+    };
+
+    var video2Rating = {
+        timeline: [video2RatingInt],
+        loop_function: function(data) {
+            var ratingData = jsPsych.data.get().filter({test_part: "videoRating"}).values();
+            if(ratingData.length > 0) {
+                if(ratingData[0].response == ratingData[1].response) {
+                    alert("Please rate the videos differently.");
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
             }
         }
-    };
+    }
 
     var videoTargetIntro = {
         type: jsPsychHtmlButtonResponse,
