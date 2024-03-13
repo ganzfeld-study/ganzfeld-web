@@ -825,6 +825,22 @@
         type: jsPsychPreload,
         auto_preload: true
     }
+    var preloadVideos = {
+        type: jsPsychPreload,
+        video: '',
+        on_start: function(trial) {
+            var videoData = jsPsych.data.get().filter({test_part: "videoIntro"}).values()[0];
+            var rndSet = videoData.rndSet;
+            var rndV1 = videoData.rndV1;
+            var rndV2 = videoData.rndV2;
+
+            var rnd1 = rndSet * 4 + rndV1;
+            var rnd2 = rndSet * 4 + rndV2;
+
+            var videos = [ vidStimuli[rnd1], vidStimuli[rnd2] ];
+            trial.video = videos;
+        }
+    }
     // fullscreen
     var enterFullscreen = {
         type: jsPsychFullscreen,
@@ -869,6 +885,7 @@
     timeline.push(timeEstimate1);
     timeline.push(timeEstimate2);
     timeline.push(videoIntro);
+    timeline.push(preloadVideos);
     timeline.push(enterFullscreen);
     timeline.push(video1Play);
     timeline.push(exitFullscreen);
