@@ -667,13 +667,12 @@
     var sets = vidStimuli.length / 4;
 
     var videoIntro = {
-        type: jsPsychInstructions,
+        type: jsPsychHtmlKeyboardResponse,
         data: { test_part: "videoIntro" },
-        pages: [
-            `<p>Now we would like you to watch a short video.</p>
-            <p>Please click "Next" when you are ready.</p>`
-            ],
-        show_clickable_nav: true,
+        stimulus:
+            `<p>Now we would like you to watch two short videos and rate how similar they are to your Ganzfeld experience.</p>
+            <p>Please click "Continue" when you are ready.</p>`,
+        choices: ['Continue'],
         on_finish: function(data) {
             // select video set
             var rndSet = parseInt(Zufallswert(sets-1), 10);
