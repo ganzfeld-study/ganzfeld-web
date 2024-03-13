@@ -1026,13 +1026,11 @@
     /* Relaxation exercise */
     // Relaxation Intro
     var relaxIntro = {
-        type: jsPsychInstructions,
+        type: jsPsychHtmlButtonResponse,
         data: { test_part: "relaxIntro" },
-        pages: [
-            `<p>Now we would like you to listen to a relaxation exercise.</p>
-            <p>Please put on the headphones and click "Next" when you are ready.</p>`
-            ],
-        show_clickable_nav: true
+        stimulus: `<p>Now we would like you to listen to a relaxation exercise.</p>
+            <p>Please put on the headphones and click "Next" when you are ready.</p>`,
+        choices: ['Continue']
     };
 
     // Relaxation Playback
