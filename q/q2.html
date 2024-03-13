@@ -120,7 +120,7 @@
         data: { test_part: "instruction" },
         pages: [
             `<p style="font-weight:bold;">Welcome to the research project "Ganzfeld"!</p>
-            <p>In this second and final session, we would like you to participate in a Ganzfeld session and afterwards fill out some questionnaires.</p>
+            <p>In this second and final session, we would like you to participate in a Ganzfeld session and watch two videos that may relate to your experiences.</p>
             <p>Please click <i>Next</i> to begin.</p>`
             ],
         show_clickable_nav: true
@@ -544,7 +544,7 @@
     var ganzfeldIntro = {
         type: jsPsychHtmlButtonResponse,
         data: { test_part: "ganzfeldIntro" },
-        stimulus: `<p>GANZFELD INTRO.</p>
+        stimulus: `<p>We are now beginning with the Ganzfeld exercise.</p>
             <p>Please put on the headphones and click "Continue" when you are ready.</p>`,
         choices: ['Continue']
     };
@@ -552,7 +552,7 @@
     // Play Pink Noise
     var ganzfeldPlay = {
         type: jsPsychAudioKeyboardResponse,
-        stimulus: '../audio/pinknoise.ogg',
+        stimulus: '../audio/pinknoise30.mp3',
         choices: "NO_KEYS",
         prompt: '<span class="playaudio"></span>',
         trial_duration: 3000,
@@ -563,7 +563,7 @@
     var timeEstimate1 = {
         type: jsPsychHtmlSliderResponse,
         stimulus: `
-        <p><i>Please answer the following two questions about your experiences during the relaxation exercise.</i></p>
+        <p><i>Please answer the following two questions about your experiences during the Ganzfeld exercise.</i></p>
         <p>1. How often did you think about time <b>during the exercise</b>?</p>`,
         require_movement: true,
         labels: ['Not at all', 'Extremely often']
@@ -572,7 +572,7 @@
     var timeEstimate2 = {
         type: jsPsychHtmlSliderResponse,
         stimulus: `
-        <p><i>Please answer the following two questions about your experiences during the relaxation exercise.</i></p>
+        <p><i>Please answer the following two questions about your experiences during the Ganzfeld exercise.</i></p>
         <p>2. How fast did time pass for you <b>during the exercise</b>?</p>`,
         require_movement: true,
         labels: ['Extremely slowly', 'Extremely fast']
@@ -869,12 +869,18 @@
     timeline.push(timeEstimate1);
     timeline.push(timeEstimate2);
     timeline.push(videoIntro);
+    timeline.push(enter_fullscreen);
     timeline.push(video1Play);
+    timeline.push(exit_fullscreen);
     timeline.push(video1Rating);
+    timeline.push(enter_fullscreen);
     timeline.push(video2Play);
+    timeline.push(exit_fullscreen);
     timeline.push(video2Rating);
     timeline.push(videoTargetIntro);
+    timeline.push(enter_fullscreen);
     timeline.push(videoTarget);
+    timeline.push(exit_fullscreen);
     timeline.push(ending);
 
     /* start the experiment */
