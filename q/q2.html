@@ -526,7 +526,7 @@
         type: jsPsychHtmlButtonResponse,
         data: { test_part: "relaxIntro" },
         stimulus: `<p>Now we would like you to listen to a relaxation exercise.</p>
-            <p>Please put on the headphones and click "Next" when you are ready.</p>`,
+            <p>Please put on the headphones and click "Continue" when you are ready.</p>`,
         choices: ['Continue']
     };
 
@@ -540,6 +540,15 @@
     };
 
     /* Ganzfeld */
+    // Relaxation Intro
+    var ganzfeldIntro = {
+        type: jsPsychHtmlButtonResponse,
+        data: { test_part: "ganzfeldIntro" },
+        stimulus: `<p>GANZFELD INTRO.</p>
+            <p>Please put on the headphones and click "Continue" when you are ready.</p>`,
+        choices: ['Continue']
+    };
+
     // Play Pink Noise
     var ganzfeldPlay = {
         type: jsPsychAudioKeyboardResponse,
