@@ -674,7 +674,7 @@
     var sets = vidStimuli.length / 4;
 
     var videoIntro = {
-        type: jsPsychHtmlKeyboardResponse,
+        type: jsPsychHtmlButtonResponse,
         data: { test_part: "videoIntro" },
         stimulus:
             `<p>Now we would like you to watch two short videos and rate how similar they are to your Ganzfeld experience.</p>
@@ -771,7 +771,7 @@
     };
 
     var videoTargetIntro = {
-        type: jsPsychHtmlKeyboardResponse,
+        type: jsPsychHtmlButtonResponse,
         data: { test_part: 'videoTargetIntro'},
         stimulus: '<p>We will now select the target video.</p><p>Please watch the selected video a second time.</p>',
         choices: ['Continue']
