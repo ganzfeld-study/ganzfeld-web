@@ -73,14 +73,12 @@
     });
 
     // SONA & subject ID
-    let sona_id = jsPsych.data.urlVariables()['sonaid'];
+    let pid = jsPsych.data.urlVariables()['pid'];
     
-    if(!sona_id){
+    if(!pid){
         var subject_id = jsPsych.randomization.randomID(16);
     } else {
-        var subject_id = sona_id;
-        var TXT_ending = 
-            '<hr><p><a href="https://lmu-psy.sona-systems.com/webstudy_credit.aspx?experiment_id=261&credit_token=c7e045b2f2b545b996b9c3148b21530d&survey_code=' + subject_id + '">Klicken Sie bitte hier, um Ihre Versuchspersonenstunde in SONA zu erhalten.</a></p>';
+        var subject_id = pid;
   }
 
     // specify starting time
@@ -116,15 +114,25 @@
 
     /* welcome message & instructions */
     var welcome = {
-        type: jsPsychInstructions,
-        data: { test_part: "instruction" },
-        pages: [
-            `<p style="font-weight:bold;">Welcome to the research project "Ganzfeld"!</p>
+        type: jsPsychSurveyText,
+        data: { test_part: 'welcome'},
+        preamble: `<p style="font-weight:bold;">Welcome to the research project "Ganzfeld"!</p>
             <p>In this second and final session, we would like you to participate in a Ganzfeld session and watch two videos that may relate to your experiences.</p>
-            <p>Please click <i>Next</i> to begin.</p>`
-            ],
-        show_clickable_nav: true
-    };
+            <p>Please click <i>Next</i> to begin.</p>`,
+        questions: [
+            {prompt: 'Participant ID'}
+        ],
+        button_label: 'Continue',
+        on_load: function(){
+            if(pid) document.getElementById('input-0').setAttribute('value', pid);
+        },
+        /*on_finish: function(data) {
+            // save pid
+            jsPsych.data.addProperties({ 
+                subject: data.responses[0]
+            });
+        }*/
+    }
 
 
     /* Surveys */

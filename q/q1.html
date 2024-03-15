@@ -10,6 +10,7 @@
     <!--<script src="jspsych/plugin-instructions.js"></script>-->
     <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.3"></script>
     <script src="jspsych/plugin-survey.js"></script>
+    <script src="jspsych/plugin-survey-text.js"></script>
     <script src="jspsych/plugin-survey-multi-choice.js"></script>
     <script src="jspsych/plugin-html-keyboard-response.js"></script>
     <script src="jspsych/plugin-html-button-response.js"></script>
@@ -57,28 +58,29 @@
         }
 
     </style>
-
   </head>
-  <body></body>
+  <body>
+  </body>
   <script>
 
     /* define parameters */
     //initialize Experiment
     const jsPsych = initJsPsych({
+        show_progress_bar: true,
+        auto_update_progress_bar: false
         /* on_finish: function() {
         jsPsych.data.displayData();
       } */
     });
 
+
     // SONA & subject ID
-    let sona_id = jsPsych.data.urlVariables()['sonaid'];
+    let pid = jsPsych.data.urlVariables()['pid'];
     
-    if(!sona_id){
+    if(!pid){
         var subject_id = jsPsych.randomization.randomID(16);
     } else {
-        var subject_id = sona_id;
-        var TXT_ending = 
-            '<hr><p><a href="https://lmu-psy.sona-systems.com/webstudy_credit.aspx?experiment_id=261&credit_token=c7e045b2f2b545b996b9c3148b21530d&survey_code=' + subject_id + '">Klicken Sie bitte hier, um Ihre Versuchspersonenstunde in SONA zu erhalten.</a></p>';
+        var subject_id = pid;
   }
 
     // specify starting time
@@ -114,18 +116,77 @@
 
     /* welcome message & instructions */
     var welcome = {
-        type: jsPsychInstructions,
-        data: { test_part: "instruction" },
-        pages: [
-            `<p style="font-weight:bold;">Welcome to the research project "Ganzfeld"!</p>
-            <p>In this first session, we would like to ask you to fill out some questionnaires and participate in a relaxation exercise.</p>
-            <p>Please click <i>Next</i> to begin by providing some information about you.</p>`
-            ],
-        show_clickable_nav: true
-    };
-
+        type: jsPsychSurveyText,
+        data: { test_part: 'welcome'},
+        preamble: `<h2>Welcome to Session 1!</h2>
+                <p>In this first session, we would first like to ask you to fill out seven questionnaires. It may take about 30-45 minutes in total but please take a break whenever you want.<br>
+                <b>IMPORTANT:</b> Please do not "refresh" the page or use the "go back/ go forward" buttons, as it would send you back to the first page and require you to start over.</p>
+                <p>Next, in the laboratory you will be asked to familiarize yourself with the Ganzfeld environment (including the red light and the pink noise) so that you are prepared for the second session, in which you will participate in the Ganzfeld experiment.</p>
+                <p>Please fill out your participant ID / make sure that it is correct and click <i>Continue</i> to begin answering the questionnaires.`,
+        questions: [
+            {prompt: 'Participant ID'}
+        ],
+        button_label: 'Continue',
+        on_load: function(){
+            if(pid) document.getElementById('input-0').setAttribute('value', pid);
+        },
+        on_finish: function(){
+            jsPsych.setProgressBar(0.10); // set progress bar to 85% full.
+        }
+        /*on_finish: function(data) {
+            // save pid
+            jsPsych.data.addProperties({ 
+                subject: data.responses[0]
+            });
+        }*/
+    }
 
     /* Surveys */
+    /* Demographics */
+    var surveyDemo = {
+        type: jsPsychSurvey,
+        data: { test_part: "survey" },
+        pages: [
+        [
+        {
+                type: 'html',
+                prompt: '<p>First, we would like to ask yopu for some personal information:</p>',
+            },
+            {
+                type: 'text',
+                prompt: "How old are you?", 
+                name: 'age', 
+                textbox_columns: 5,
+                required: true,
+                input_type: "number"
+            },
+            {
+                type: 'multi-choice',
+                prompt: "What gender do you identify with?", 
+                name: 'gender', 
+                options: ['female', 'male', 'other / non-binary'],
+                required: true
+            },
+            {
+                type: 'multi-choice',
+                prompt: "Which of the following best describes your diet?", 
+                name: 'vegetarian', 
+                options: [
+                    'Vegan (or plant-based): a person who eats fruits, vegetables, and grains but no animal or seafood products',
+                    'Non-vegan vegetarian: a person who eats dairy products and/or eggs, fruits, vegetables, grains, but no other animal or seafood products',
+                    'Meat reducer: a person who eats dairy products, eggs, fruits, vegetables, grains, and a reduced amount of animal or seafood products. For example, a pescetarian (who eats fish but no other animals) or someone who eliminates or reduces their consumption of red meat',
+                    'Omnivore: a person who regularly eats most meats, seafood, eggs, dairy products, fruits, vegetables, and grains.'
+                    ],
+                required: true
+            }
+        ]
+        ],
+        button_label_finish: 'Next',
+        on_finish: function(){
+            jsPsych.setProgressBar(0.20); 
+        }
+    };
+
     /* The Boundary Questionnaire */
     var surveyBQ = {
         type: jsPsychSurvey,
@@ -161,7 +222,10 @@
             }
         ]
         ],
-        button_label_finish: 'Next'
+        button_label_finish: 'Next',
+        on_finish: function(){
+            jsPsych.setProgressBar(0.30); 
+        }
     };
 
     /* The Tellegen Absorption Scale */
@@ -230,56 +294,10 @@
             }
         ]
         ],
-        button_label_finish: 'Next'
-    };
-
-    /* The Big Five Inventory */
-    var surveyBFI2 = {
-        type: jsPsychSurvey,
-        data: { test_part: "BFI2" },
-        pages: [
-        [
-            {
-                type: 'html',
-                name: 'BFIIntro',
-                prompt: '<p>Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please write a number next to each statement to indicate the extent to which you agree or disagree with that statement.</p>',
-            },
-            {
-                type: 'likert-table',
-                name: 'BFI',
-                prompt: 'I am someone who...',
-                statements: [
-                {prompt: 'Sometimes I feel and experience things as I did as a child.', name: 'BFI01'},
-                {prompt: 'I can be greatly moved by eloquent or poetic language.', name: 'BFI02'},
-                {prompt: 'While watching a movie, a TV show, or a play, I may become so involved that I may forget about myself and my surroundings and experience the story as if it were real and as if I were taking part in it.', name: 'BFI03'},
-                {prompt: 'If I stare at a picture and then look away from it, I can sometimes “see” an image of the picture almost as if I were still looking at it.', name: 'BFI04'},
-                {prompt: 'Sometimes I feel as if my mind could envelop the whole world.', name: 'BFI05'},
-                {prompt: 'I like to watch cloud shapes change in the sky.', name: 'BFI06'},
-                {prompt: 'If I wish, I can imagine (or daydream) some things so vividly that they hold my attention as a good movie or story does.', name: 'BFI07'},
-                {prompt: 'I think I really know what some people mean when they talk about mystical experiences.', name: 'BFI08'},
-                {prompt: 'I sometimes “step outside” my usual self and experience an entirely different state of being.', name: 'BFI09'},
-                {prompt: 'Textures—such as wool, sand, wood—sometimes remind me of colors or music.', name: 'BFI10'},
-                {prompt: 'Sometimes I experience things as if they were “doubly” real.', name: 'BFI11'},
-                {prompt: 'When I listen to music I can get so caught up in it that I don\'t notice anything else.', name: 'BFI12'},
-                {prompt: 'If I wish I can imagine that my body is so heavy that I could not move it if I wanted to.', name: 'BFI13'},
-                {prompt: 'I can often somehow sense the presence of another person before I actually see or hear her/him.', name: 'BFI14'},
-                {prompt: 'The crackle and flames of a wood fire stimulate my imagination.', name: 'BFI15'},
-                {prompt: 'It is sometimes possible for me to be completely immersed in nature or art and to feel as if my whole state of consciousness has somehow been temporarily altered.', name: 'BFI16'},
-                {prompt: 'Different colors have distinctive and special meanings for me.', name: 'BFI17'},
-                {prompt: 'I am able to wander off into my thoughts while doing a routine task and then find a few minutes later that I have completed it.', name: 'BFI18'},
-                {prompt: 'I can sometimes recollect certain past experiences in my life with such clarity and vividness that it is like living them again or almost so.', name: 'BFI19'},
-                {prompt: 'Things that might seem meaningless to others often make sense to me.', name: 'BFI20'},
-                {prompt: 'While acting in a play I think I could really feel the emotions of the character and “become” her/him for the time being, forgetting both myself and the audience.', name: 'BFI21'},
-                {prompt: 'My thoughts often don\'t occur as words but as visual images.', name: 'BFI22'},
-                {prompt: 'I often take delight in small things (like the five-pointed star shape that appears when you cut an apple across the core or the colors in soap bubbles).', name: 'BFI23'},
-                {prompt: 'When listening to organ music or other powerful music I sometimes feel as if I am being lifted into the air.', name: 'BFI24'},
-                ],
-                options: ['1', '2', '3', '4', '5', '6'],
-                required: true
-            }
-        ]
-        ],
-        button_label_finish: 'Next'
+        button_label_finish: 'Next',
+        on_finish: function(){
+            jsPsych.setProgressBar(0.40); 
+        }
     };
 
     /* The Dissociative Experiences Scale */
@@ -561,7 +579,62 @@
             }
         ]
         ],
-        button_label_finish: 'Next'
+        button_label_finish: 'Next',
+        on_finish: function(){
+            jsPsych.setProgressBar(0.50); 
+        }
+    };
+
+        /* The Big Five Inventory */
+        var surveyBFI2 = {
+        type: jsPsychSurvey,
+        data: { test_part: "BFI2" },
+        pages: [
+        [
+            {
+                type: 'html',
+                name: 'BFIIntro',
+                prompt: '<p>Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please write a number next to each statement to indicate the extent to which you agree or disagree with that statement.</p>',
+            },
+            {
+                type: 'likert-table',
+                name: 'BFI',
+                prompt: 'I am someone who...',
+                statements: [
+                {prompt: 'Sometimes I feel and experience things as I did as a child.', name: 'BFI01'},
+                {prompt: 'I can be greatly moved by eloquent or poetic language.', name: 'BFI02'},
+                {prompt: 'While watching a movie, a TV show, or a play, I may become so involved that I may forget about myself and my surroundings and experience the story as if it were real and as if I were taking part in it.', name: 'BFI03'},
+                {prompt: 'If I stare at a picture and then look away from it, I can sometimes “see” an image of the picture almost as if I were still looking at it.', name: 'BFI04'},
+                {prompt: 'Sometimes I feel as if my mind could envelop the whole world.', name: 'BFI05'},
+                {prompt: 'I like to watch cloud shapes change in the sky.', name: 'BFI06'},
+                {prompt: 'If I wish, I can imagine (or daydream) some things so vividly that they hold my attention as a good movie or story does.', name: 'BFI07'},
+                {prompt: 'I think I really know what some people mean when they talk about mystical experiences.', name: 'BFI08'},
+                {prompt: 'I sometimes “step outside” my usual self and experience an entirely different state of being.', name: 'BFI09'},
+                {prompt: 'Textures—such as wool, sand, wood—sometimes remind me of colors or music.', name: 'BFI10'},
+                {prompt: 'Sometimes I experience things as if they were “doubly” real.', name: 'BFI11'},
+                {prompt: 'When I listen to music I can get so caught up in it that I don\'t notice anything else.', name: 'BFI12'},
+                {prompt: 'If I wish I can imagine that my body is so heavy that I could not move it if I wanted to.', name: 'BFI13'},
+                {prompt: 'I can often somehow sense the presence of another person before I actually see or hear her/him.', name: 'BFI14'},
+                {prompt: 'The crackle and flames of a wood fire stimulate my imagination.', name: 'BFI15'},
+                {prompt: 'It is sometimes possible for me to be completely immersed in nature or art and to feel as if my whole state of consciousness has somehow been temporarily altered.', name: 'BFI16'},
+                {prompt: 'Different colors have distinctive and special meanings for me.', name: 'BFI17'},
+                {prompt: 'I am able to wander off into my thoughts while doing a routine task and then find a few minutes later that I have completed it.', name: 'BFI18'},
+                {prompt: 'I can sometimes recollect certain past experiences in my life with such clarity and vividness that it is like living them again or almost so.', name: 'BFI19'},
+                {prompt: 'Things that might seem meaningless to others often make sense to me.', name: 'BFI20'},
+                {prompt: 'While acting in a play I think I could really feel the emotions of the character and “become” her/him for the time being, forgetting both myself and the audience.', name: 'BFI21'},
+                {prompt: 'My thoughts often don\'t occur as words but as visual images.', name: 'BFI22'},
+                {prompt: 'I often take delight in small things (like the five-pointed star shape that appears when you cut an apple across the core or the colors in soap bubbles).', name: 'BFI23'},
+                {prompt: 'When listening to organ music or other powerful music I sometimes feel as if I am being lifted into the air.', name: 'BFI24'},
+                ],
+                options: ['1', '2', '3', '4', '5', '6'],
+                required: true
+            }
+        ]
+        ],
+        button_label_finish: 'Next',
+        on_finish: function(){
+            jsPsych.setProgressBar(0.60); 
+        }
     };
 
     /* The Brief Sensation Seeking Scale */
@@ -594,7 +667,10 @@
             }
         ]
         ],
-        button_label_finish: 'Next'
+        button_label_finish: 'Next',
+        on_finish: function(){
+            jsPsych.setProgressBar(0.70); 
+        }
     };
 
     /* Australian Sheep Goat Scale */
@@ -623,8 +699,8 @@
         data: { test_part: "ASGS" },
         stimulus: function() { 
             return `<div style="width:50em; max-width:100%;">
+            <p><i>${i+1} / ${ASGSItem.length}</i></p>
             <p><i>Please read both ends of the following rating-scales, and move the slider to the point on the line which best corresponds to your opinion.</i></p>
-            <p><b>${i+1} / ${ASGSItem.length}</b></p>
             <div style="width:24em; max-width:48%; float: left;">
                 <p>${ASGSItem[i][0]}</p>
             </div>
@@ -634,13 +710,18 @@
             </div>`;
         },
         require_movement: true,
-        on_finish: function() { i++; }
+        on_finish: function() { 
+            i++; 
+        }
         //labels: ['100% chance', '50% chance', '0% chance']
     };
 
     // create timeline with multiple copies of ASGSTrial for each question
     var surveyASGS = {
-        timeline: Array(ASGSItem.length).fill(surveyASGSTrial)
+        timeline: Array(ASGSItem.length).fill(surveyASGSTrial),
+        on_timeline_finish: function() {
+            jsPsych.setProgressBar(0.80); 
+  },
     }
 
     /* Phenomenology of consciousness ivnentory */
@@ -968,53 +1049,6 @@
         timeline: [addPCICss, surveyPCIRelaxTrial, removePCICss]
     }
 
-    /* Demographics */
-    var surveyDemo = {
-        type: jsPsychSurvey,
-        data: { test_part: "survey" },
-        pages: [
-        [
-        {
-                type: 'html',
-                prompt: '<p>First, we would like to ask yopu for some personal information:</p>',
-            },
-            {
-                type: 'text',
-                prompt: "How old are you?", 
-                name: 'age', 
-                textbox_columns: 5,
-                required: true,
-                input_type: "number"
-            },
-            {
-                type: 'multi-choice',
-                prompt: "What gender do you identify with?", 
-                name: 'gender', 
-                options: ['female', 'male', 'other / con-conforming'],
-                required: true
-            },
-            /*{
-                type: 'drop-down',
-                prompt: "Was ist dein höchster Bildungsabschluss?", 
-                name: 'education', 
-                options: [
-                    "Kein Schulabschluss",
-                    "Grund-/Hauptschulabschluss",
-                    "Mittlere Reife",
-                    "Fachhochschulreife",
-                    "Abitur",
-                    "Abgeschlossene Ausbildung",
-                    "Bachelor-Abschluss",
-                    "Master-Abschluss/Diplom",
-                    "Promotion"
-                ],
-                required: true
-            }*/
-        ]
-        ],
-        button_label_finish: 'Next'
-    };
-
     /* Rest for 2 mins */
     var rest = {
         type: jsPsychHtmlButtonResponse,
@@ -1039,7 +1073,10 @@
         stimulus: '../audio/christineRelax.mp3',
         choices: "NO_KEYS",
         prompt: '<span class="playaudio"></span>',
-        trial_ends_after_audio: true
+        trial_ends_after_audio: true,
+        on_finish: function(){
+            jsPsych.setProgressBar(0.90); 
+        }
     };
 
     /* Time Estimation */
@@ -1058,7 +1095,10 @@
         <p><i>Please answer the following two questions about your experiences during the relaxation exercise.</i></p>
         <p>2. How fast did time pass for you <b>during the exercise</b>?</p>`,
         require_movement: true,
-        labels: ['Extremely slowly', 'Extremely fast']
+        labels: ['Extremely slowly', 'Extremely fast'],
+        on_finish: function(){
+            jsPsych.setProgressBar(1); 
+        }
     };
 
     /* save data to csv */
@@ -1125,13 +1165,14 @@
     timeline.push(surveyBQ);
     timeline.push(surveyTAS);
     timeline.push(surveyDES);
+    timeline.push(surveyBFI2);
     timeline.push(surveyBSSS);
     timeline.push(surveyASGS);
-    timeline.push(rest);
-    timeline.push(surveyPCIRest);
+    //timeline.push(rest);
+    //timeline.push(surveyPCIRest);
     timeline.push(relaxIntro);
     timeline.push(relaxPlay);
-    timeline.push(surveyPCIRelax);
+    //timeline.push(surveyPCIRelax);
     timeline.push(timeEstimate1);
     timeline.push(timeEstimate2);
     timeline.push(ending);
