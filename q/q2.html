@@ -5,16 +5,20 @@
     <title>Ganzfeld 2</title>
     <script src="jspsych/jspsych.js"></script>
     <script src="jspsych/plugin-preload.js"></script>
-    <script src="jspsych/plugin-fullscreen.js"></script>
+    <!--<script src="jspsych/plugin-fullscreen.js"></script>-->
+    <script src="https://unpkg.com/@jspsych/plugin-fullscreen@1.2.1"></script>
     <script src="jspsych/plugin-call-function.js"></script>
     <!--<script src="jspsych/plugin-instructions.js"></script>-->
     <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.3"></script>
     <script src="jspsych/plugin-survey.js"></script>
     <script src="jspsych/plugin-survey-multi-choice.js"></script>
+    <script src="jspsych/plugin-survey-text.js"></script>
+    <script src="jspsych/plugin-survey-html-form.js"></script>
     <script src="jspsych/plugin-html-keyboard-response.js"></script>
     <script src="jspsych/plugin-html-button-response.js"></script>
     <script src="jspsych/plugin-html-slider-response.js"></script>
     <script src="jspsych/plugin-audio-keyboard-response.js"></script>
+    <script src="jspsych/plugin-audio-button-response.js"></script>
     <script src="jspsych/plugin-video-keyboard-response.js"></script>
     <script src="jspsych/quantis.js"></script>
     <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
@@ -56,6 +60,44 @@
             transform: scale(1);
             opacity: 0;
         }
+        }
+
+        /* Video */
+        .video-rating-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+        }
+        .video-container {
+            margin-right: 2rem;
+            height: 33vh; /* Set a fixed height */
+            margin-bottom: 1rem;
+        }
+        video {
+            width: 100%;
+            height: 100%; /* Ensure the video fills its container */
+        }
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        input[type="range"] {
+            width: 80%;
+        }
+        output {
+            margin-top: 0.5rem;
+        }
+        datalist {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            writing-mode: vertical-lr;
+            width: 80%;
+        }
+        option {
+            padding: 0;
         }
 
     </style>
@@ -116,9 +158,15 @@
     var welcome = {
         type: jsPsychSurveyText,
         data: { test_part: 'welcome'},
-        preamble: `<p style="font-weight:bold;">Welcome to the research project "Ganzfeld"!</p>
-            <p>In this second and final session, we would like you to participate in a Ganzfeld session and watch two videos that may relate to your experiences.</p>
-            <p>Please click <i>Next</i> to begin.</p>`,
+        preamble: `<h2>Welcome back to Session 2!</h2>
+            <p>In this final session, we would like you to participate in a Ganzfeld experiment. You will be asked to make a gentle wish that during Ganzfeld you will have experiences related to a film clip that will be shown to you later. Specifically, you will be asked to:</p>
+                * Answer a few questions about your attitude to the experiment.<br>
+                * Rest in a reclining chair for a few minutes and answer a few questions about this experience.<br>
+                * Do the ganzfeld experiment. This will include 8 minutes of relaxation instructions, followed by 30 minutes of Ganzfeld. During these 30 minutes, you will be asked to report your experiences (think-out-loud)<br>
+                * After completing some questions about your ganzfeld experience, you will be asked to watch two brief film clips, one of which is the "target", which will be shown to you again later. You will be asked to rate these two clips concerning their similarity to your ganzfeld experience. Then, the target clip be shown to you.<br>
+            </ul>
+            <p>Please answer honestly about your experiences and attitudes. There are no right or wrong answers. We value your genuine thoughts and opinions.</p>
+            <p>Please fill out your participant ID / make sure that it is correct and click <i>Continue</i> to begin.</p>`,
         questions: [
             {prompt: 'Participant ID'}
         ],
@@ -144,7 +192,7 @@
             {
                 type: 'html',
                 name: 'SuccessBeliefIntro',
-                prompt: '<p>Before we begin, we would like to ask you to indicate how strongly you believe in a success of your participation and how comfortable you feel with the Ganzfeld setup.</p>',
+                prompt: '<p>Before we begin, we would like to ask you about your attitude to the experiment and the setup.</p>',
             },
             {
                 type: 'likert',
@@ -160,7 +208,6 @@
                 prompt: 'I feel comfortable with the Ganzfeld setup.',
                 likert_scale_min_label: 'Not at all',
                 likert_scale_max_label: 'Very much',
-                //likert_scale_values: surveyDESScaleValues,
                 required: true
             },
         ]
@@ -195,15 +242,15 @@
       };
 
     // 1. Relaxation
-    var surveyPCIRelaxTrial = {
+    var surveyPCIRestTrial = {
         type: jsPsychSurvey,
-        data: { test_part: "PCIRelaxation" },
+        data: { test_part: "PCIRest" },
         pages: [
         [
             {
                 type: 'html',
                 name: 'PCIIntro',
-                prompt: '<p>Please read each statement carefully and answer as accurately as you can by indicating the number between “0” and “6” that best corresponds to your subjective experience <b>during the relaxation exercise</b>.</p>',
+                prompt: '<p>Please read each statement carefully and answer as accurately as you can by indicating the number between “0” and “6” that best corresponds to your subjective experience <b>during the 3 minutes of resting</b>.</p>',
             },
             {
                 type: 'likert',
@@ -348,7 +395,7 @@
             {
                 type: 'html',
                 name: 'PCIIntro',
-                prompt: '<p>Please read each statement carefully and answer as accurately as you can by indicating the number between “0” and “6” that best corresponds to your subjective experience <b>in the Ganzfeld environment</b>.</p>',
+                prompt: '<p>Please read each statement carefully and answer as accurately as you can by indicating the number between “0” and “6” that best corresponds to your subjective experience <b>during the 30 minutes of Ganzfeld</b>.</p>',
             },
             {
                 type: 'likert',
@@ -486,8 +533,8 @@
     };
 
     // create PCI timelines
-    var surveyPCIRelax = {
-        timeline: [addPCICss, surveyPCIRelaxTrial, removePCICss]
+    var surveyPCIRest = {
+        timeline: [addPCICss, surveyPCIRestTrial, removePCICss]
     }
 
     var surveyPCIGanzfeld = {
@@ -503,7 +550,7 @@
             {
                 type: 'html',
                 name: 'DSSQIntro',
-                prompt: `<p>This set of questions concerns the kinds of thoughts that go through people's heads at particular times, for example while they are doing some task or activity. Below is a list of thoughts, some of which you might have had recently.  Please indicate roughly how often you had each thought <b>DURING THE GANZFELD</b>.</p>`,
+                prompt: `<p>This set of questions concerns the kinds of thoughts that go through people's heads at particular times, for example while they are doing some task or activity. Below is a list of thoughts, some of which you might have had recently.  Please indicate roughly how often you had each thought <b>during the 30 minutes of Ganzfeld</b>.</p>`,
             },
             {
                 type: 'likert-table',
@@ -528,50 +575,79 @@
     };
 
 
-    /* Relaxation exercise */
-    // Relaxation Intro
-    var relaxIntro = {
+    /* Resting */
+    // Resting Intro
+    var restIntro = {
         type: jsPsychHtmlButtonResponse,
-        data: { test_part: "relaxIntro" },
-        stimulus: `<p>Now we would like you to listen to a relaxation exercise.</p>
-            <p>Please put on the headphones and click "Continue" when you are ready.</p>`,
+        data: { test_part: "restIntro" },
+        stimulus: `<p>Next we would like you to rest in a reclining chair for 3 minutes. Press Continue when you are ready, then make yourself comfortable in the chair, and rest until you hear a beep signaling the end of the three minute interval. Afterwards you can return to this program to proceed.</p>`,
         choices: ['Continue']
     };
 
-    // Relaxation Playback
-    var relaxPlay = {
-        type: jsPsychAudioKeyboardResponse,
-        stimulus: '../audio/christineRelax.mp3',
+    // Rest
+    var restPlay = {
+        type: jsPsychHtmlKeyboardResponse,
+        data: { test_part: "rest" },
+        stimulus:  function(){
+            // Create an AudioContext
+            var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+            // Create an oscillator node
+            var oscillator = audioCtx.createOscillator();
+
+            // Set the oscillator type to 'sine' for a simple beep sound
+            oscillator.type = 'sine';
+
+            // Set the frequency of the oscillator (adjust for desired pitch)
+            oscillator.frequency.setValueAtTime(440, audioCtx.currentTime); // 440 Hz is a standard pitch for an "A" note
+
+            // Connect the oscillator to the audio context's destination (speakers)
+            oscillator.connect(audioCtx.destination);
+
+            // Start the oscillator after 3 minutes
+            setTimeout(function(){
+            oscillator.start();
+            }, 180000); // 180000 milliseconds = 3 minutes
+
+            // Stop the oscillator after 1000 milliseconds (adjust as needed)
+            setTimeout(function(){
+            oscillator.stop();
+            }, 181000); // Stop 1000 milliseconds after starting
+
+            // Return null since no stimulus is needed
+            return '';
+        },
         choices: "NO_KEYS",
-        prompt: '<span class="playaudio"></span>',
-        trial_ends_after_audio: true
+        prompt: '. . . now make yourself comfortable in the reclining chair, and rest for 3 minutes . . . ',
+        trial_duration: 181500
     };
 
     /* Ganzfeld */
-    // Relaxation Intro
+    // Ganzfeld Intro
     var ganzfeldIntro = {
-        type: jsPsychHtmlButtonResponse,
+        type: jsPsychAudioButtonResponse,
+        stimulus: '../audio/pinknoise30.mp3',
         data: { test_part: "ganzfeldIntro" },
-        stimulus: `<p>We are now beginning with the Ganzfeld exercise.</p>
-            <p>Please put on the headphones and click "Continue" when you are ready.</p>`,
+        prompt: `<p>Tell the experimenter to assist you with the ganzfeld equipment. The experimenter will click Ciontinue when you are ready to begin.</p>`,
         choices: ['Continue']
     };
 
     // Play Pink Noise
     var ganzfeldPlay = {
         type: jsPsychAudioKeyboardResponse,
+        data: { test_part: "ganzfeldPlay" },
         stimulus: '../audio/pinknoise30.mp3',
         choices: "NO_KEYS",
         prompt: '<span class="playaudio"></span>',
         trial_duration: 3000,
-        trial_ends_after_audio: false
+        trial_ends_after_audio: true
     };
 
     /* Time Estimation */
     var timeEstimate1 = {
         type: jsPsychHtmlSliderResponse,
         stimulus: `
-        <p><i>Please answer the following two questions about your experiences during the Ganzfeld exercise.</i></p>
+        <p><i>Please answer the following two questions about your experiences during the 30 minutes of Ganzfeld.</i></p>
         <p>1. How often did you think about time <b>during the exercise</b>?</p>`,
         require_movement: true,
         labels: ['Not at all', 'Extremely often']
@@ -580,7 +656,7 @@
     var timeEstimate2 = {
         type: jsPsychHtmlSliderResponse,
         stimulus: `
-        <p><i>Please answer the following two questions about your experiences during the Ganzfeld exercise.</i></p>
+        <p><i>Please answer the following two questions about your experiences during the 30 minutes of Ganzfeld.</i></p>
         <p>2. How fast did time pass for you <b>during the exercise</b>?</p>`,
         require_movement: true,
         labels: ['Extremely slowly', 'Extremely fast']
@@ -711,13 +787,16 @@
         }
     };
 
-    var video1Play = {
-        type: jsPsychVideoKeyboardResponse,
+/*    var video1Play = {
+        type: jsPsychVideoButtonResponse,
         data: { test_part: 'videoPlay'},
         stimulus: [
             ''
         ],
-        choices: "NO_KEYS",
+        prompt: 'Video 1',
+        choices: "Continue",
+        autoplay: false,
+        controls: true,
         trial_ends_after_video: true,
         on_start: function(trial) {
             //get video data of trial with test_part: videoIntro
@@ -732,22 +811,16 @@
         }
     };
 
-    var video1Rating = {
-        type: jsPsychHtmlSliderResponse,
-        data: { test_part: 'videoRating'},
-        stimulus: `
-        <p>How similar was the video to your Ganzfeld experience?</p>`,
-        require_movement: true,
-        labels: ['Not at all similar', 'Extremely similar']
-    };
-
     var video2Play = {
-        type: jsPsychVideoKeyboardResponse,
+        type: jsPsychVideoButtonResponse,
         data: { test_part: 'videoPlay'},
         stimulus: [
             ''
         ],
-        choices: "NO_KEYS",
+        prompt: 'Video 2',
+        choices: "Continue",
+        autoplay: false,
+        controls: true,
         trial_ends_after_video: true,
         on_start: function(trial) {
             //get video data of trial with test_part: videoIntro
@@ -761,11 +834,20 @@
         }
     };
 
+    var video1Rating = {
+        type: jsPsychHtmlSliderResponse,
+        data: { test_part: 'videoRating'},
+        stimulus: `
+        <p>How similar was the <b>first video</b> to your Ganzfeld experience?</p>`,
+        require_movement: true,
+        labels: ['Not at all similar', 'Extremely similar']
+    };
+
     var video2RatingInt = {
         type: jsPsychHtmlSliderResponse,
         data: { test_part: 'videoRating'},
         stimulus: `
-        <p>How similar was the video to your Ganzfeld experience?</p>`,
+        <p>How similar was the <b>second video</b> to your Ganzfeld experience?</p>`,
         require_movement: true,
         labels: ['Not at all similar', 'Extremely similar']
     };
@@ -776,6 +858,89 @@
             var ratingData = jsPsych.data.get().filter({test_part: "videoRating"}).values();
             if(ratingData.length > 0) {
                 if(ratingData[0].response == ratingData[1].response) {
+                    alert("Please rate the videos differently.");
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+    }*/
+
+    var videoDisplayINT = {
+        type: jsPsychSurveyHtmlForm,
+        data: { test_part: 'videoRating'},
+        preamble: '<p>Now we would like you to watch two short videos and rate how similar they are to your Ganzfeld experience.</p>',
+        html: '',
+        button_label: 'Continue',
+        on_start: function(trial) {
+            //get video data of trial with test_part: videoIntro
+            var videoData = jsPsych.data.get().filter({test_part: "videoIntro"}).values()[0];
+
+            // video 1 index
+            var rnd1 = videoData.rndSet * 4 + videoData.rndV1;
+
+            // video 2 index
+            var rnd2 = videoData.rndSet * 4 + videoData.rndV2;
+
+            // set video stimulus
+            trial.html = `
+            <div class="video-rating-container">
+                <div class="video-container">
+                    <video id="video1" controls>
+                        <source src="${vidStimuli[rnd1]}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="video-container">
+                    <video id="video2" controls>
+                        <source src="${vidStimuli[rnd2]}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+                <div class="video-rating-container">
+                <div class="slider-container">
+                    <label for="slider1">How similar is the first video to your Ganzfeld experience?</label>
+                    <output id="slider1-value">50</output>
+                    <input type="range" id="slider1" name="slider1" min="0" max="100" value="50" list="ticks1">
+                    <datalist id="ticks1">
+                        <option value="0" label="Not at all similar"></option>
+                        <option value="100" label="Extremely similar"></option>
+                    </datalist>
+                </div>
+                <div class="slider-container">
+                    <label for="slider2">How similar is the second video to your Ganzfeld experience?</label>
+                    <output id="slider2-value">50</output>
+                    <input type="range" id="slider2" name="slider2" min="0" max="100" value="50" list="ticks2">
+                    <datalist id="ticks2">
+                        <option value="0" label="Not at all similar"></option>
+                        <option value="100" label="Extremely similar"></option>
+                    </datalist>
+                </div>
+            </div>
+            `;
+        },
+        on_load: function() {
+            // Update output elements when sliders are changed
+            document.getElementById('slider1').addEventListener('input', function() {
+                document.getElementById('slider1-value').textContent = this.value;
+            });
+
+            document.getElementById('slider2').addEventListener('input', function() {
+                document.getElementById('slider2-value').textContent = this.value;
+            });
+        }
+    }
+
+    var videoDisplay = {
+        timeline: [videoDisplayINT],
+        loop_function: function(data) {
+            var ratingData = jsPsych.data.get().filter({test_part: "videoRating"}).values();
+            if(ratingData.length > 0) {
+                if(ratingData.slice(-1)[0].response.slider1 == ratingData.slice(-1)[0].response.slider2) {
                     alert("Please rate the videos differently.");
                     return true;
                 } else {
@@ -856,6 +1021,7 @@
 
             var videos = [ vidStimuli[rnd1], vidStimuli[rnd2] ];
             trial.video = videos;
+            console.log("preloading: " + videos);
         }
     }
     // fullscreen
@@ -889,13 +1055,12 @@
     
     //control condition
     var timeline = [];
-
     timeline.push(preload);
     timeline.push(welcome);
     timeline.push(surveyPreGanzfeld);
-    timeline.push(relaxIntro);
-    timeline.push(relaxPlay);
-    timeline.push(surveyPCIRelax);
+    timeline.push(restIntro);
+    timeline.push(restPlay);
+    timeline.push(surveyPCIRest);
     timeline.push(ganzfeldPlay);
     timeline.push(surveyPCIGanzfeld);
     timeline.push(surveyDSSQ);
@@ -903,6 +1068,8 @@
     timeline.push(timeEstimate2);
     timeline.push(videoIntro);
     timeline.push(preloadVideos);
+    timeline.push(videoDisplay);
+    /*timeline.push(preloadVideos);
     timeline.push(enterFullscreen);
     timeline.push(video1Play);
     timeline.push(exitFullscreen);
@@ -910,7 +1077,7 @@
     timeline.push(enterFullscreen);
     timeline.push(video2Play);
     timeline.push(exitFullscreen);
-    timeline.push(video2Rating);
+    timeline.push(video2Rating);*/
     timeline.push(videoTargetIntro);
     timeline.push(enterFullscreen);
     timeline.push(videoTarget);
