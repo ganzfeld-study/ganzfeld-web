@@ -628,7 +628,7 @@
         type: jsPsychAudioButtonResponse,
         stimulus: '../audio/pinknoise30.mp3',
         data: { test_part: "ganzfeldIntro" },
-        prompt: `<p>Tell the experimenter to assist you with the ganzfeld equipment. The experimenter will click Ciontinue when you are ready to begin.</p>`,
+        prompt: `<p>Tell the experimenter to assist you with the ganzfeld equipment. The experimenter will click Continue when you are ready to begin.</p>`,
         choices: ['Continue']
     };
 
@@ -872,7 +872,7 @@
     var videoDisplayINT = {
         type: jsPsychSurveyHtmlForm,
         data: { test_part: 'videoRating'},
-        preamble: '<p>Now we would like you to watch two short videos and rate how similar they are to your Ganzfeld experience.</p>',
+        //preamble: '<p>Now we would like you to watch two short videos and rate how similar they are to your Ganzfeld experience.</p>',
         html: '',
         button_label: 'Continue',
         on_start: function(trial) {
@@ -965,6 +965,7 @@
             ''
         ],
         choices: "NO_KEYS",
+        controls: true,
         trial_ends_after_video: true,
         on_start: function(trial) {
             //get video data of trial with test_part: videoIntro
@@ -1080,9 +1081,9 @@
     timeline.push(exitFullscreen);
     timeline.push(video2Rating);*/
     timeline.push(videoTargetIntro);
-    timeline.push(enterFullscreen);
+    //timeline.push(enterFullscreen);
     timeline.push(videoTarget);
-    timeline.push(exitFullscreen);
+    //timeline.push(exitFullscreen);
     timeline.push(ending);
 
     /* start the experiment */
