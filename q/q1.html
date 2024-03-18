@@ -118,11 +118,14 @@
     var welcome = {
         type: jsPsychSurveyText,
         data: { test_part: 'welcome'},
-        preamble: `<h2>Welcome to Session 1!</h2>
-                <p>In this first session, we would first like to ask you to fill out seven questionnaires. It may take about 30-45 minutes in total but please take a break whenever you want.<br>
-                <b>IMPORTANT:</b> Please do not "refresh" the page or use the "go back/ go forward" buttons, as it would send you back to the first page and require you to start over.</p>
+        preamble: `
+            <h2>Welcome to Session 1!</h2>
+            <div style="text-align:justify">
+                <p>In this first session, we would first like to ask you to fill out seven questionnaires. It may take about 30-45 minutes in total but please take a break whenever you want.</p>
+                <p style="border: 2px solid #555; padding:5px;"><b>IMPORTANT:</b> Please do not "refresh" the page or use the "go back/ go forward" buttons, as it would send you back to the first page and require you to start over.</p>
                 <p>Next, in the laboratory you will be asked to familiarize yourself with the Ganzfeld environment (including the red light and the pink noise) so that you are prepared for the second session, in which you will participate in the Ganzfeld experiment.</p>
-                <p>Please fill out your participant ID / make sure that it is correct and click <i>Continue</i> to begin answering the questionnaires.`,
+                <p>Please fill out your participant ID / make sure that it is correct and click <i>Continue</i> to begin answering the questionnaires.
+            </div>`,
         questions: [
             {prompt: 'Participant ID'}
         ],

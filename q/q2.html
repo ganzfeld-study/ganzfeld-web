@@ -159,14 +159,17 @@
         type: jsPsychSurveyText,
         data: { test_part: 'welcome'},
         preamble: `<h2>Session 2</h2>
-            <p>In this final session, we would like you to participate in a Ganzfeld experiment. You will be asked to make a gentle wish that during Ganzfeld you will have experiences related to a film clip that will be shown to you later. Specifically, you will be asked to:</p>
-                * Answer a few questions about your attitude to the experiment.<br>
-                * Rest in a reclining chair for a few minutes and answer a few questions about this experience.<br>
-                * Do the ganzfeld experiment. This will include 8 minutes of relaxation instructions, followed by 30 minutes of Ganzfeld. During these 30 minutes, you will be asked to report your experiences (think-out-loud)<br>
-                * After completing some questions about your Ganzfeld experience, you will be asked to watch two brief film clips, one of which is the "target", which will be shown to you again later. You will be asked to rate these two clips concerning their similarity to your Ganzfeld experience. Then, the target clip be shown to you.<br>
-            </ul>
-            <p>Please answer honestly about your experiences and attitudes. There are no right or wrong answers. We value your genuine thoughts and opinions.</p>
-            <p>Please fill out your participant ID / make sure that it is correct and click <i>Continue</i> to begin.</p>`,
+            <div style="text-align:justify">
+                <p>In this final session, we would like you to participate in a Ganzfeld experiment. You will be asked to make a gentle wish that during Ganzfeld you will have experiences related to a film clip that will be shown to you later. Specifically, you will be asked to:</p>
+                <ul>
+                    <li>Answer a few questions about your attitude to the experiment.</li>
+                    <li>Rest in a reclining chair for a few minutes and answer a few questions about this experience.</li>
+                    <li>Do the ganzfeld experiment. This will include 8 minutes of relaxation instructions, followed by 30 minutes of Ganzfeld. During these 30 minutes, you will be asked to report your experiences (think-out-loud)</li>
+                        <li>After completing some questions about your Ganzfeld experience, you will be asked to watch two brief film clips, one of which is the "target", which will be shown to you again later. You will be asked to rate these two clips concerning their similarity to your Ganzfeld experience. Then, the target clip be shown to you.</li>
+                </ul>
+                <p>Please answer honestly about your experiences and attitudes. There are no right or wrong answers. We value your genuine thoughts and opinions.</p>
+                <p>Please fill out your participant ID / make sure that it is correct and click <i>Continue</i> to begin.</p>
+            </div>`,
         questions: [
             {prompt: 'Participant ID'}
         ],
@@ -640,7 +643,7 @@
 
     /* Ganzfeld */
     // Ganzfeld Intro
-    var GanzfeldIntro = {
+    var ganzfeldIntro = {
         type: jsPsychAudioButtonResponse,
         stimulus: '../audio/pinknoise30.mp3',
         data: { test_part: "GanzfeldIntro" },
@@ -649,7 +652,7 @@
     };
 
     // Play Pink Noise
-    var GanzfeldPlay = {
+    var ganzfeldPlay = {
         type: jsPsychAudioKeyboardResponse,
         data: { test_part: "GanzfeldPlay" },
         stimulus: '../audio/pinknoise30.mp3',
@@ -803,87 +806,6 @@
         }
     };
 
-/*    var video1Play = {
-        type: jsPsychVideoButtonResponse,
-        data: { test_part: 'videoPlay'},
-        stimulus: [
-            ''
-        ],
-        prompt: 'Video 1',
-        choices: "Continue",
-        autoplay: false,
-        controls: true,
-        trial_ends_after_video: true,
-        on_start: function(trial) {
-            //get video data of trial with test_part: videoIntro
-            var videoData = jsPsych.data.get().filter({test_part: "videoIntro"}).values()[0];
-            console.log(videoData);
-
-            // video 1 index
-            var rnd = videoData.rndSet * 4 + videoData.rndV1;
-
-            // set video stimulus
-            trial.stimulus = [ vidStimuli[rnd] ];
-        }
-    };
-
-    var video2Play = {
-        type: jsPsychVideoButtonResponse,
-        data: { test_part: 'videoPlay'},
-        stimulus: [
-            ''
-        ],
-        prompt: 'Video 2',
-        choices: "Continue",
-        autoplay: false,
-        controls: true,
-        trial_ends_after_video: true,
-        on_start: function(trial) {
-            //get video data of trial with test_part: videoIntro
-            var videoData = jsPsych.data.get().filter({test_part: "videoIntro"}).values()[0];
-
-            // video 2 index
-            var rnd = videoData.rndSet * 4 + videoData.rndV2;
-
-            // set video stimulus
-            trial.stimulus = [ vidStimuli[rnd] ];
-        }
-    };
-
-    var video1Rating = {
-        type: jsPsychHtmlSliderResponse,
-        data: { test_part: 'videoRating'},
-        stimulus: `
-        <p>How similar was the <b>first video</b> to your Ganzfeld experience?</p>`,
-        require_movement: true,
-        labels: ['Not at all similar', 'Extremely similar']
-    };
-
-    var video2RatingInt = {
-        type: jsPsychHtmlSliderResponse,
-        data: { test_part: 'videoRating'},
-        stimulus: `
-        <p>How similar was the <b>second video</b> to your Ganzfeld experience?</p>`,
-        require_movement: true,
-        labels: ['Not at all similar', 'Extremely similar']
-    };
-
-    var video2Rating = {
-        timeline: [video2RatingInt],
-        loop_function: function(data) {
-            var ratingData = jsPsych.data.get().filter({test_part: "videoRating"}).values();
-            if(ratingData.length > 0) {
-                if(ratingData[0].response == ratingData[1].response) {
-                    alert("Please rate the videos differently.");
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-    }*/
 
     var videoDisplayINT = {
         type: jsPsychSurveyHtmlForm,
@@ -1090,15 +1012,6 @@
     timeline.push(videoIntro);
     timeline.push(preloadVideos);
     timeline.push(videoDisplay);
-    /*timeline.push(preloadVideos);
-    timeline.push(enterFullscreen);
-    timeline.push(video1Play);
-    timeline.push(exitFullscreen);
-    timeline.push(video1Rating);
-    timeline.push(enterFullscreen);
-    timeline.push(video2Play);
-    timeline.push(exitFullscreen);
-    timeline.push(video2Rating);*/
     timeline.push(videoTargetIntro);
     //timeline.push(enterFullscreen);
     timeline.push(videoTarget);
