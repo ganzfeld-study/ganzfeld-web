@@ -9,6 +9,10 @@
     #b1ef83
     #f9f871
 */
+/* Smooth scrolling */
+html {
+	scroll-behavior: smooth;
+}
 
 /* Reset some default styles for consistency */
 body, h1, h2, p, ul, li, a {
