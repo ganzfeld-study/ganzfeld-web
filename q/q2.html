@@ -81,6 +81,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            width:100%;
             margin-bottom: 1rem;
         }
         input[type="range"] {
@@ -91,9 +92,8 @@
         }
         datalist {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             justify-content: space-between;
-            writing-mode: vertical-lr;
             width: 80%;
         }
         option {
@@ -163,7 +163,7 @@
                 * Answer a few questions about your attitude to the experiment.<br>
                 * Rest in a reclining chair for a few minutes and answer a few questions about this experience.<br>
                 * Do the ganzfeld experiment. This will include 8 minutes of relaxation instructions, followed by 30 minutes of Ganzfeld. During these 30 minutes, you will be asked to report your experiences (think-out-loud)<br>
-                * After completing some questions about your ganzfeld experience, you will be asked to watch two brief film clips, one of which is the "target", which will be shown to you again later. You will be asked to rate these two clips concerning their similarity to your ganzfeld experience. Then, the target clip be shown to you.<br>
+                * After completing some questions about your Ganzfeld experience, you will be asked to watch two brief film clips, one of which is the "target", which will be shown to you again later. You will be asked to rate these two clips concerning their similarity to your Ganzfeld experience. Then, the target clip be shown to you.<br>
             </ul>
             <p>Please answer honestly about your experiences and attitudes. There are no right or wrong answers. We value your genuine thoughts and opinions.</p>
             <p>Please fill out your participant ID / make sure that it is correct and click <i>Continue</i> to begin.</p>`,
@@ -640,18 +640,18 @@
 
     /* Ganzfeld */
     // Ganzfeld Intro
-    var ganzfeldIntro = {
+    var GanzfeldIntro = {
         type: jsPsychAudioButtonResponse,
         stimulus: '../audio/pinknoise30.mp3',
-        data: { test_part: "ganzfeldIntro" },
-        prompt: `<p>Tell the experimenter to assist you with the ganzfeld equipment. The experimenter will click Continue when you are ready to begin.</p>`,
+        data: { test_part: "GanzfeldIntro" },
+        prompt: `<p>Tell the experimenter to assist you with the Ganzfeld equipment. The experimenter will click Continue when you are ready to begin.</p>`,
         choices: ['Continue']
     };
 
     // Play Pink Noise
-    var ganzfeldPlay = {
+    var GanzfeldPlay = {
         type: jsPsychAudioKeyboardResponse,
-        data: { test_part: "ganzfeldPlay" },
+        data: { test_part: "GanzfeldPlay" },
         stimulus: '../audio/pinknoise30.mp3',
         choices: "NO_KEYS",
         prompt: '<span class="playaudio"></span>',
@@ -903,6 +903,7 @@
 
             // set video stimulus
             trial.html = `
+            <p>Please rate the similarity of each clip to your Ganzfeld experiences on a scale from 0 (not at all similar) to 100 (extremely similar).</p>
             <div class="video-rating-container">
                 <div class="video-container">
                     <video id="video1" controls>
@@ -919,21 +920,21 @@
             </div>
                 <div class="video-rating-container">
                 <div class="slider-container">
-                    <label for="slider1">How similar is the first video to your Ganzfeld experience?</label>
+                    <label for="slider1">Clip A</label>
                     <output id="slider1-value">50</output>
                     <input type="range" id="slider1" name="slider1" min="0" max="100" value="50" list="ticks1">
                     <datalist id="ticks1">
-                        <option value="0" label="Not at all similar"></option>
-                        <option value="100" label="Extremely similar"></option>
+                        <option value="0" label="0"></option>
+                        <option value="100" label="100"></option>
                     </datalist>
                 </div>
                 <div class="slider-container">
-                    <label for="slider2">How similar is the second video to your Ganzfeld experience?</label>
+                    <label for="slider2">Clip B</label>
                     <output id="slider2-value">50</output>
                     <input type="range" id="slider2" name="slider2" min="0" max="100" value="50" list="ticks2">
                     <datalist id="ticks2">
-                        <option value="0" label="Not at all similar"></option>
-                        <option value="100" label="Extremely similar"></option>
+                        <option value="0" label="0"></option>
+                        <option value="100" label="100"></option>
                     </datalist>
                 </div>
             </div>
@@ -1014,7 +1015,7 @@
         choices: "NO_KEYS",
         on_start: function() {
             // save Data
-            saveData("/ganzfeld/session2/ganzfeld_2_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+            saveData("/Ganzfeld/session2/Ganzfeld_2_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
         }
     }
 
