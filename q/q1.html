@@ -224,7 +224,7 @@
         ],
         button_label_finish: 'Next',
         on_finish: function(){
-            jsPsych.setProgressBar(0.30); 
+            jsPsych.setProgressBar(0.40); 
         }
     };
 
@@ -296,7 +296,7 @@
         ],
         button_label_finish: 'Next',
         on_finish: function(){
-            jsPsych.setProgressBar(0.40); 
+            jsPsych.setProgressBar(0.30); 
         }
     };
 
@@ -581,7 +581,7 @@
         ],
         button_label_finish: 'Next',
         on_finish: function(){
-            jsPsych.setProgressBar(0.50); 
+            jsPsych.setProgressBar(0.70); 
         }
     };
 
@@ -594,46 +594,47 @@
             {
                 type: 'html',
                 name: 'BFIIntro',
-                prompt: '<p>Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please write a number next to each statement to indicate the extent to which you agree or disagree with that statement.</p>',
+                prompt: `<p>Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please write a number next to each statement to indicate the extent to which you agree or disagree with that statement.</p>
+                <p style="font-weight:bold;">I am someone who...</p>`,
             },
             {
                 type: 'likert-table',
                 name: 'BFI',
                 prompt: 'I am someone who...',
                 statements: [
-                {prompt: 'Sometimes I feel and experience things as I did as a child.', name: 'BFI01'},
-                {prompt: 'I can be greatly moved by eloquent or poetic language.', name: 'BFI02'},
-                {prompt: 'While watching a movie, a TV show, or a play, I may become so involved that I may forget about myself and my surroundings and experience the story as if it were real and as if I were taking part in it.', name: 'BFI03'},
-                {prompt: 'If I stare at a picture and then look away from it, I can sometimes “see” an image of the picture almost as if I were still looking at it.', name: 'BFI04'},
-                {prompt: 'Sometimes I feel as if my mind could envelop the whole world.', name: 'BFI05'},
-                {prompt: 'I like to watch cloud shapes change in the sky.', name: 'BFI06'},
-                {prompt: 'If I wish, I can imagine (or daydream) some things so vividly that they hold my attention as a good movie or story does.', name: 'BFI07'},
-                {prompt: 'I think I really know what some people mean when they talk about mystical experiences.', name: 'BFI08'},
-                {prompt: 'I sometimes “step outside” my usual self and experience an entirely different state of being.', name: 'BFI09'},
-                {prompt: 'Textures—such as wool, sand, wood—sometimes remind me of colors or music.', name: 'BFI10'},
-                {prompt: 'Sometimes I experience things as if they were “doubly” real.', name: 'BFI11'},
-                {prompt: 'When I listen to music I can get so caught up in it that I don\'t notice anything else.', name: 'BFI12'},
-                {prompt: 'If I wish I can imagine that my body is so heavy that I could not move it if I wanted to.', name: 'BFI13'},
-                {prompt: 'I can often somehow sense the presence of another person before I actually see or hear her/him.', name: 'BFI14'},
-                {prompt: 'The crackle and flames of a wood fire stimulate my imagination.', name: 'BFI15'},
-                {prompt: 'It is sometimes possible for me to be completely immersed in nature or art and to feel as if my whole state of consciousness has somehow been temporarily altered.', name: 'BFI16'},
-                {prompt: 'Different colors have distinctive and special meanings for me.', name: 'BFI17'},
-                {prompt: 'I am able to wander off into my thoughts while doing a routine task and then find a few minutes later that I have completed it.', name: 'BFI18'},
-                {prompt: 'I can sometimes recollect certain past experiences in my life with such clarity and vividness that it is like living them again or almost so.', name: 'BFI19'},
-                {prompt: 'Things that might seem meaningless to others often make sense to me.', name: 'BFI20'},
-                {prompt: 'While acting in a play I think I could really feel the emotions of the character and “become” her/him for the time being, forgetting both myself and the audience.', name: 'BFI21'},
-                {prompt: 'My thoughts often don\'t occur as words but as visual images.', name: 'BFI22'},
-                {prompt: 'I often take delight in small things (like the five-pointed star shape that appears when you cut an apple across the core or the colors in soap bubbles).', name: 'BFI23'},
-                {prompt: 'When listening to organ music or other powerful music I sometimes feel as if I am being lifted into the air.', name: 'BFI24'},
+                { prompt: 'Is outgoing, sociable.', name: 'BFI01' },
+                { prompt: 'Has few artistic interests.', name: 'BFI02' },
+                { prompt: 'Has an assertive personality.', name: 'BFI03' },
+                { prompt: 'Is curious about many different things.', name: 'BFI04' },
+                { prompt: 'Rarely feels excited or eager.', name: 'BFI05' },
+                { prompt: 'Is inventive, finds clever ways to do things.', name: 'BFI06' },
+                { prompt: 'Tends to be quiet.', name: 'BFI07' },
+                { prompt: 'Is fascinated by art, music, or literature.', name: 'BFI08' },
+                { prompt: 'Is dominant, acts as a leader.', name: 'BFI09' },
+                { prompt: 'Avoids intellectual, philosophical discussions.', name: 'BFI10' },
+                { prompt: 'Is less active than other people.', name: 'BFI11' },
+                { prompt: 'Has little creativity.', name: 'BFI12' },
+                { prompt: 'Is sometimes shy, introverted.', name: 'BFI13' },
+                { prompt: 'Values art and beauty.', name: 'BFI14' },
+                { prompt: 'Finds it hard to influence people.', name: 'BFI15' },
+                { prompt: 'Is complex, a deep thinker.', name: 'BFI16' },
+                { prompt: 'Is full of energy.', name: 'BFI17' },
+                { prompt: 'Has difficulty imagining things.', name: 'BFI18' },
+                { prompt: 'Is talkative.', name: 'BFI19' },
+                { prompt: 'Thinks poetry and plays are boring.', name: 'BFI20' },
+                { prompt: 'Prefers to have others take charge.', name: 'BFI21' },
+                { prompt: 'Has little interest in abstract ideas.', name: 'BFI22' },
+                { prompt: 'Shows a lot of enthusiasm.', name: 'BFI23' },
+                { prompt: 'Is original, comes up with new ideas.', name: 'BFI24' }
                 ],
-                options: ['1', '2', '3', '4', '5', '6'],
+                options: ['1 Disagree strongly', '2 Disagree a little', '3 Neutral / no opinion', '4 Agree a little', '5 Agree strongly'],
                 required: true
             }
         ]
         ],
         button_label_finish: 'Next',
         on_finish: function(){
-            jsPsych.setProgressBar(0.60); 
+            jsPsych.setProgressBar(0.50); 
         }
     };
 
@@ -669,7 +670,7 @@
         ],
         button_label_finish: 'Next',
         on_finish: function(){
-            jsPsych.setProgressBar(0.70); 
+            jsPsych.setProgressBar(0.60); 
         }
     };
 
@@ -1162,11 +1163,11 @@
     timeline.push(welcome);
     //timeline.push(informedConsent);
     timeline.push(surveyDemo);
-    timeline.push(surveyBQ);
     timeline.push(surveyTAS);
-    timeline.push(surveyDES);
+    timeline.push(surveyBQ);
     timeline.push(surveyBFI2);
     timeline.push(surveyBSSS);
+    timeline.push(surveyDES);
     timeline.push(surveyASGS);
     //timeline.push(rest);
     //timeline.push(surveyPCIRest);
