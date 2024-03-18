@@ -158,7 +158,7 @@
     var welcome = {
         type: jsPsychSurveyText,
         data: { test_part: 'welcome'},
-        preamble: `<h2>Welcome back to Session 2!</h2>
+        preamble: `<h2>Session 2</h2>
             <p>In this final session, we would like you to participate in a Ganzfeld experiment. You will be asked to make a gentle wish that during Ganzfeld you will have experiences related to a film clip that will be shown to you later. Specifically, you will be asked to:</p>
                 * Answer a few questions about your attitude to the experiment.<br>
                 * Rest in a reclining chair for a few minutes and answer a few questions about this experience.<br>
@@ -1026,6 +1026,7 @@
     }
     var preloadVideos = {
         type: jsPsychPreload,
+        message: '<p>Loading videos...</p>',
         video: '',
         on_start: function(trial) {
             var videoData = jsPsych.data.get().filter({test_part: "videoIntro"}).values()[0];
