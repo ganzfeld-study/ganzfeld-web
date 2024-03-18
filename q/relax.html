@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Ganzfeld 1 Relaxation</title>
+    <script src="jspsych/jspsych.js"></script>
+    <script src="jspsych/plugin-preload.js"></script>
+    <script src="jspsych/plugin-fullscreen.js"></script>
+    <script src="jspsych/plugin-call-function.js"></script>
+    <!--<script src="jspsych/plugin-instructions.js"></script>-->
+    <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.3"></script>
+    <script src="jspsych/plugin-survey.js"></script>
+    <script src="jspsych/plugin-survey-text.js"></script>
+    <script src="jspsych/plugin-survey-multi-choice.js"></script>
+    <script src="jspsych/plugin-html-keyboard-response.js"></script>
+    <script src="jspsych/plugin-html-button-response.js"></script>
+    <script src="jspsych/plugin-html-slider-response.js"></script>
+    <script src="jspsych/plugin-audio-keyboard-response.js"></script>
+    <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+    <!--<link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css">-->
+    <link rel="stylesheet" href="jspsych/survey.css"></link>
+    <!--<link rel="stylesheet" href="consent/consent.css"></link>-->
+
+    <style>
+        /* Spinner for Audio Playback */
+        .playaudio {
+        width: 48px;
+        height: 48px;
+        display: inline-block;
+        position: relative;
+        }
+        .playaudio::after,
+        .playaudio::before {
+        content: '';  
+        box-sizing: border-box;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 2px solid #000;
+        position: absolute;
+        left: 0;
+        top: 0;
+        animation: animloader 2s linear infinite;
+        }
+        .playaudio::after {
+        animation-delay: 1s;
+        }
+
+        @keyframes animloader {
+        0% {
+            transform: scale(0);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 0;
+        }
+        }
+
+    </style>
+  </head>
+  <body>
+  </body>
+  <script>
+
+    /* define parameters */
+    //initialize Experiment
+    const jsPsych = initJsPsych({
+    });
+
+
+    // SONA & subject ID
+    let pid = jsPsych.data.urlVariables()['pid'];
+    
+    if(!pid){
+        var subject_id = jsPsych.randomization.randomID(16);
+    } else {
+        var subject_id = pid;
+  }
+
+    // specify starting time
+    var start_time = new Date();
+
+    // add to data file
+    jsPsych.data.addProperties({ 
+        subject: subject_id, 
+        time: start_time.toISOString()
+    });
+
+
+    /*
+    // consent to participate.
+        var check_consent = function(elem) {
+        if (document.getElementById('consent_checkbox').checked) {
+            return true;
+        }
+        else {
+            alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
+            return false;
+        }
+        return false;
+    };
+
+    // declare the block.
+    var informedConsent = {
+        type: jsPsychExternalHtml,
+        url: "../consent/pana_consent.html",
+        cont_btn: "start",
+        check_fn: check_consent
+    };*/
+
+    /* welcome message & instructions */
+    var welcome = {
+        type: jsPsychSurveyText,
+        data: { test_part: 'welcome'},
+        preamble: `<p>Now we would like to ask you to familiarize yourself with the Ganzfeld environment (including the red light and the pink noise) so that you are prepared for the second session, in which you will participate in the Ganzfeld experiment.</p>
+                <p>Please fill out your participant ID / make sure that it is correct and click <i>Continue</i> to begin answering the questionnaires.`,
+        questions: [
+            {prompt: 'Participant ID'}
+        ],
+        button_label: 'Continue',
+        on_load: function(){
+            if(pid) document.getElementById('input-0').setAttribute('value', pid);
+        }
+        /*on_finish: function(data) {
+            // save pid
+            jsPsych.data.addProperties({ 
+                subject: data.responses[0]
+            });
+        }*/
+    }
+
+    /* Surveys */
+    /* Phenomenology of consciousness ivnentory */
+    // Change css for this questionnaire only
+    var addPCICss = {
+         type: jsPsychCallFunction,
+         func: function(){
+            document.querySelector('head').insertAdjacentHTML('beforeEnd', 
+            `<style id="PCI">
+                .sv_q_rating_min_text, .sv_q_rating_max_text {
+                    display: inline-block;
+                    width: calc(50% - 10em);
+                    vertical-align: middle;
+                }
+            </style>`
+            );
+         }
+      };
+  
+    var removePCICss = {
+         type: jsPsychCallFunction,
+         func: function(){
+            document.querySelector('#PCI').remove();
+         }
+      };
+
+    // 1. Rest
+    var surveyPCIRestTrial = {
+        type: jsPsychSurvey,
+        data: { test_part: "PCIRest" },
+        pages: [
+        [
+            {
+                type: 'html',
+                name: 'PCIIntro',
+                prompt: '<p>Please read each statement carefully and answer as accurately as you can by indicating the number between “0” and “6” that best corresponds to your subjective experience <b>while resting</b>.</p>',
+            },
+            {
+                type: 'likert',
+                name: 'PCI1',
+                prompt: '1.',
+                likert_scale_min_label: 'I was forever distracted and unable to concentrate on anything.',
+                likert_scale_max_label: 'I was able to concentrate quite well and was not distracted.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI2',
+                prompt: '2.',
+                likert_scale_min_label: 'My body ended at the boundary between my skin and the world.',
+                likert_scale_max_label: 'I felt my body greatly expanded beyond the boundaries of my skin.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI3',
+                prompt: '3.',
+                likert_scale_min_label: 'My perception of the flow of time changed drastically.',
+                likert_scale_max_label: 'I noticed no changes in my perception of the flow of time.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI4',
+                prompt: '4.',
+                likert_scale_min_label: 'The muscles of my body felt very tense and tight.',
+                likert_scale_max_label: 'The muscles of my body felt very loose and relaxed.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI5',
+                prompt: '5.',
+                likert_scale_min_label: 'My state of consciousness was not any different or unusual from what it ordinarily is.',
+                likert_scale_max_label: 'I felt in an extremely different and unusual state of consciousness.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI6',
+                prompt: '6.',
+                likert_scale_min_label: 'My bodily feelings seemed to expand into the world around me.',
+                likert_scale_max_label: 'My bodily feelings were confined to the area within my skin.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI7',
+                prompt: '7.',
+                likert_scale_min_label: 'Time seemed to greatly speed up or slow down.',
+                likert_scale_max_label: 'Time was experienced with no changes in its rate of passage.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI8',
+                prompt: '8.',
+                likert_scale_min_label: 'I was not distracted, but was able to be completely absorbed in what I was experiencing.',
+                likert_scale_max_label: 'I was continually distracted by extraneous impressions or events.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI9',
+                prompt: '9.',
+                likert_scale_min_label: 'I felt no feelings of tension or tightness at all.',
+                likert_scale_max_label: 'I felt tense and tight.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI10',
+                prompt: '10.',
+                likert_scale_min_label: 'My state of awareness was very different from what I usually experience',
+                likert_scale_max_label: 'My state of awareness was no different than usual.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI11',
+                prompt: '11.',
+                likert_scale_min_label: 'I felt no sense of timelessness; time flowed as I usually experienced it.',
+                likert_scale_max_label: 'Time stood still; there was no movement of time at all.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI12',
+                prompt: '12.',
+                likert_scale_min_label: 'I continually maintained a very strong sense of separation between myself and the environment.',
+                likert_scale_max_label: 'I experienced intense unity with the world; the boundaries between me and the environment dissolved away.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI13',
+                prompt: '13.',
+                likert_scale_min_label: 'My state of awareness was not unusual or different from what it ordinarily is.',
+                likert_scale_max_label: 'I felt in an extraordinarily unusual and non-ordinary state of awareness.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            }
+        ]
+        ],
+        button_label_finish: 'Next'
+    };
+
+    // 2. Relaxation
+    var surveyPCIRelaxTrial = {
+        type: jsPsychSurvey,
+        data: { test_part: "PCIRelaxation" },
+        pages: [
+        [
+            {
+                type: 'html',
+                name: 'PCIIntro',
+                prompt: '<p>Please read each statement carefully and answer as accurately as you can by indicating the number between “0” and “6” that best corresponds to your subjective experience <b>during the relaxation exercise</b>.</p>',
+            },
+            {
+                type: 'likert',
+                name: 'PCI1',
+                prompt: '1.',
+                likert_scale_min_label: 'I was forever distracted and unable to concentrate on anything.',
+                likert_scale_max_label: 'I was able to concentrate quite well and was not distracted.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI2',
+                prompt: '2.',
+                likert_scale_min_label: 'My body ended at the boundary between my skin and the world.',
+                likert_scale_max_label: 'I felt my body greatly expanded beyond the boundaries of my skin.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI3',
+                prompt: '3.',
+                likert_scale_min_label: 'My perception of the flow of time changed drastically.',
+                likert_scale_max_label: 'I noticed no changes in my perception of the flow of time.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI4',
+                prompt: '4.',
+                likert_scale_min_label: 'The muscles of my body felt very tense and tight.',
+                likert_scale_max_label: 'The muscles of my body felt very loose and relaxed.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI5',
+                prompt: '5.',
+                likert_scale_min_label: 'My state of consciousness was not any different or unusual from what it ordinarily is.',
+                likert_scale_max_label: 'I felt in an extremely different and unusual state of consciousness.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI6',
+                prompt: '6.',
+                likert_scale_min_label: 'My bodily feelings seemed to expand into the world around me.',
+                likert_scale_max_label: 'My bodily feelings were confined to the area within my skin.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI7',
+                prompt: '7.',
+                likert_scale_min_label: 'Time seemed to greatly speed up or slow down.',
+                likert_scale_max_label: 'Time was experienced with no changes in its rate of passage.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI8',
+                prompt: '8.',
+                likert_scale_min_label: 'I was not distracted, but was able to be completely absorbed in what I was experiencing.',
+                likert_scale_max_label: 'I was continually distracted by extraneous impressions or events.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI9',
+                prompt: '9.',
+                likert_scale_min_label: 'I felt no feelings of tension or tightness at all.',
+                likert_scale_max_label: 'I felt tense and tight.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI10',
+                prompt: '10.',
+                likert_scale_min_label: 'My state of awareness was very different from what I usually experience',
+                likert_scale_max_label: 'My state of awareness was no different than usual.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI11',
+                prompt: '11.',
+                likert_scale_min_label: 'I felt no sense of timelessness; time flowed as I usually experienced it.',
+                likert_scale_max_label: 'Time stood still; there was no movement of time at all.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI12',
+                prompt: '12.',
+                likert_scale_min_label: 'I continually maintained a very strong sense of separation between myself and the environment.',
+                likert_scale_max_label: 'I experienced intense unity with the world; the boundaries between me and the environment dissolved away.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            },
+            {
+                type: 'likert',
+                name: 'PCI13',
+                prompt: '13.',
+                likert_scale_min_label: 'My state of awareness was not unusual or different from what it ordinarily is.',
+                likert_scale_max_label: 'I felt in an extraordinarily unusual and non-ordinary state of awareness.',
+                likert_scale_min: 0,
+                likert_scale_max: 6,
+                required: true
+            }
+        ]
+        ],
+        button_label_finish: 'Next'
+    };
+
+    // create PCI timelines
+    var surveyPCIRest = {
+        timeline: [addPCICss, surveyPCIRestTrial, removePCICss]
+    }
+
+    var surveyPCIRelax = {
+        timeline: [addPCICss, surveyPCIRelaxTrial, removePCICss]
+    }
+
+    /* Rest for 2 mins */
+    var rest = {
+        type: jsPsychHtmlButtonResponse,
+        data: { test_part: "rest" },
+        stimulus: '<p>Thank you!</p><p>Please rest in the comfortable chair for 2 minutes before you continue.</p>',
+        choices: ['Continue']
+    };
+
+    /* Relaxation exercise */
+    // Relaxation Intro
+    var relaxIntro = {
+        type: jsPsychHtmlButtonResponse,
+        data: { test_part: "relaxIntro" },
+        stimulus: `<p>Now we would like you to listen to a relaxation exercise.</p>
+            <p>Please put on the headphones and click "Continue" when you are ready.</p>`,
+        choices: ['Continue']
+    };
+
+    // Relaxation Playback
+    var relaxPlay = {
+        type: jsPsychAudioKeyboardResponse,
+        stimulus: '../audio/christineRelax.mp3',
+        choices: "NO_KEYS",
+        prompt: '<span class="playaudio"></span>',
+        trial_ends_after_audio: true,
+        on_finish: function(){
+            jsPsych.setProgressBar(0.90); 
+        }
+    };
+
+    /* Time Estimation */
+    var timeEstimate1 = {
+        type: jsPsychHtmlSliderResponse,
+        stimulus: `
+        <p><i>Please answer the following two questions about your experiences during the relaxation exercise.</i></p>
+        <p>1. How often did you think about time <b>during the exercise</b>?</p>`,
+        require_movement: true,
+        labels: ['Not at all', 'Extremely often']
+    };
+
+    var timeEstimate2 = {
+        type: jsPsychHtmlSliderResponse,
+        stimulus: `
+        <p><i>Please answer the following two questions about your experiences during the relaxation exercise.</i></p>
+        <p>2. How fast did time pass for you <b>during the exercise</b>?</p>`,
+        require_movement: true,
+        labels: ['Extremely slowly', 'Extremely fast'],
+        on_finish: function(){
+            jsPsych.setProgressBar(1); 
+        }
+    };
+
+    /* save data to csv */
+    function saveData(name, data){
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'save-data6.php');
+      xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+      xhr.send(JSON.stringify({filename: name, filedata: data}));
+    }
+
+    /* end message */
+    var ending = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: '<p>Thank you!</p><p>Your responses were recorded, you may close the window now.</p>',
+        //choices: "ALL_KEYS",
+        choices: "NO_KEYS",
+        on_start: function() {
+            // save Data
+            saveData("/ganzfeld/session1/ganzfeld_relax_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+        }
+    }
+
+    /* helper */
+    // preload
+    var preload = {
+        type: jsPsychPreload,
+        auto_preload: true
+    }
+    // fullscreen
+    var enterFullscreen = {
+        type: jsPsychFullscreen,
+        fullscreen_mode: true
+    }
+
+    var exitFullscreen = {
+        type: jsPsychFullscreen,
+        fullscreen_mode: false,
+        delay_after: 0
+    }
+
+    /*// Hide and Show cursor 
+    var hide_cursor = {
+         type: jsPsychCallFunction,
+         func: function(){
+            document.querySelector('head').insertAdjacentHTML('beforeEnd', '<style id="hide-cursor">body { cursor: none; }</style>');
+         }
+      };
+  
+      var show_cursor = {
+         type: jsPsychCallFunction,
+         func: function(){
+            document.querySelector('#hide-cursor').remove();
+         }
+      };*/
+
+    /* create timeline */
+    
+    //control condition
+    var timeline = [];
+    timeline.push(preload);
+    timeline.push(welcome);
+    timeline.push(relaxIntro);
+    timeline.push(relaxPlay);
+    timeline.push(timeEstimate1);
+    timeline.push(timeEstimate2);
+    timeline.push(ending);
+
+
+    /* start the experiment */
+    jsPsych.run(timeline);
+
+
+  </script>
+</html>
