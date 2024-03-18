@@ -150,12 +150,13 @@ ul {
     color: white;
     font-weight: 400;
     box-shadow: 0 4px 14px 0 rgb(19 93 111 / 39%);
-    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .btn:hover {
-    background: #24cdb4;
+    background-color: #24cdb4;
     box-shadow: 0 6px 20px rgb(19 93 111 / 23%);
+    transform: scale(1.05); 
 }
 
 
