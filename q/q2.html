@@ -184,7 +184,7 @@
 
 
     /* Surveys */
-    var surveyPreGanzfeld = {
+    /*var surveyPreGanzfeld = {
         type: jsPsychSurvey,
         data: { test_part: "PreGanzfeld" },
         pages: [
@@ -213,8 +213,24 @@
         ]
         ],
         button_label_finish: 'Next'
+    };*/
+    var surveyPreSB = {
+        type: jsPsychHtmlSliderResponse,
+        data: { test_part: "successBelief" },
+        stimulus: `<p>Before we begin, we would like to ask you about your attitude to the experiment and the setup.</p>
+        <p style="font-weight: bold;">How likely do you think it is that you personally will succeed in your precognitive test today?</p>`,
+        require_movement: true,
+        labels: ['0%', '50%', '100%']
     };
 
+    var surveyPreComf = {
+        type: jsPsychHtmlSliderResponse,
+        data: { test_part: "Comfortable" },
+        stimulus: `<p>Before we begin, we would like to ask you about your attitude to the experiment and the setup.</p>
+        <p style="font-weight: bold;">Do you feel comfortable with the Ganzfeld setup?</p>`,
+        require_movement: true,
+        labels: ['not at all', 'very much']
+    };
 
 
     /* Phenomenology of consciousness ivnentory */
@@ -1058,7 +1074,8 @@
     var timeline = [];
     timeline.push(preload);
     timeline.push(welcome);
-    timeline.push(surveyPreGanzfeld);
+    timeline.push(surveyPreSB);
+    timeline.push(surveyPreComf);
     timeline.push(restIntro);
     timeline.push(restPlay);
     timeline.push(surveyPCIRest);
