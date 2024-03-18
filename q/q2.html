@@ -220,7 +220,7 @@
     var surveyPreSB = {
         type: jsPsychHtmlSliderResponse,
         data: { test_part: "successBelief" },
-        stimulus: `<p>Before we begin, we would like to ask you about your attitude to the experiment and the setup.</p>
+        stimulus: `<p>Before we begin, we would like to ask you about your attitude to the experiment.</p>
         <p style="font-weight: bold;">How likely do you think it is that you personally will succeed in your precognitive test today?</p>`,
         require_movement: true,
         labels: ['0%', '50%', '100%']
@@ -229,8 +229,7 @@
     var surveyPreComf = {
         type: jsPsychHtmlSliderResponse,
         data: { test_part: "Comfortable" },
-        stimulus: `<p>Before we begin, we would like to ask you about your attitude to the experiment and the setup.</p>
-        <p style="font-weight: bold;">Do you feel comfortable with the Ganzfeld setup?</p>`,
+        stimulus: `<p style="font-weight: bold;">Do you feel comfortable with the Ganzfeld setup?</p>`,
         require_movement: true,
         labels: ['not at all', 'very much']
     };
@@ -671,7 +670,7 @@
         type: jsPsychHtmlSliderResponse,
         stimulus: `
         <p><i>Please answer the following two questions about your experiences during the 30 minutes of Ganzfeld.</i></p>
-        <p>1. How often did you think about time <b>during the exercise</b>?</p>`,
+        <p>1. How often did you think about time <b>during the task</b>?</p>`,
         require_movement: true,
         labels: ['Not at all', 'Extremely often']
     };
@@ -680,7 +679,7 @@
         type: jsPsychHtmlSliderResponse,
         stimulus: `
         <p><i>Please answer the following two questions about your experiences during the 30 minutes of Ganzfeld.</i></p>
-        <p>2. How fast did time pass for you <b>during the exercise</b>?</p>`,
+        <p>2. How fast did time pass for you <b>during the task</b>?</p>`,
         require_movement: true,
         labels: ['Extremely slowly', 'Extremely fast']
     };
