@@ -7,6 +7,7 @@
     <script src="jspsych/plugin-preload.js"></script>
     <script src="jspsych/plugin-fullscreen.js"></script>
     <script src="jspsych/plugin-call-function.js"></script>
+    <script src="jspsych/plugin-external-html.js"></script>
     <!--<script src="../jspsych/plugin-instructions.js"></script>-->
     <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.3"></script>
     <script src="jspsych/plugin-survey.js"></script>
@@ -33,11 +34,10 @@
       } */
     });
 
-    // Labs
-    var labs = []
+
     let lab = jsPsych.data.urlVariables()['l'];
 
-    while(!["1","2","3","4","5","6"].includes(lab)) {
+    if(!["1","2","3","4","5","6"].includes(lab)) {
         lab = prompt("Lab not found!\nPlease state lab (1-6)");
         console.log("Lab: " + lab);
     }
@@ -74,7 +74,7 @@
     });
 
 
-    /*
+    
     // consent to participate.
         var check_consent = function(elem) {
         if (document.getElementById('consent_checkbox').checked) {
@@ -90,10 +90,10 @@
     // declare the block.
     var informedConsent = {
         type: jsPsychExternalHtml,
-        url: "../consent/pana_consent.html",
+        url: "consent/consent" + lab + ".html",
         cont_btn: "start",
         check_fn: check_consent
-    };*/
+    };
 
     /* welcome message & instructions */
     var welcome = {
@@ -238,7 +238,7 @@
     //control condition
     var timeline = [];
     timeline.push(welcome);
-    //timeline.push(informedConsent);
+    timeline.push(informedConsent);
     timeline.push(screening);
     timeline.push(ending);
 
