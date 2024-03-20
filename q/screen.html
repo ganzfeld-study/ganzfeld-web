@@ -56,7 +56,8 @@
     let sona_id = jsPsych.data.urlVariables()['sonaid'];
     
     if(!sona_id){
-        var subject_id = jsPsych.randomization.randomID(16);
+        var subject_id = lab + "_" + jsPsych.randomization.randomID(4);
+        console.log("Subject ID: " + subject_id);
     } else {
         var subject_id = sona_id;
         var TXT_ending = 
