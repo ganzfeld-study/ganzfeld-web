@@ -116,7 +116,7 @@
         preamble: `<p>Now we would like to ask you to familiarize yourself with the Ganzfeld environment (including the red light and the pink noise) so that you are prepared for the second session, in which you will participate in the Ganzfeld experiment.</p>
                 <p>Please fill out your participant ID / make sure that it is correct and click <i>Continue</i> to begin answering the questionnaires.`,
         questions: [
-            {prompt: 'Participant ID'}
+            {prompt: 'Participant ID', name: 'pid'}
         ],
         button_label: 'Continue',
         on_load: function(){
@@ -190,7 +190,7 @@
         choices: "NO_KEYS",
         on_start: function() {
             // save Data
-            saveData("/ganzfeld/session1/ganzfeld_relax_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+            saveData("/ganzfeld/relax/ganzfeld_relax_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
         }
     }
 
