@@ -851,18 +851,18 @@
             </div>
                 <div class="video-rating-container">
                 <div class="slider-container">
-                    <label for="slider1">Clip A</label>
-                    <output id="slider1-value">50</output>
-                    <input type="range" id="slider1" name="slider1" min="0" max="100" value="50" list="ticks1">
+                    <label for="clipa">Clip A</label>
+                    <output id="clipa-value">50</output>
+                    <input type="range" id="clipa" name="clipa" min="0" max="100" value="50" list="ticks1">
                     <datalist id="ticks1">
                         <option value="0" label="0"></option>
                         <option value="100" label="100"></option>
                     </datalist>
                 </div>
                 <div class="slider-container">
-                    <label for="slider2">Clip B</label>
-                    <output id="slider2-value">50</output>
-                    <input type="range" id="slider2" name="slider2" min="0" max="100" value="50" list="ticks2">
+                    <label for="clipb">Clip B</label>
+                    <output id="clipb-value">50</output>
+                    <input type="range" id="clipb" name="clipb" min="0" max="100" value="50" list="ticks2">
                     <datalist id="ticks2">
                         <option value="0" label="0"></option>
                         <option value="100" label="100"></option>
@@ -873,12 +873,12 @@
         },
         on_load: function() {
             // Update output elements when sliders are changed
-            document.getElementById('slider1').addEventListener('input', function() {
-                document.getElementById('slider1-value').textContent = this.value;
+            document.getElementById('clipa').addEventListener('input', function() {
+                document.getElementById('clipa-value').textContent = this.value;
             });
 
-            document.getElementById('slider2').addEventListener('input', function() {
-                document.getElementById('slider2-value').textContent = this.value;
+            document.getElementById('clipb').addEventListener('input', function() {
+                document.getElementById('clipb-value').textContent = this.value;
             });
         }
     }
@@ -888,7 +888,7 @@
         loop_function: function(data) {
             var ratingData = jsPsych.data.get().filter({test_part: "videoRating"}).values();
             if(ratingData.length > 0) {
-                if(ratingData.slice(-1)[0].response.slider1 == ratingData.slice(-1)[0].response.slider2) {
+                if(ratingData.slice(-1)[0].response.clipa == ratingData.slice(-1)[0].response.clipb) {
                     alert("Please rate the videos differently.");
                     return true;
                 } else {
