@@ -186,7 +186,7 @@
         choices: "NO_KEYS",
         on_start: function() {
             // save Data
-            saveData("/ganzfeld/relax/ganzfeld_relax_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+            saveData("/relax/ganzfeld_relax_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
         }
     }
 
