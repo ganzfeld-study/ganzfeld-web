@@ -943,7 +943,7 @@
         choices: "NO_KEYS",
         on_start: function() {
             // save Data
-            saveData("/Ganzfeld/session2/Ganzfeld_2_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+            saveData("/session2/ganzfeld_2_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
         }
     }
 
