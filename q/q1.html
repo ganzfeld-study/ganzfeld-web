@@ -134,7 +134,7 @@
             if(pid) document.getElementById('input-0').setAttribute('value', pid);
         },
         on_finish: function(){
-            jsPsych.setProgressBar(0.10); // set progress bar to 85% full.
+            jsPsych.setProgressBar(0.125); // set progress bar to 85% full.
         }
         /*on_finish: function(data) {
             // save pid
@@ -186,48 +186,7 @@
         ],
         button_label_finish: 'Next',
         on_finish: function(){
-            jsPsych.setProgressBar(0.20); 
-        }
-    };
-
-    /* The Boundary Questionnaire */
-    var surveyBQ = {
-        type: jsPsychSurvey,
-        data: { test_part: "BQ" },
-        pages: [
-        [
-            {
-                type: 'html',
-                name: 'BQIntro',
-                prompt: '<p>Please rate each of the statements from 0 to 4 (0 indicates <i>"not at all true of me"</i>; 4 indicates <i>"very true of me"</i>).  Try to respond to all of the statements as quickly as you can.</p>',
-            },
-            {
-                type: 'likert-table',
-                name: 'BQ',
-                prompt: ' ',
-                statements: [
-                {prompt: 'My feelings blend into one another.', name: 'BQ01'},
-                {prompt: 'I am very close to my childhood feelings.', name: 'BQ02'},
-                {prompt: 'I am easily hurt.', name: 'BQ03'},
-                {prompt: 'I spend a lot of time daydreaming, fantasizing or in reverie.', name: 'BQ04'},
-                {prompt: 'Sometimes it\'s scary when one gets too involved with another person.', name: 'BQ05'},
-                {prompt: 'A good parent has to be a bit of a child, too.', name: 'BQ06'},
-                {prompt: 'I can easily imagine myself as an animal or what it might be like to be an animal.', name: 'BQ07'},
-                {prompt: 'When I work on a project, I don\'t like to tie myself down to a definite outline.  I rather like to let my mind wander.', name: 'BQ08'},
-                {prompt: 'In my dreams, people sometimes merge into each other or become other people.', name: 'BQ09'},
-                {prompt: 'I believe I am influenced by forces that no one can understand.', name: 'BQ10'},
-                {prompt: 'There are no sharp dividing lines between normal people, people with problems and people who are considered psychotic or crazy.', name: 'BQ11'},
-                {prompt: 'I think I would enjoy being some kind of creative artist.', name: 'BQ12'},
-                {prompt: 'I have had the experience of someone calling me or speaking my name and not being sure whether it was really happening or whether I was imagining it.', name: 'BQ13'}
-                ],
-                options: ['0', '1', '2', '3', '4'],
-                required: true
-            }
-        ]
-        ],
-        button_label_finish: 'Next',
-        on_finish: function(){
-            jsPsych.setProgressBar(0.40); 
+            jsPsych.setProgressBar(0.25); 
         }
     };
 
@@ -299,7 +258,136 @@
         ],
         button_label_finish: 'Next',
         on_finish: function(){
-            jsPsych.setProgressBar(0.30); 
+            jsPsych.setProgressBar(0.375); 
+        }
+    };
+
+    /* The Boundary Questionnaire */
+    var surveyBQ = {
+        type: jsPsychSurvey,
+        data: { test_part: "BQ" },
+        pages: [
+        [
+            {
+                type: 'html',
+                name: 'BQIntro',
+                prompt: '<p>Please rate each of the statements from 0 to 4 (0 indicates <i>"not at all true of me"</i>; 4 indicates <i>"very true of me"</i>).  Try to respond to all of the statements as quickly as you can.</p>',
+            },
+            {
+                type: 'likert-table',
+                name: 'BQ',
+                prompt: ' ',
+                statements: [
+                {prompt: 'My feelings blend into one another.', name: 'BQ01'},
+                {prompt: 'I am very close to my childhood feelings.', name: 'BQ02'},
+                {prompt: 'I am easily hurt.', name: 'BQ03'},
+                {prompt: 'I spend a lot of time daydreaming, fantasizing or in reverie.', name: 'BQ04'},
+                {prompt: 'Sometimes it\'s scary when one gets too involved with another person.', name: 'BQ05'},
+                {prompt: 'A good parent has to be a bit of a child, too.', name: 'BQ06'},
+                {prompt: 'I can easily imagine myself as an animal or what it might be like to be an animal.', name: 'BQ07'},
+                {prompt: 'When I work on a project, I don\'t like to tie myself down to a definite outline.  I rather like to let my mind wander.', name: 'BQ08'},
+                {prompt: 'In my dreams, people sometimes merge into each other or become other people.', name: 'BQ09'},
+                {prompt: 'I believe I am influenced by forces that no one can understand.', name: 'BQ10'},
+                {prompt: 'There are no sharp dividing lines between normal people, people with problems and people who are considered psychotic or crazy.', name: 'BQ11'},
+                {prompt: 'I think I would enjoy being some kind of creative artist.', name: 'BQ12'},
+                {prompt: 'I have had the experience of someone calling me or speaking my name and not being sure whether it was really happening or whether I was imagining it.', name: 'BQ13'}
+                ],
+                options: ['0', '1', '2', '3', '4'],
+                required: true
+            }
+        ]
+        ],
+        button_label_finish: 'Next',
+        on_finish: function(){
+            jsPsych.setProgressBar(0.5); 
+        }
+    };
+
+    /* The Big Five Inventory */
+    var surveyBFI2 = {
+    type: jsPsychSurvey,
+    data: { test_part: "BFI2" },
+    pages: [
+    [
+        {
+            type: 'html',
+            name: 'BFIIntro',
+            prompt: `<p>Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please write a number next to each statement to indicate the extent to which you agree or disagree with that statement.</p>`,
+        },
+        {
+            type: 'likert-table',
+            name: 'BFI',
+            prompt: 'I am someone who...',
+            statements: [
+            { prompt: 'Is outgoing, sociable.', name: 'BFI01' },
+            { prompt: 'Has few artistic interests.', name: 'BFI02' },
+            { prompt: 'Has an assertive personality.', name: 'BFI03' },
+            { prompt: 'Is curious about many different things.', name: 'BFI04' },
+            { prompt: 'Rarely feels excited or eager.', name: 'BFI05' },
+            { prompt: 'Is inventive, finds clever ways to do things.', name: 'BFI06' },
+            { prompt: 'Tends to be quiet.', name: 'BFI07' },
+            { prompt: 'Is fascinated by art, music, or literature.', name: 'BFI08' },
+            { prompt: 'Is dominant, acts as a leader.', name: 'BFI09' },
+            { prompt: 'Avoids intellectual, philosophical discussions.', name: 'BFI10' },
+            { prompt: 'Is less active than other people.', name: 'BFI11' },
+            { prompt: 'Has little creativity.', name: 'BFI12' },
+            { prompt: 'Is sometimes shy, introverted.', name: 'BFI13' },
+            { prompt: 'Values art and beauty.', name: 'BFI14' },
+            { prompt: 'Finds it hard to influence people.', name: 'BFI15' },
+            { prompt: 'Is complex, a deep thinker.', name: 'BFI16' },
+            { prompt: 'Is full of energy.', name: 'BFI17' },
+            { prompt: 'Has difficulty imagining things.', name: 'BFI18' },
+            { prompt: 'Is talkative.', name: 'BFI19' },
+            { prompt: 'Thinks poetry and plays are boring.', name: 'BFI20' },
+            { prompt: 'Prefers to have others take charge.', name: 'BFI21' },
+            { prompt: 'Has little interest in abstract ideas.', name: 'BFI22' },
+            { prompt: 'Shows a lot of enthusiasm.', name: 'BFI23' },
+            { prompt: 'Is original, comes up with new ideas.', name: 'BFI24' }
+            ],
+            options: ['1 Disagree strongly', '2 Disagree a little', '3 Neutral / no opinion', '4 Agree a little', '5 Agree strongly'],
+            required: true
+        }
+        ]
+        ],
+        button_label_finish: 'Next',
+        on_finish: function(){
+            jsPsych.setProgressBar(0.675); 
+        }
+    };
+
+    /* The Brief Sensation Seeking Scale */
+    var surveyBSSS = {
+        type: jsPsychSurvey,
+        data: { test_part: "BSSS" },
+        pages: [
+        [
+            {
+                type: 'html',
+                name: 'BSSSIntro',
+                prompt: '<p>Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please write a number next to each statement to indicate the extent to which you agree or disagree with that statement.</p>',
+            },
+            {
+                type: 'likert-table',
+                name: 'BSSS',
+                prompt: ' ',
+                statements: [
+                {prompt: 'I would like to explore strange places.', name: 'BSSI01'},
+                {prompt: 'I get restless when I spend too much time at home.', name: 'BSSI02'},
+                {prompt: 'I like to do frightening things.', name: 'BSSI03'},
+                {prompt: 'I like wild parties.', name: 'BSSI04'},
+                {prompt: 'I would like to take off on a trip with no pre-planned routes or timetables.', name: 'BSSI05'},
+                {prompt: 'I prefer friends who are excitingly unpredictable.', name: 'BSSI06'},
+                {prompt: 'I would like to try bungee jumping.', name: 'BSSI07'},
+                {prompt: 'I would love to have new and exciting experiences, even if they are illegal.', name: 'BSSI08'}
+                ],
+                options: ['Strongly disagree', 'Disagree', 'Neither disagree nor agree', 'Agree', 'Strongly agree'],
+                required: true
+            }
+        ]
+        ],
+        button_label_finish: 'Next',
+        on_finish: function(){
+            jsPsych.setProgressBar(0.75); 
         }
     };
 
@@ -584,95 +672,7 @@
         ],
         button_label_finish: 'Next',
         on_finish: function(){
-            jsPsych.setProgressBar(0.70); 
-        }
-    };
-
-        /* The Big Five Inventory */
-        var surveyBFI2 = {
-        type: jsPsychSurvey,
-        data: { test_part: "BFI2" },
-        pages: [
-        [
-            {
-                type: 'html',
-                name: 'BFIIntro',
-                prompt: `<p>Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please write a number next to each statement to indicate the extent to which you agree or disagree with that statement.</p>`,
-            },
-            {
-                type: 'likert-table',
-                name: 'BFI',
-                prompt: 'I am someone who...',
-                statements: [
-                { prompt: 'Is outgoing, sociable.', name: 'BFI01' },
-                { prompt: 'Has few artistic interests.', name: 'BFI02' },
-                { prompt: 'Has an assertive personality.', name: 'BFI03' },
-                { prompt: 'Is curious about many different things.', name: 'BFI04' },
-                { prompt: 'Rarely feels excited or eager.', name: 'BFI05' },
-                { prompt: 'Is inventive, finds clever ways to do things.', name: 'BFI06' },
-                { prompt: 'Tends to be quiet.', name: 'BFI07' },
-                { prompt: 'Is fascinated by art, music, or literature.', name: 'BFI08' },
-                { prompt: 'Is dominant, acts as a leader.', name: 'BFI09' },
-                { prompt: 'Avoids intellectual, philosophical discussions.', name: 'BFI10' },
-                { prompt: 'Is less active than other people.', name: 'BFI11' },
-                { prompt: 'Has little creativity.', name: 'BFI12' },
-                { prompt: 'Is sometimes shy, introverted.', name: 'BFI13' },
-                { prompt: 'Values art and beauty.', name: 'BFI14' },
-                { prompt: 'Finds it hard to influence people.', name: 'BFI15' },
-                { prompt: 'Is complex, a deep thinker.', name: 'BFI16' },
-                { prompt: 'Is full of energy.', name: 'BFI17' },
-                { prompt: 'Has difficulty imagining things.', name: 'BFI18' },
-                { prompt: 'Is talkative.', name: 'BFI19' },
-                { prompt: 'Thinks poetry and plays are boring.', name: 'BFI20' },
-                { prompt: 'Prefers to have others take charge.', name: 'BFI21' },
-                { prompt: 'Has little interest in abstract ideas.', name: 'BFI22' },
-                { prompt: 'Shows a lot of enthusiasm.', name: 'BFI23' },
-                { prompt: 'Is original, comes up with new ideas.', name: 'BFI24' }
-                ],
-                options: ['1 Disagree strongly', '2 Disagree a little', '3 Neutral / no opinion', '4 Agree a little', '5 Agree strongly'],
-                required: true
-            }
-        ]
-        ],
-        button_label_finish: 'Next',
-        on_finish: function(){
-            jsPsych.setProgressBar(0.50); 
-        }
-    };
-
-    /* The Brief Sensation Seeking Scale */
-    var surveyBSSS = {
-        type: jsPsychSurvey,
-        data: { test_part: "BSSS" },
-        pages: [
-        [
-            {
-                type: 'html',
-                name: 'BSSSIntro',
-                prompt: '<p>Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please write a number next to each statement to indicate the extent to which you agree or disagree with that statement.</p>',
-            },
-            {
-                type: 'likert-table',
-                name: 'BSSS',
-                prompt: ' ',
-                statements: [
-                {prompt: 'I would like to explore strange places.', name: 'BSSI01'},
-                {prompt: 'I get restless when I spend too much time at home.', name: 'BSSI02'},
-                {prompt: 'I like to do frightening things.', name: 'BSSI03'},
-                {prompt: 'I like wild parties.', name: 'BSSI04'},
-                {prompt: 'I would like to take off on a trip with no pre-planned routes or timetables.', name: 'BSSI05'},
-                {prompt: 'I prefer friends who are excitingly unpredictable.', name: 'BSSI06'},
-                {prompt: 'I would like to try bungee jumping.', name: 'BSSI07'},
-                {prompt: 'I would love to have new and exciting experiences, even if they are illegal.', name: 'BSSI08'}
-                ],
-                options: ['Strongly disagree', 'Disagree', 'Neither disagree nor agree', 'Agree', 'Strongly agree'],
-                required: true
-            }
-        ]
-        ],
-        button_label_finish: 'Next',
-        on_finish: function(){
-            jsPsych.setProgressBar(0.60); 
+            jsPsych.setProgressBar(0.875); 
         }
     };
 
@@ -714,7 +714,9 @@
         },
         require_movement: true,
         on_finish: function() { 
-            i++; 
+            i++;
+            let progress = (i / ASGSItem.length) * 0.125;
+            jsPsych.setProgressBar(progress);
         }
         //labels: ['100% chance', '50% chance', '0% chance']
     };
@@ -723,7 +725,7 @@
     var surveyASGS = {
         timeline: Array(ASGSItem.length).fill(surveyASGSTrial),
         on_timeline_finish: function() {
-            jsPsych.setProgressBar(0.80); 
+            jsPsych.setProgressBar(1); 
   },
     }
 
