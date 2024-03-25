@@ -773,58 +773,6 @@
     }*/
 
 
-    /* Rest for 2 mins */
-    var rest = {
-        type: jsPsychHtmlButtonResponse,
-        data: { test_part: "rest" },
-        stimulus: '<p>Thank you!</p><p>Please rest in the comfortable chair for 2 minutes before you continue.</p>',
-        choices: ['Continue']
-    };
-
-    /* Relaxation exercise */
-    // Relaxation Intro
-    var relaxIntro = {
-        type: jsPsychHtmlButtonResponse,
-        data: { test_part: "relaxIntro" },
-        stimulus: `<p>Now we would like you to listen to a relaxation exercise.</p>
-            <p>Please put on the headphones and click "Continue" when you are ready.</p>`,
-        choices: ['Continue']
-    };
-
-    // Relaxation Playback
-    var relaxPlay = {
-        type: jsPsychAudioKeyboardResponse,
-        stimulus: '../audio/christineRelax.mp3',
-        choices: "NO_KEYS",
-        prompt: '<span class="playaudio"></span>',
-        trial_ends_after_audio: true,
-        on_finish: function(){
-            jsPsych.setProgressBar(0.90); 
-        }
-    };
-
-    /* Time Estimation */
-    var timeEstimate1 = {
-        type: jsPsychHtmlSliderResponse,
-        stimulus: `
-        <p><i>Please answer the following two questions about your experiences during the relaxation exercise.</i></p>
-        <p>1. How often did you think about time <b>during the exercise</b>?</p>`,
-        require_movement: true,
-        labels: ['Not at all', 'Extremely often']
-    };
-
-    var timeEstimate2 = {
-        type: jsPsychHtmlSliderResponse,
-        stimulus: `
-        <p><i>Please answer the following two questions about your experiences during the relaxation exercise.</i></p>
-        <p>2. How fast did time pass for you <b>during the exercise</b>?</p>`,
-        require_movement: true,
-        labels: ['Extremely slowly', 'Extremely fast'],
-        on_finish: function(){
-            jsPsych.setProgressBar(1); 
-        }
-    };
-
     /* save data to csv */
     function saveData(name, data){
       var xhr = new XMLHttpRequest();
@@ -894,7 +842,6 @@
     timeline.push(surveyDES);
     timeline.push(surveyASGS);
     timeline.push(ending);
-
 
     /* start the experiment */
     jsPsych.run(timeline);
