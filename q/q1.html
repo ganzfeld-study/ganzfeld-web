@@ -678,7 +678,49 @@
     };
 
     /* Australian Sheep Goat Scale */
-    var i = 0;
+    var surveyASGS = {
+        type: jsPsychSurvey,
+        data: { test_part: "ASGS" },
+        pages: [
+        [
+            {
+                type: 'html',
+                name: 'ASGSIntro',
+                prompt: '<p>Here follows 16 statements about your own beliefs and attitudes. For each number, please read the statements carefully and pick the answer that best corresponds to your opinion.</p>',
+            },
+            {
+                type: 'likert-table',
+                name: 'ASGS',
+                prompt: ' ',
+                statements: [
+                    {prompt: 'I believe that Extrasensory perception (ESP) exists.', name: 'ASGS01'},
+                    {prompt: 'I believe that I have had a personal experience of ESP.', name: 'ASGS02'},
+                    {prompt: 'I believe that I am psychic.', name: 'ASGS03'},
+                    {prompt: 'I believe that it is possible to gain information about the future before it happens in ways that do not depend on rational prediction or normal sensory channels.', name: 'ASGS04'},
+                    {prompt: 'I believe that I have had a hunch that turned out to be correct and which (I believe) was not just a coincidence.', name: 'ASGS05'},
+                    {prompt: 'I believe that I have had at least one premonition about the future that came true and which (I believe) was not just a coincidence.', name: 'ASGS06'},
+                    {prompt: 'I believe that I have had at least one dream that came true and which (I believe) was not just a coincidence.', name: 'ASGS07'},
+                    {prompt: 'I believe that I have had at least one vision that was not an hallucination and from which I received information that I could not have otherwise gained at that time and place.', name: 'ASGS08'},
+                    {prompt: 'I believe that it is possible to gain information about the thoughts, feelings or circumstances of another person, in a way that does not depend on rational prediction or normal sensory channels.', name: 'ASGS09'},
+                    {prompt: 'I believe that it is possible to send a "mental message" to another person, or in some way influence them at a distance, by means other than the normal channels of communication.', name: 'ASGS10'},
+                    {prompt: 'I believe that I have had at least one experience of telepathy between myself and another person.', name: 'ASGS11'},
+                    {prompt: 'I believe that psychokinesis (or "PK") exists, that is, the direct influence of mind on a physical system, without the mediation of any known physical energy.', name: 'ASGS12'},
+                    {prompt: 'I believe that I have personally exerted PK on at least one occasion.', name: 'ASGS13'},
+                    {prompt: 'I believe that I have marked psychokinetic ability.', name: 'ASGS14'},
+                    {prompt: 'I believe that, on at least one occasion, an inexplicable (but non-recurrent) physical event of an apparently psychokinetic origin has occurred in my presence.', name: 'ASGS15'},
+                    {prompt: 'I believe that persistent inexplicable physical disturbances, of an apparently psychokinetic origin (as for example a “poltergeist”) have occurred in my presence at some time in the past.', name: 'ASGS16'}
+                ],
+                options: ['False', 'Uncertain', 'True'],
+                required: true
+            }
+        ]
+        ],
+        button_label_finish: 'Next',
+        on_finish: function(){
+            jsPsych.setProgressBar(1); 
+        }
+    };
+    /*var i = 0;
     var ASGSItem = [
         ['I am completely convinced that Extrasensory Perception (ESP) does not exist.', 'I am completely convinced that ESP exists.'],
         ['I am completely convinced that I have never  had a personal experience of ESP.', 'I am completely convinced that I have had a personal experience of ESP.'],
@@ -728,7 +770,7 @@
         on_timeline_finish: function() {
             jsPsych.setProgressBar(1); 
   },
-    }
+    }*/
 
 
     /* Rest for 2 mins */
@@ -840,6 +882,7 @@
     
     //control condition
     var timeline = [];
+    timeline.push(surveyASGS);
     timeline.push(preload);
     timeline.push(welcome);
     //timeline.push(informedConsent);
@@ -850,13 +893,6 @@
     timeline.push(surveyBSSS);
     timeline.push(surveyDES);
     timeline.push(surveyASGS);
-    //timeline.push(rest);
-    //timeline.push(surveyPCIRest);
-    /*timeline.push(relaxIntro);
-    timeline.push(relaxPlay);
-    //timeline.push(surveyPCIRelax);
-    timeline.push(timeEstimate1);
-    timeline.push(timeEstimate2);*/
     timeline.push(ending);
 
 
