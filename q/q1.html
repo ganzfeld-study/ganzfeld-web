@@ -137,12 +137,6 @@
         on_finish: function(){
             jsPsych.setProgressBar(0.125); // set progress bar to 85% full.
         }
-        /*on_finish: function(data) {
-            // save pid
-            jsPsych.data.addProperties({ 
-                subject: data.responses[0]
-            });
-        }*/
     }
 
     /* Surveys */
@@ -810,21 +804,6 @@
         fullscreen_mode: false,
         delay_after: 0
     }
-
-    /*// Hide and Show cursor 
-    var hide_cursor = {
-         type: jsPsychCallFunction,
-         func: function(){
-            document.querySelector('head').insertAdjacentHTML('beforeEnd', '<style id="hide-cursor">body { cursor: none; }</style>');
-         }
-      };
-  
-      var show_cursor = {
-         type: jsPsychCallFunction,
-         func: function(){
-            document.querySelector('#hide-cursor').remove();
-         }
-      };*/
 
     /* create timeline */
     
