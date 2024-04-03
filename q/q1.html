@@ -196,7 +196,8 @@
                 name: 'TASIntro',
                 prompt: `
                 <p>This questionnaire consists of questions about experiences that you may have had in your life. We are interested in how often you have these experiences. It is important, however, that your answers show how often these experiences happen to you when you are not under the influence of alcohol or drugs.</p>
-                <p>Please indicate whether each statement applies to you by using the following response scale:</p>
+                <p>Please indicate how much each statement applies to you from 1 = <i>strongly disagree</i> to 6 = <i>strongly agree</i>.</p>`
+                /*<p>Please indicate whether each statement applies to you by using the following response scale:</p>
                 <ul>
                     <li>1=strongly disagree</li>
                     <li>2=moderately disagree</li>
@@ -204,7 +205,7 @@
                     <li>4=slightly agree</li>
                     <li>5=moderately agree</li>
                     <li>6=strongly agree</li>
-                </ul>`
+                </ul>`*/
             },
             {
                 type: 'likert-table',
@@ -246,7 +247,7 @@
                 {prompt: 'I find that different odors have different colors.', name: 'TAS33'},
                 {prompt: 'I can be deeply moved by a sunset.', name: 'TAS34'},
                 ],
-                options: ['1', '2', '3', '4', '5', '6'],
+                options: ['1 strongly disagree', '2 moderately disagree', '3 slightly disagree', '4 slightly agree', '5 moderately agree', '6 strongly agree'],
                 required: true
             }
         ]
@@ -266,7 +267,7 @@
             {
                 type: 'html',
                 name: 'BQIntro',
-                prompt: '<p>Please rate each of the statements from 0 to 4 (0 indicates <i>"not at all true of me"</i>; 4 indicates <i>"very true of me"</i>).  Try to respond to all of the statements as quickly as you can.</p>',
+                prompt: '<p>Please rate each of the statements from 1 = <i>"not at all true of me"</i> to 5 = <i>"very true of me"</i>. Try to respond to all of the statements as quickly as you can.</p>',
             },
             {
                 type: 'likert-table',
@@ -287,7 +288,7 @@
                 {prompt: 'I think I would enjoy being some kind of creative artist.', name: 'BQ12'},
                 {prompt: 'I have had the experience of someone calling me or speaking my name and not being sure whether it was really happening or whether I was imagining it.', name: 'BQ13'}
                 ],
-                options: ['0', '1', '2', '3', '4'],
+                options: ['1 not at all true of me', '2', '3', '4', '5 very true of me'],
                 required: true
             }
         ]
@@ -307,7 +308,7 @@
         {
             type: 'html',
             name: 'BFIIntro',
-            prompt: `<p>Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please write a number next to each statement to indicate the extent to which you agree or disagree with that statement.</p>`,
+            prompt: `<p>Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please indicate the extent to which you agree or disagree with that statement from 1 = <i>disagree strongly</i> to 5 = <i>agree strongly</i>.</p>`,
         },
         {
             type: 'likert-table',
@@ -339,7 +340,7 @@
             { prompt: 'Shows a lot of enthusiasm.', name: 'BFI23' },
             { prompt: 'Is original, comes up with new ideas.', name: 'BFI24' }
             ],
-            options: ['1 Disagree strongly', '2 Disagree a little', '3 Neutral / no opinion', '4 Agree a little', '5 Agree strongly'],
+            options: ['1 disagree strongly', '2 disagree a little', '3 neutral / no opinion', '4 agree a little', '5 agree strongly'],
             required: true
         }
         ]
@@ -359,7 +360,7 @@
             {
                 type: 'html',
                 name: 'BSSSIntro',
-                prompt: '<p>Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please write a number next to each statement to indicate the extent to which you agree or disagree with that statement.</p>',
+                prompt: '<p>Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please indicate the extent to which you agree or disagree with that statement from 1 = <i>disagree strongly</i> to 5 = <i>agree strongly</i>.</p>',
             },
             {
                 type: 'likert-table',
@@ -375,7 +376,7 @@
                 {prompt: 'I would like to try bungee jumping.', name: 'BSSI07'},
                 {prompt: 'I would love to have new and exciting experiences, even if they are illegal.', name: 'BSSI08'}
                 ],
-                options: ['Strongly disagree', 'Disagree', 'Neither disagree nor agree', 'Agree', 'Strongly agree'],
+                options: ['1 disagree strongly', '2 disagree', '3 neither disagree nor agree', '4 agree', '5 agree strongly'],
                 required: true
             }
         ]
@@ -680,7 +681,7 @@
             {
                 type: 'html',
                 name: 'ASGSIntro',
-                prompt: '<p>Here follows 16 statements about your own beliefs and attitudes. For each number, please read the statements carefully and pick the answer that best corresponds to your opinion.</p>',
+                prompt: '<p>Here follows 16 statements about your own beliefs and attitudes. For each one, please read the statements carefully and pick the answer that best corresponds to your opinion.</p>',
             },
             {
                 type: 'likert-table',
