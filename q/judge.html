@@ -6,20 +6,13 @@
     <script src="jspsych/jspsych.js"></script>
     <script src="jspsych/plugin-preload.js"></script>
     <!--<script src="jspsych/plugin-fullscreen.js"></script>-->
-    <script src="https://unpkg.com/@jspsych/plugin-fullscreen@1.2.1"></script>
     <script src="jspsych/plugin-call-function.js"></script>
     <!--<script src="jspsych/plugin-instructions.js"></script>-->
     <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.3"></script>
     <script src="jspsych/plugin-survey.js"></script>
-    <script src="jspsych/plugin-survey-multi-choice.js"></script>
     <script src="jspsych/plugin-survey-text.js"></script>
     <script src="jspsych/plugin-survey-html-form.js"></script>
     <script src="jspsych/plugin-html-keyboard-response.js"></script>
-    <script src="jspsych/plugin-html-button-response.js"></script>
-    <script src="jspsych/plugin-html-slider-response.js"></script>
-    <script src="jspsych/plugin-audio-keyboard-response.js"></script>
-    <script src="jspsych/plugin-audio-button-response.js"></script>
-    <script src="jspsych/plugin-video-keyboard-response.js"></script>
     <script src="jspsych/quantis.js"></script>
     <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
     <!--<link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css">-->
@@ -110,7 +103,8 @@
             <p>Please make sure that participant ID and video set are correct.</p>`,
         questions: [
             {prompt: 'Participant ID', name: 'pid', required: true},
-            {prompt: 'Video Set', name: 'videoSet', required: true}
+            {prompt: 'Video Set', name: 'videoSet', required: true},
+            {prompt: 'Judge ID', name: 'videoSet', required: true}
         ],
         button_label: 'Continue',
         on_load: function(){
@@ -307,24 +301,49 @@
                     </datalist>
                 </div>
             </div>
+            <p id="duplicate-message" style="color: red;"></p>
             `;
         },
         on_load: function() {
+            function checkDuplicateValues() {
+                const values = [];
+                values.push(document.getElementById('ClipA').value);
+                values.push(document.getElementById('ClipB').value);
+                values.push(document.getElementById('ClipC').value);
+                values.push(document.getElementById('ClipD').value);
+
+                const uniqueValues = new Set(values);
+
+                if (values.length - uniqueValues.size >= 1) {
+                    document.getElementById('duplicate-message').textContent = "Please rate the videos differently";
+                    document.getElementById('jspsych-survey-html-form-next').disabled = true;
+                } else {
+                    document.getElementById('duplicate-message').textContent = "";
+                    document.getElementById('jspsych-survey-html-form-next').disabled = false;
+                }
+            }
+
+            checkDuplicateValues();
+
             // Update output elements when sliders are changed
             document.getElementById('ClipA').addEventListener('input', function() {
                 document.getElementById('ClipA-value').textContent = this.value;
+                checkDuplicateValues();
             });
 
             document.getElementById('ClipB').addEventListener('input', function() {
                 document.getElementById('ClipB-value').textContent = this.value;
+                checkDuplicateValues();
             });
 
             document.getElementById('ClipC').addEventListener('input', function() {
                 document.getElementById('ClipC-value').textContent = this.value;
+                checkDuplicateValues();
             });
 
             document.getElementById('ClipD').addEventListener('input', function() {
                 document.getElementById('ClipD-value').textContent = this.value;
+                checkDuplicateValues();
             });
         }
     }
@@ -395,17 +414,6 @@
             console.log("preloading: " + videos);
         }
     }
-    // fullscreen
-    var enterFullscreen = {
-        type: jsPsychFullscreen,
-        fullscreen_mode: true
-    }
-
-    var exitFullscreen = {
-        type: jsPsychFullscreen,
-        fullscreen_mode: false,
-        delay_after: 0
-    }
 
 
     /* create timeline */
@@ -415,7 +423,7 @@
     timeline.push(welcome);
     timeline.push(preloadVideos);
     timeline.push(videoDisplay);
-    //timeline.push(ending);
+    timeline.push(ending);
 
     /* start the experiment */
     jsPsych.run(timeline);
