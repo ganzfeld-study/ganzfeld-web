@@ -89,7 +89,7 @@
 
     // add to data file
     jsPsych.data.addProperties({ 
-        judge: subject_id,
+        id: subject_id,
         subject: pid, 
         time: start_time.toISOString()
     });
@@ -104,7 +104,7 @@
         questions: [
             {prompt: 'Participant ID', name: 'pid', required: true},
             {prompt: 'Video Set', name: 'videoSet', required: true},
-            {prompt: 'Judge ID', name: 'videoSet', required: true}
+            {prompt: 'Judge ID', name: 'judge', required: true}
         ],
         button_label: 'Continue',
         on_load: function(){
