@@ -78,10 +78,10 @@
     });
 
     // SONA & subject ID
-    let pid = jsPsych.data.urlVariables()['pid'];
+    let subject = jsPsych.data.urlVariables()['pid'];
     let videoSet = jsPsych.data.urlVariables()['vs'];
     
-    var subject_id = jsPsych.randomization.randomID(16);
+    var id = jsPsych.randomization.randomID(16);
 
 
     // specify starting time
@@ -89,8 +89,7 @@
 
     // add to data file
     jsPsych.data.addProperties({ 
-        id: subject_id,
-        subject: pid, 
+        id: id,
         time: start_time.toISOString()
     });
 
@@ -102,13 +101,13 @@
         preamble: `<h2>Judging</h2>
             <p>Please make sure that participant ID and video set are correct.</p>`,
         questions: [
-            {prompt: 'Participant ID', name: 'pid', required: true},
+            {prompt: 'Participant ID', name: 'subject', required: true},
             {prompt: 'Video Set', name: 'videoSet', required: true},
             {prompt: 'Judge ID', name: 'judge', required: true}
         ],
         button_label: 'Continue',
         on_load: function(){
-            if(pid) document.getElementById('input-0').setAttribute('value', pid);
+            if(subject) document.getElementById('input-0').setAttribute('value', subject);
             if(videoSet) document.getElementById('input-1').setAttribute('value', videoSet);
         },
         /*on_finish: function(data) {
@@ -224,10 +223,25 @@
             console.log(videoSet);
 
             // video indices
-            var v0 = videoSet * 4;
-            var v1 = videoSet * 4 + 1;
-            var v2 = videoSet * 4 + 2;
-            var v3 = videoSet * 4 + 3;
+            var v0 = {
+                src: videoSet * 4,
+                name: "ClipA"
+            }
+            var v1 = {
+                src: videoSet * 4 + 1,
+                name: "ClipB"
+            }
+            var v2 = {
+                src: videoSet * 4 + 2,
+                name: "ClipC"
+            }
+            var v3 = {
+                src: videoSet * 4 + 3,
+                name: "ClipD"
+            }
+
+            // shuffle order
+            var shuffle = jsPsych.randomization.shuffle([v0, v1, v2, v3]);
 
             // set video stimulus
             trial.html = `
@@ -235,13 +249,13 @@
             <div class="video-rating-container">
                 <div class="video-container">
                     <video id="video1" controls>
-                        <source src="${vidStimuli[v0]}" type="video/mp4">
+                        <source src="${vidStimuli[shuffle[0].src]}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 </div>
                 <div class="video-container">
                     <video id="video2" controls>
-                        <source src="${vidStimuli[v1]}" type="video/mp4">
+                        <source src="${vidStimuli[shuffle[1].src]}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 </div>
@@ -250,7 +264,7 @@
                 <div class="slider-container">
                     <label for="ClipA">Clip A</label>
                     <output id="ClipA-value">50</output>
-                    <input type="range" id="ClipA" name="ClipA" min="0" max="100" value="50" list="ticks1">
+                    <input type="range" id="ClipA" name="${shuffle[0].name}" min="0" max="100" value="50" list="ticks1">
                     <datalist id="ticks1">
                         <option value="0" label="0"></option>
                         <option value="100" label="100"></option>
@@ -259,7 +273,7 @@
                 <div class="slider-container">
                     <label for="ClipB">Clip B</label>
                     <output id="ClipB-value">50</output>
-                    <input type="range" id="ClipB" name="ClipB" min="0" max="100" value="50" list="ticks2">
+                    <input type="range" id="ClipB" name="${shuffle[1].name}" min="0" max="100" value="50" list="ticks2">
                     <datalist id="ticks2">
                         <option value="0" label="0"></option>
                         <option value="100" label="100"></option>
@@ -270,13 +284,13 @@
             <div class="video-rating-container">
                 <div class="video-container">
                     <video id="video2" controls>
-                        <source src="${vidStimuli[v2]}" type="video/mp4">
+                        <source src="${vidStimuli[shuffle[2].src]}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 </div>
                 <div class="video-container">
                     <video id="video2" controls>
-                        <source src="${vidStimuli[v3]}" type="video/mp4">
+                        <source src="${vidStimuli[shuffle[3].src]}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 </div>
@@ -285,7 +299,7 @@
                 <div class="slider-container">
                     <label for="ClipC">Clip C</label>
                     <output id="ClipC-value">50</output>
-                    <input type="range" id="ClipC" name="ClipC" min="0" max="100" value="50" list="ticks1">
+                    <input type="range" id="ClipC" name="${shuffle[2].name}" min="0" max="100" value="50" list="ticks1">
                     <datalist id="ticks1">
                         <option value="0" label="0"></option>
                         <option value="100" label="100"></option>
@@ -294,7 +308,7 @@
                 <div class="slider-container">
                     <label for="ClipD">Clip D</label>
                     <output id="ClipD-value">50</output>
-                    <input type="range" id="ClipD" name="ClipD" min="0" max="100" value="50" list="ticks1">
+                    <input type="range" id="ClipD" name="${shuffle[3].name}" min="0" max="100" value="50" list="ticks1">
                     <datalist id="ticks1">
                         <option value="0" label="0"></option>
                         <option value="100" label="100"></option>
@@ -390,7 +404,7 @@
         choices: "NO_KEYS",
         on_start: function() {
             // save Data
-            saveData("/judge/ganzfeld_judge_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+            saveData("/judge/ganzfeld_judge_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + id, jsPsych.data.get().csv());
         }
     }
 
