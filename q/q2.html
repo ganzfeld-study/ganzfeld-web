@@ -660,6 +660,16 @@
         choices: ['Continue']
     };
 
+    // Relaxation
+    var ganzfeldPlayR = {
+        type: jsPsychAudioKeyboardResponse,
+        data: { test_part: "GanzfeldPlayR" },
+        stimulus: '../audio/relaxation-for-ganzfeld-CSM.mp3',
+        choices: "NO_KEYS",
+        prompt: '<span class="playaudio"></span>',
+        trial_ends_after_audio: true
+    };
+
     // Play Pink Noise
     var ganzfeldPlay = {
         type: jsPsychAudioKeyboardResponse,
@@ -1015,6 +1025,7 @@
     timeline.push(restPlay);
     timeline.push(surveyPCIRest);
     timeline.push(ganzfeldIntro);
+    timeline.push(ganzfeldPlayR);
     timeline.push(ganzfeldPlay);
     timeline.push(surveyPCIGanzfeld);
     timeline.push(surveyDSSQ);
