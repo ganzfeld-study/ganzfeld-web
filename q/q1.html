@@ -74,24 +74,41 @@
     });
 
 
-    // SONA & subject ID
+    // subject & Lab ID
     let pid = jsPsych.data.urlVariables()['pid'];
     
     if(!pid){
         var subject_id = jsPsych.randomization.randomID(16);
+        var lab = prompt("No participant ID transmitted!\nPlease state lab (1-6)");
     } else {
         var subject_id = pid;
-  }
+        // set lab to first character of pid
+        var lab = pid.charAt(0);
+    }
 
+    // set language
+    var lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
+
+    console.log("Subject ID: " + subject_id + " Lab: " + lab + " Language: " + lang);
     // specify starting time
     var start_time = new Date();
 
     // add to data file
     jsPsych.data.addProperties({ 
-        subject: subject_id, 
+        //subject: subject_id, 
         time: start_time.toISOString()
     });
 
+    // Function to retrieve text based on language and key
+    function txt(translations, language, key) {
+        if (translations.hasOwnProperty(language) && translations[language].hasOwnProperty(key)) {
+            console.log(translations[language][key]);
+            return translations[language][key];
+        } else {
+            // Return default text or empty string if translation not found
+            return '';
+        }
+    }
 
     /*
     // consent to participate.
@@ -132,7 +149,34 @@
         ],
         button_label: 'Continue',
         on_load: function(){
-            if(pid) document.getElementById('input-0').setAttribute('value', pid);
+            var input = document.getElementById('input-0');
+            var continueBtn = document.getElementById('jspsych-survey-text-next');
+            
+            if(pid){
+                input.setAttribute('value', pid);
+            } else if (lab){
+                input.setAttribute('value', lab + "_");
+                // Set cursor position at the end
+
+                input.selectionStart = input.selectionEnd = input.value.length;
+
+                // Add red border to input
+                input.style.border = '2px solid red';
+                input.style.outline = 'none';
+                continueBtn.disabled = true;
+            }
+
+            // Listen for input events to remove red border after 6 characters have been added
+            input.addEventListener('input', function() {
+                if (input.value.length == 8) {
+                    // Remove red border after 8 characters have been entered
+                    input.style.border = '2px solid #ccc';
+                    continueBtn.disabled = false;
+                } else {
+                    input.style.border = '2px solid red';
+                    continueBtn.disabled = true;
+                }
+            });
         },
         on_finish: function(){
             jsPsych.setProgressBar(0.125); // set progress bar to 85% full.
@@ -141,14 +185,86 @@
 
     /* Surveys */
     /* Demographics */
+    var txt_surveyDemo = {
+    "en": {
+        "page1_prompt": "First, we would like to ask you for some personal information:",
+        "page2_prompt": "How old are you?",
+        "page3_prompt": "What gender do you identify with?",
+        "page4_prompt": "Which of the following best describes your diet?",
+        "options_gender": ['female', 'male', 'other / non-binary'],
+        "options_diet": [
+            'Vegan (or plant-based): a person who eats fruits, vegetables, and grains but no animal or seafood products',
+            'Non-vegan vegetarian: a person who eats dairy products and/or eggs, fruits, vegetables, grains, but no other animal or seafood products',
+            'Meat reducer: a person who eats dairy products, eggs, fruits, vegetables, grains, and a reduced amount of animal or seafood products. For example, a pescetarian (who eats fish but no other animals) or someone who eliminates or reduces their consumption of red meat',
+            'Omnivore: a person who regularly eats most meats, seafood, eggs, dairy products, fruits, vegetables, and grains.'
+        ],
+        "button_next": "Next"
+    },
+    "de": {
+        "page1_prompt": "Zuerst möchten wir Sie um einige persönliche Informationen bitten:",
+        "page2_prompt": "Wie alt sind Sie?",
+        "page3_prompt": "Mit welchem Geschlecht identifizieren Sie sich?",
+        "page4_prompt": "Welche der folgenden Optionen beschreibt am besten Ihre Ernährung?",
+        "options_gender": ['weiblich', 'männlich', 'anderes / nicht-binär'],
+        "options_diet": [
+            'Vegan (oder pflanzlich): Eine Person, die Obst, Gemüse und Getreide isst, aber keine tierischen oder Meeresprodukte',
+            'Nicht-veganer Vegetarier: Eine Person, die Milchprodukte und/oder Eier isst, Obst, Gemüse, Getreide, aber keine anderen tierischen oder Meeresprodukte',
+            'Fleischreduzierer: Eine Person, die Milchprodukte, Eier, Obst, Gemüse, Getreide und eine reduzierte Menge an tierischen oder Meeresprodukten isst. Zum Beispiel ein Pescetarier (der Fisch, aber keine anderen Tiere isst) oder jemand, der seinen Verzehr von rotem Fleisch reduziert oder eliminiert',
+            'Allesfresser: Eine Person, die regelmäßig die meisten Fleisch-, Meeresfrüchte-, Eier-, Milchprodukte-, Obst-, Gemüse- und Getreidesorten isst.'
+        ],
+        "button_next": "Weiter"
+    }
+    // Add translations for other languages as needed
+};
+
+
+var surveyDemo = {
+    type: jsPsychSurvey,
+    data: { test_part: "survey" },
+    pages: [
+        [
+            {
+                type: 'html',
+                prompt: txt(txt_surveyDemo, lang, 'page1_prompt')
+            },
+            {
+                type: 'text',
+                prompt: txt(txt_surveyDemo, lang, 'page2_prompt'), 
+                name: 'age', 
+                textbox_columns: 5,
+                required: true,
+                input_type: "number"
+            },
+            {
+                type: 'multi-choice',
+                prompt: txt(txt_surveyDemo, lang, 'page3_prompt'), 
+                name: 'gender', 
+                options: txt_surveyDemo[lang]['options_gender'],
+                required: true
+            },
+            {
+                type: 'multi-choice',
+                prompt: txt(txt_surveyDemo, lang, 'page4_prompt'), 
+                name: 'vegetarian', 
+                options: txt_surveyDemo[lang]['options_diet'],
+                required: true
+            }
+        ]
+    ],
+    button_label_finish: txt(txt_surveyDemo, lang, 'button_next'),
+    on_finish: function(){
+        jsPsych.setProgressBar(0.25); 
+    }
+};
+
     var surveyDemo = {
         type: jsPsychSurvey,
         data: { test_part: "survey" },
         pages: [
         [
-        {
+            {
                 type: 'html',
-                prompt: '<p>First, we would like to ask you for some personal information:</p>',
+                prompt: 'First, we would like to ask you for some personal information:',
             },
             {
                 type: 'text',
