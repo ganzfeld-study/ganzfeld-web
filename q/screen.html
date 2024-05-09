@@ -47,6 +47,8 @@
     var subject_id = lab + "_" + jsPsych.randomization.randomID(6);
     console.log("Subject ID: " + subject_id);
 
+    // set language
+    let lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
 
     // specify starting time
     var start_time = new Date();
@@ -57,6 +59,16 @@
         subject: subject_id, 
         time: start_time.toISOString()
     });
+
+    // Function to retrieve text based on language and key
+    function txt(translations, language, key) {
+        if (translations.hasOwnProperty(language) && translations[language].hasOwnProperty(key)) {
+            return translations[language][key];
+        } else {
+            // Return default text or empty string if translation not found
+            return '<i>No translation found</i>';
+        }
+    }
 
     // Compensation of Labs
     var compensation = [
@@ -89,11 +101,9 @@
     };
 
     /* welcome message & instructions */
-    var welcome = {
-        type: jsPsychInstructions,
-        data: { test_part: "instruction" },
-        pages: [
-            `<h1>Instructions to Potential Participants</h1>
+    var txt_welcome = {
+        "en": {
+            "instruction": `<h1>Instructions to Potential Participants</h1>
             
             <h3>What?</h3>
             <p>This experiment is directed to interested people with varying experiences, beliefs, and habits, and who have not had any serious psychological problems (e.g., depression or psychosis) or neurological disorders (e.g., epilepsy) in the past 12 months. The experiment evaluates potential parapsychological (psi) phenomena and changes in states of consciousness. In psi phenomena, it seems as if the person gets information on an event that s/he could not have anticipated through the senses or reason. For instance, unexpectedly thinking of a person s/he had not been in contact for a long time before getting a text/sms, call, or email from them that day, or having a dream about something unexpected that happens the next day. Even if such experiences might be quite compelling, it is difficult to rule out alternative explanations, such as chance, in everyday life. We are therefore interested in examining these experiences systematically using the scientific method.</p>
@@ -105,12 +115,88 @@
             <p>Answering the three questions on the next screen. If called back, you will be invited to take part in two sessions for a total of around 2-2.5 hours. ${compensation[lab-1]} In the sessions, participants will be asked to look at a red light while listening to pink noise (like the noise in a radio between stations), a procedure called ganzfeld (or sensory homogenization).</p>
             
             <p>Please click Next to answer some questions.</p>`
+        },
+        "de": {
+            "instruction": `<h1>Hinweise für potenzielle Teilnehmer</h1>
+            
+            <h3>Was?</h3>
+            <p>Dieses Experiment richtet sich an interessierte Personen mit unterschiedlichen Erfahrungen, Überzeugungen und Gewohnheiten, die in den letzten 12 Monaten keine ernsthaften psychischen Probleme (z.B. Depressionen oder Psychosen) oder neurologischen Störungen (z.B. Epilepsie) hatten. Bei dem Experiment werden potenzielle parapsychologische (Psi-)Phänomene und Veränderungen des Bewusstseinszustands untersucht. Bei Psi-Phänomenen hat es den Anschein, als ob die Person Informationen über ein Ereignis erhält, das sie mit ihren Sinnen oder ihrem Verstand nicht hätte vorhersehen können. Zum Beispiel denkt man unerwartet an eine Person, mit der man lange keinen Kontakt mehr hatte, bevor man an diesem Tag eine SMS, einen Anruf oder eine E-Mail von ihr erhält, oder man träumt von etwas Unerwartetem, das am nächsten Tag passiert. Auch wenn solche Erlebnisse sehr überzeugend sein mögen, ist es schwierig, im Alltag alternative Erklärungen, wie etwa den Zufall, auszuschließen. Wir sind daher daran interessiert, diese Erfahrungen systematisch mit der wissenschaftlichen Methode zu untersuchen.</p>
+
+            <h3>Wer?</h3>
+            <p>Interessierte Menschen mit unterschiedlichen Erfahrungen, Überzeugungen und Gewohnheiten.</p>
+
+            <h3>Wie?</h3>
+            <p>Beantworten Sie die drei Fragen auf dem nächsten Bildschirm. Wenn Sie zurückgerufen werden, werden Sie zu zwei Sitzungen eingeladen, die insgesamt etwa 2-2,5 Stunden dauern. ${compensation[lab-1]} In den Sitzungen werden die Teilnehmer gebeten, auf ein rotes Licht zu schauen, während sie rosa Rauschen hören (wie das Rauschen in einem Radio zwischen den Sendern), ein Verfahren, das Ganzfeld (oder sensorische Homogenisierung) genannt wird.</p>
+            
+            <p>Bitte klicken Sie auf Weiter, um einige Fragen zu beantworten.</p>`
+        },
+        "se": {
+            "instruction": `<h1>Instruktioner till potentiella deltagare</h1>
+            
+            <h3>Vad?</h3>
+            <p>Detta experiment riktar sig till intresserade personer med varierande erfarenheter, övertygelser och vanor, och som inte har haft några allvarliga psykologiska problem (t.ex. depression eller psykos) eller neurologiska störningar (t.ex. epilepsi) under de senaste 12 månaderna. Experimentet utvärderar potentiella parapsykologiska (psi) fenomen och förändringar i medvetandetillstånd. Vid psi-fenomen verkar det som om personen får information om en händelse som han eller hon inte hade kunnat förutse med hjälp av sinnena eller förnuftet. Det kan t.ex. handla om att man oväntat tänker på en person som man inte har haft kontakt med på länge innan man får ett sms, samtal eller e-post från personen samma dag, eller att man drömmer om något oväntat som händer nästa dag. Även om sådana upplevelser kan vara ganska övertygande är det svårt att utesluta alternativa förklaringar, som t.ex. slumpen, i vardagslivet. Vi är därför intresserade av att undersöka dessa upplevelser systematiskt med hjälp av den vetenskapliga metoden.</p>
+
+            <h3>Vem? </h3>
+            <p>Intresserade människor med varierande erfarenheter, övertygelser och vanor.</p>
+
+            <h3>Hur?</h3>
+            <p>Svara på de tre frågorna på nästa skärm. Om du blir uppringd kommer du att bli inbjuden att delta i två sessioner på totalt cirka 2-2,5 timmar. ${compensation[lab-1]} Under sessionerna kommer deltagarna att bli ombedda att titta på ett rött ljus samtidigt som de lyssnar på rosa brus (som ljudet i en radio mellan stationerna), en procedur som kallas ganzfeld (eller sensorisk homogenisering).</p> <p>Klicka på Nästa.
+            
+            <p>Klicka på Nästa för att svara på några frågor.</p>`
+        }
+    }
+    var welcome = {
+        type: jsPsychInstructions,
+        data: { test_part: "instruction" },
+        pages: [
+                txt(txt_welcome, lang, "instruction")
             ],
         show_clickable_nav: true
     };
 
 
     /* Screening */
+    var txt_screening = {
+        "en": {
+            "intro": "<p>Please indicate the most appropriate answer by clicking on the circle or the answer.</p>",
+            "mentality": "Do you engage in an artistic/creative activity or practice mind-body disciplines such as meditation or yoga?",
+            "mentality_options": ['(1) Never', '(2) Rarely', '(3) Sometimes', '(4) On a monthly basis', '(5) On a weekly basis'],
+            "psi": "Regardless of how you interpreted them, have you had experiences that could be seen as parapsychological (psi)?",
+            "succeed": "Do you believe that you may succeed in a psi experiment?",
+            "succeed_options": ['(1) Not at all', '(2) Probably not', '(3) Do not know', '(4) Probably yes', '(5) Yes'], 
+            "contact": "<p>Please provide your email address and/or phone number to be contacted if you are eligible for the study.</p>",
+            "name": "Name",
+            "email": "Email address",
+            "phone": "Phone number",
+            "button_label_finish": "Finish"
+        },
+        "de": {
+            "intro": "<p>Bitte geben Sie die zutreffendste Antwort an, indem Sie auf den Kreis oder die Antwort klicken.</p>",
+            "mentality": "Üben Sie eine künstlerische/kreative Tätigkeit aus oder praktizieren Sie geistig-körperliche Disziplinen wie Meditation oder Yoga?",
+            "mentality_options": ['(1) Nie', '(2) Selten', '(3) Manchmal', '(4) Auf monatlicher Basis', '(5) Auf wöchentlicher Basis'],
+            "psi": "Hatten Sie unabhängig davon, wie Sie sie interpretiert haben, Erfahrungen, die als parapsychologisch (psi) angesehen werden können?",
+            "succeed": "Glauben Sie, dass Sie bei einem Psi-Experiment erfolgreich sein könnten?",
+            "succeed_options": ['(1) Überhaupt nicht', '(2) Wahrscheinlich nicht', '(3) Ich weiß nicht', '(4) Wahrscheinlich ja', '(5) Ja'], 
+            "contact": "<p>Bitte geben Sie Ihre E-Mail-Adresse und/oder Telefonnummer an, um kontaktiert zu werden, wenn Sie für die Studie in Frage kommen.</p>",
+            "name": "Name",
+            "email": "Email-Adresse",
+            "phone": "Telefonnummer",
+            "button_label_finish": "Beenden"
+        },
+        "se": {
+            "intro": "Var vänlig ange det mest lämpliga svaret genom att klicka på cirkeln eller svaret.",
+            "mentality": "Nedan följer tre frågor. Vänligen markera det svar som stämmer bäst in på dig Utövar du en konstnärlig/kreativ aktivitet eller kropp/själ-disciplin som meditation eller yoga?",
+            "mentality_options": ['(1) Aldrig', '(2) Sällan', '(3) Ibland', '(4) På månadsbasis', '(5) På veckobasis'],
+            "psi": "Oavsett hur du tolkat dem, har du haft upplevelser som kan ses som parapsykologiska (psi)?",
+            "succeed": "Tror du att du kan lyckas i ett psi-experiment?",
+            "succeed_options": ['(1) Inte alls', '(2) Förmodligen inte', '(3) Vet inte', '(4) Förmodligen ja', '(5) Ja'], 
+            "contact": "Ange din e-postadress och/eller ditt telefonnummer för att bli kontaktad om du är behörig för studien.",
+            "name": "Namn",
+            "email": "Email",
+            "phone": "Telefonnummer",
+            "button_label_finish": "Avsluta"
+        }
+    }
     var screening = {
         type: jsPsychSurvey,
         data: { test_part: "screening" },
@@ -119,76 +205,55 @@
             {
                 type: 'html',
                 name: 'intro',
-                prompt: '<p>Please indicate the most appropriate answer by clicking on the circle or the answer.</p>',
+                prompt: txt(txt_screening, lang, "intro"),
             },
             {
                 type: 'multi-choice',
                 name: 'mentality',
-                prompt: 'Do you engage in an artistic/creative activity or practice mind-body disciplines such as meditation or yoga?', 
-                options: ['(1) Never', '(2) Rarely', '(3) Sometimes', '(4) On a monthly basis', '(5) On a weekly basis'], 
+                prompt: txt(txt_screening, lang, "mentality"),
+                options: txt(txt_screening, lang, "mentality_options"),
                 required: true
             },
             {
                 type: 'multi-choice',
                 name: 'psi',
-                prompt: 'Regardless of how you interpreted them, have you had experiences that could be seen as parapsychological (psi)?', 
-                options: ['(1) Never', '(2) Rarely', '(3) Sometimes', '(4) On a monthly basis', '(5) On a weekly basis'], 
+                prompt: txt(txt_screening, lang, "psi"),
+                options: txt(txt_screening, lang, "mentality_options"), 
                 required: true
             },
             {
                 type: 'multi-choice',
                 name: 'succeed',
-                prompt: 'Do you believe that you may succeed in a psi experiment?', 
-                options: ['(1) Not at all', '(2) Probably not', '(3) Do not know', '(4) Probably yes', '(5) Yes'], 
+                prompt: txt(txt_screening, lang, "succeed"),
+                options: txt(txt_screening, lang, "succeed_options"),
                 required: true
             },
-            /*{
-                type: 'multi-choice',
-                name: 'trackoftime',
-                prompt: 'Do you lose track of time when engaged in a fun or artistic activity?', 
-                options: ['Never', 'Rarely', 'Sometimes', 'Often', 'Always'], 
-                required: true
-            },
-            {
-                type: 'multi-choice',
-                name: 'diet',
-                prompt: 'Which of the following best describes your diet?', 
-                options: [
-                    'Vegan (or plant-based): a person who eats fruits, vegetables, and grains but no animal or seafood products',
-                    'Non-vegan vegetarian: a person who eats dairy products and/or eggs, fruits, vegetables, grains, but no other animal or seafood products',
-                    'Meat reducer: a person who eats dairy products, eggs, fruits, vegetables, grains, but reduces the amount of animal or seafood products. For example, a ”pescetarian.”',
-                    'Omnivore: a person who regularly eats most meats, seafood, eggs, dairy products, fruits, vegetables, and grains.'
-                ], 
-                required: true
-            },*/
             {
                 type: 'html',
                 name: 'contact',
-                prompt: '<p>Please provide your email address and/or phone number to be contacted if you are eligible for the study.</p>',
+                prompt: txt(txt_screening, lang, "contact"),
             },
             {
                 type: 'text',
-                prompt: 'Name', 
+                prompt: txt(txt_screening, lang, "name"),
                 name: 'name',
                 input_type: 'text',
             },
             {
                 type: 'text',
-                prompt: 'Email address', 
-                //placeholder: 'Email',
+                prompt: txt(txt_screening, lang, "email"),
                 name: 'email',
                 input_type: 'email',
             },
             {
                 type: 'text',
-                prompt: 'Phone number', 
-                //placeholder: 'Email',
+                prompt: txt(txt_screening, lang, "phone"),
                 name: 'phone',
                 input_type: 'tel',
             },
         ]
         ],
-        //button_label_finish: 'Finish'
+        button_label_finish: txt(txt_screening, lang, "button_label_finish")
     };
 
     /* save data to csv 
@@ -218,9 +283,20 @@
     }
 
     /* end message */
+    var txt_ending = {
+        "en": {
+            "ending": "<p>Thank you!</p><p>Your responses were recorded, you may close the window now.</p>"
+        },
+        "de": {
+            "ending": "<p>Vielen Dank!</p><p>Ihre Antworten wurden gespeichert, Sie können das Fenster jetzt schließen.</p>"
+        },
+        "se": {
+            "ending": "<p>Tack så mycket!</p><p>Dina svar har registrerats, du kan stänga ned fönstret nu.</p>"
+        }
+    }
     var ending = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: '<p>Thank you!</p><p>Your responses were recorded, you may close the window now.</p>',
+        stimulus: txt(txt_ending, lang, "ending"),
         //choices: "ALL_KEYS",
         choices: "NO_KEYS",
         on_start: function() {
