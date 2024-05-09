@@ -281,6 +281,10 @@ footer a:hover {
     right: 10px;
     font-size: 24px;
     cursor: pointer;
+    color: #999;
+}
+.close:hover {
+    color: #333;
 }
 
 
