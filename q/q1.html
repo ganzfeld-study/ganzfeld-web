@@ -76,20 +76,28 @@
 
     // subject & Lab ID
     let pid = jsPsych.data.urlVariables()['pid'];
+    let lab = jsPsych.data.urlVariables()['l'];
     
+    // no Pid
     if(!pid){
-        var subject_id = jsPsych.randomization.randomID(16);
-        var lab = prompt("No participant ID transmitted!\nPlease state lab (1-6)");
+        console.log("No PID transmitted.");
+        // no lab -> go to lab selection
+        if(!["1","2","3","4","5","6"].includes(lab)){
+            console.log("No lab transmitted. Redirecting...");
+            location.href = 'lab.html?exp=q1';
+        } else {
+            //var subject_id = jsPsych.randomization.randomID(16);
+        }
     } else {
-        var subject_id = pid;
+        //var subject_id = pid;
         // set lab to first character of pid
-        var lab = pid.charAt(0);
+        lab = pid.charAt(0);
     }
 
     // set language
-    var lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
+    let lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
 
-    console.log("Subject ID: " + subject_id + " Lab: " + lab + " Language: " + lang);
+    console.log(" Lab: " + lab + " Language: " + lang);
     // specify starting time
     var start_time = new Date();
 
@@ -131,23 +139,40 @@
         check_fn: check_consent
     };*/
 
+
     /* welcome message & instructions */
+    var txt_welcome = 
+    {
+        "en": {
+            "welcome": "Welcome to Session 1!",
+            "preamble": "<h2>Welcome to Session 1!</h2><div style='text-align:justify'><p>In this first session, we would first like to ask you to fill out seven questionnaires. It may take about 30-45 minutes in total but please take a break whenever you want.</p><p style='border: 2px solid #555; padding:5px;'><b>IMPORTANT:</b> Please do not 'refresh' the page or use the 'go back/ go forward' buttons, as it would send you back to the first page and require you to start over.</p><p>Next, in the laboratory you will be asked to familiarize yourself with the Ganzfeld environment (including the red light and the pink noise) so that you are prepared for the second session, in which you will participate in the Ganzfeld experiment.</p><p>Please fill out your participant ID / make sure that it is correct and click <i>Continue</i> to begin answering the questionnaires.</div>",
+            "pid": "Participant ID",
+            "button_next": "Continue"
+        },
+        "de": {
+            "welcome": "Willkommen zur Sitzung 1!",
+            "preamble": "<h2>Willkommen zur Sitzung 1!</h2><div style='text-align:justify'><p>In dieser ersten Sitzung möchten wir Sie zunächst bitten, sieben Fragebögen auszufüllen. Es wird insgesamt etwa 30-45 Minuten dauern, aber nehmen Sie sich eine Pause, wann immer Sie möchten.</p><p style='border: 2px solid #555; padding:5px;'><b>WICHTIG:</b> Bitte aktualisieren Sie die Seite nicht oder verwenden Sie die Schaltflächen 'Zurück' oder 'Weiter', da Sie dadurch zur ersten Seite zurückgesendet werden und von vorne beginnen müssten.</p><p>Als Nächstes werden Sie im Labor gebeten, sich mit der Ganzfeldumgebung (einschließlich des roten Lichts und des rosa Rauschens) vertraut zu machen, damit Sie für die zweite Sitzung vorbereitet sind, in der Sie am Ganzfeldexperiment teilnehmen werden.</p><p>Bitte füllen Sie Ihre Teilnehmer-ID aus / stellen Sie sicher, dass sie korrekt ist, und klicken Sie auf <i>Fortfahren</i>, um mit dem Beantworten der Fragebögen zu beginnen.</div>",
+            "pid": "Teilnehmer-ID",
+            "button_next": "Fortfahren"
+        },
+        "se": {
+            "welcome": "Välkommen till Session 1!",
+            "preamble": "<h2>Välkommen till Session 1!</h2><div style='text-align:justify'><p>I denna första session skulle vi först vilja be dig att fylla i sju frågeformulär. Det kan ta cirka 30-45 minuter",
+            "pid": "Deltagar-ID",
+            "button_next": "Fortsätt"
+        }
+    };
     var welcome = {
         type: jsPsychSurveyText,
         data: { test_part: 'welcome'},
-        preamble: `
-            <h2>Welcome to Session 1!</h2>
-            <div style="text-align:justify">
-                <p>In this first session, we would first like to ask you to fill out seven questionnaires. It may take about 30-45 minutes in total but please take a break whenever you want.</p>
-                <p style="border: 2px solid #555; padding:5px;"><b>IMPORTANT:</b> Please do not "refresh" the page or use the "go back/ go forward" buttons, as it would send you back to the first page and require you to start over.</p>
-                <p>Next, in the laboratory you will be asked to familiarize yourself with the Ganzfeld environment (including the red light and the pink noise) so that you are prepared for the second session, in which you will participate in the Ganzfeld experiment.</p>
-                <p>Please fill out your participant ID / make sure that it is correct and click <i>Continue</i> to begin answering the questionnaires.
-            </div>`,
+        preamble: txt(txt_welcome, lang, 'preamble'),
         questions: [
-            {prompt: 'Participant ID',
-            name: 'pid'}
+            {
+                prompt: txt(txt_welcome, lang, 'pid'),
+                name: 'subject_id'
+            }
         ],
-        button_label: 'Continue',
+        button_label: txt(txt_welcome, lang, 'button_next'),
         on_load: function(){
             var input = document.getElementById('input-0');
             var continueBtn = document.getElementById('jspsych-survey-text-next');
@@ -178,7 +203,11 @@
                 }
             });
         },
-        on_finish: function(){
+        on_finish: function(data){
+            var subject_id = data.response.subject_id;
+            jsPsych.data.addProperties({ 
+                subject: subject_id
+            });
             jsPsych.setProgressBar(0.125); // set progress bar to 85% full.
         }
     }
@@ -205,7 +234,7 @@
         "page2_prompt": "Wie alt sind Sie?",
         "page3_prompt": "Mit welchem Geschlecht identifizieren Sie sich?",
         "page4_prompt": "Welche der folgenden Optionen beschreibt am besten Ihre Ernährung?",
-        "options_gender": ['weiblich', 'männlich', 'anderes / nicht-binär'],
+        "options_gender": ['weiblich', 'männlich', 'divers / non-binär'],
         "options_diet": [
             'Vegan (oder pflanzlich): Eine Person, die Obst, Gemüse und Getreide isst, aber keine tierischen oder Meeresprodukte',
             'Nicht-veganer Vegetarier: Eine Person, die Milchprodukte und/oder Eier isst, Obst, Gemüse, Getreide, aber keine anderen tierischen oder Meeresprodukte',
@@ -216,7 +245,6 @@
     }
     // Add translations for other languages as needed
 };
-
 
 var surveyDemo = {
     type: jsPsychSurvey,
@@ -257,49 +285,6 @@ var surveyDemo = {
     }
 };
 
-    var surveyDemo = {
-        type: jsPsychSurvey,
-        data: { test_part: "survey" },
-        pages: [
-        [
-            {
-                type: 'html',
-                prompt: 'First, we would like to ask you for some personal information:',
-            },
-            {
-                type: 'text',
-                prompt: "How old are you?", 
-                name: 'age', 
-                textbox_columns: 5,
-                required: true,
-                input_type: "number"
-            },
-            {
-                type: 'multi-choice',
-                prompt: "What gender do you identify with?", 
-                name: 'gender', 
-                options: ['female', 'male', 'other / non-binary'],
-                required: true
-            },
-            {
-                type: 'multi-choice',
-                prompt: "Which of the following best describes your diet?", 
-                name: 'vegetarian', 
-                options: [
-                    'Vegan (or plant-based): a person who eats fruits, vegetables, and grains but no animal or seafood products',
-                    'Non-vegan vegetarian: a person who eats dairy products and/or eggs, fruits, vegetables, grains, but no other animal or seafood products',
-                    'Meat reducer: a person who eats dairy products, eggs, fruits, vegetables, grains, and a reduced amount of animal or seafood products. For example, a pescetarian (who eats fish but no other animals) or someone who eliminates or reduces their consumption of red meat',
-                    'Omnivore: a person who regularly eats most meats, seafood, eggs, dairy products, fruits, vegetables, and grains.'
-                    ],
-                required: true
-            }
-        ]
-        ],
-        button_label_finish: 'Next',
-        on_finish: function(){
-            jsPsych.setProgressBar(0.25); 
-        }
-    };
 
     /* The Tellegen Absorption Scale */
     var surveyTAS = {

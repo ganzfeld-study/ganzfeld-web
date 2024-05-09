@@ -37,32 +37,16 @@
 
     let lab = jsPsych.data.urlVariables()['l'];
 
-    if(!["1","2","3","4","5","6"].includes(lab)) {
-        lab = prompt("Lab not found!\nPlease state lab (1-6)");
-        console.log("Lab: " + lab);
+    // no lab -> go to lab selection
+    if(!["1","2","3","4","5","6"].includes(lab)){
+        console.log("No lab transmitted. Redirecting...");
+        location.href = 'lab.html?exp=screen';
     }
 
-    // Compensation of Labs
-    var compensation = [
-        'Those involved in the sessions will get a cinema ticket for each session.',
-        '',
-        'You will receive $20 via Paypal for completing both sessions.',
-        '',
-        'Für die Teilnahme an den Sitzungen erhalten Sie nach Abschluss eine Vergütung in Höhe von 20 € (10 € pro Sitzung). Die Vergütung wird Ihnen in bar ausgezahlt.',
-        'Für die Teilnahme an den Sitzungen erhalten Sie nach Abschluss eine Vergütung in Höhe von 20 € (10 € pro Sitzung). Die Vergütung wird Ihnen in bar ausgezahlt.'
-    ]
+    // subject ID
+    var subject_id = lab + "_" + jsPsych.randomization.randomID(6);
+    console.log("Subject ID: " + subject_id);
 
-    // SONA & subject ID
-    let sona_id = jsPsych.data.urlVariables()['sonaid'];
-    
-    if(!sona_id){
-        var subject_id = lab + "_" + jsPsych.randomization.randomID(6);
-        console.log("Subject ID: " + subject_id);
-    } else {
-        var subject_id = sona_id;
-        var TXT_ending = 
-            '<hr><p><a href="https://lmu-psy.sona-systems.com/webstudy_credit.aspx?experiment_id=261&credit_token=c7e045b2f2b545b996b9c3148b21530d&survey_code=' + subject_id + '">Klicken Sie bitte hier, um Ihre Versuchspersonenstunde in SONA zu erhalten.</a></p>';
-  }
 
     // specify starting time
     var start_time = new Date();
@@ -74,7 +58,15 @@
         time: start_time.toISOString()
     });
 
-
+    // Compensation of Labs
+    var compensation = [
+        'Those involved in the sessions will get a cinema ticket for each session.',
+        '',
+        'You will receive $20 via Paypal for completing both sessions.',
+        '',
+        'Für die Teilnahme an den Sitzungen erhalten Sie nach Abschluss eine Vergütung in Höhe von 20 € (10 € pro Sitzung). Die Vergütung wird Ihnen in bar ausgezahlt.',
+        'Für die Teilnahme an den Sitzungen erhalten Sie nach Abschluss eine Vergütung in Höhe von 20 € (10 € pro Sitzung). Die Vergütung wird Ihnen in bar ausgezahlt.'
+    ];
     
     // consent to participate.
         var check_consent = function(elem) {

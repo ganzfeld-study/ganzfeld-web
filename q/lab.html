@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../styles.css">
+    <title>Select Lab</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .lab-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .lab {
+            margin: 10px;
+            padding: 10px 20px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .lab:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Select Your Lab</h1>
+    <div class="lab-container">
+        <div class="lab" onclick="selectLab(1)">Linnaeus/Lund</div>
+        <div class="lab" onclick="selectLab(2)">Northampton</div>
+        <div class="lab" onclick="selectLab(3)">IONS</div>
+        <div class="lab" onclick="selectLab(4)">West Georgia</div>
+        <div class="lab" onclick="selectLab(5)">IGPP Freiburg</div>
+        <div class="lab" onclick="selectLab(6)">LMU Munich</div>
+    </div>
+
+    <script>
+        var urlParams = new URLSearchParams(window.location.search);
+        var experimentUrl = urlParams.get('exp') || 'screen'; // Default to Screening
+
+        function selectLab(labId) {
+            window.location.href = `${experimentUrl}.html?l=${labId}`;
+        }
+    </script>
+</body>
+</html>
