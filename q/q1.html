@@ -496,6 +496,7 @@ var surveyDemo = {
             "BQ12": "I think I would enjoy being some kind of creative artist.",
             "BQ13": "I have had the experience of someone calling me or speaking my name and not being sure whether it was really happening or whether I was imagining it.",
             "BQ_options": ['1 not at all true of me', '2', '3', '4', '5 very true of me'],
+            "next": "Next"
         },
         "de": {
             "BQIntro": "<p>Bitte bewerten Sie jede der Aussagen von 1 = <i>\"trifft überhaupt nicht zu\"</i> bis 5 = <i>\"trifft voll und ganz zu\"</i>. Versuchen Sie, auf alle Aussagen so schnell wie möglich zu antworten.</p>",
@@ -512,7 +513,8 @@ var surveyDemo = {
             "BQ11": "Es gibt keine klare Grenzziehung zwischen normalen Menschen, Personen mit Problemen und Personen, die als verrückt oder psychotisch angesehen werden.",
             "BQ12": "Ich glaube, es würde mir gefallen, irgendeine Art Künstler zu sein.",
             "BQ13": "Ich habe schon die Erfahrung gemacht, dass jemand mich gerufen oder meinen Namen genannt hat, und ich nicht sicher war, ob es wirklich passiert ist oder ob ich es mir vorgestellt habe.",
-            "BQ_options": ['1 trifft überhaupt nicht zu', '2', '3', '4', '5 trifft voll und ganz zu']
+            "BQ_options": ['1 trifft überhaupt nicht zu', '2', '3', '4', '5 trifft voll und ganz zu'],
+            "next": "Weiter"
         }
     }
     var surveyBQ = {
@@ -544,18 +546,80 @@ var surveyDemo = {
                 {prompt: txt(txt_BQ, lang, 'BQ12'), name: 'BQ12'},
                 {prompt: txt(txt_BQ, lang, 'BQ13'), name: 'BQ13'}
                 ],
-                options: txt_BQ[lang]['BQ_options'],
+                options: txt(txt_BQ, lang, 'BQ_options'),
                 required: true
             }
         ]
         ],
-        button_label_finish: 'Next',
+        button_label_finish: txt(txt_BQ, lang, 'next'),
         on_finish: function(){
             jsPsych.setProgressBar(0.5); 
         }
     };
 
     /* The Big Five Inventory */
+    var txt_BFI2 = {
+        "en": {
+            "BFIIntro": "<p>Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please indicate the extent to which you agree or disagree with that statement from 1 = <i>disagree strongly</i> to 5 = <i>agree strongly</i>.</p>",
+            "BFIprompt": "I am someone who...",
+            "BFI01": "Is outgoing, sociable.",
+            "BFI02": "Has few artistic interests.",
+            "BFI03": "Has an assertive personality.",
+            "BFI04": "Is curious about many different things.",
+            "BFI05": "Rarely feels excited or eager.",
+            "BFI06": "Is inventive, finds clever ways to do things.",
+            "BFI07": "Tends to be quiet.",
+            "BFI08": "Is fascinated by art, music, or literature.",
+            "BFI09": "Is dominant, acts as a leader.",
+            "BFI10": "Avoids intellectual, philosophical discussions.",
+            "BFI11": "Is less active than other people.",
+            "BFI12": "Has little creativity.",
+            "BFI13": "Is sometimes shy, introverted.",
+            "BFI14": "Values art and beauty.",
+            "BFI15": "Finds it hard to influence people.",
+            "BFI16": "Is complex, a deep thinker.",
+            "BFI17": "Is full of energy.",
+            "BFI18": "Has difficulty imagining things.",
+            "BFI19": "Is talkative.",
+            "BFI20": "Thinks poetry and plays are boring.",
+            "BFI21": "Prefers to have others take charge.",
+            "BFI22": "Has little interest in abstract ideas.",
+            "BFI23": "Shows a lot of enthusiasm.",
+            "BFI24": "Is original, comes up with new ideas.",
+            "BFI_options": ['1 disagree strongly', '2 disagree a little', '3 neutral / no opinion', '4 agree a little', '5 agree strongly'],
+            "next": "Next"
+        },
+        "de": {
+            "BFIIntro": "<p>Hier finden Sie eine Reihe von Eigenschaften, die auf Sie zutreffen können, aber nicht müssen. Stimmen Sie zum Beispiel zu, dass Sie gerne Zeit mit anderen verbringen? Bitte geben Sie bei jeder Aussage an, inwieweit Sie dieser zustimmen oder nicht zustimmen, von 1 = <i>stimme überhaupt nicht zu</i> bis 5 = <i>stimme voll und ganz zu</i>.</p>",
+            "BFIprompt": " ",
+            "BFI01": "Ich gehe aus mir heraus, bin gesellig.",
+            "BFI02": "Ich bin nicht sonderlich kunstinteressiert.",
+            "BFI03": "Ich bin durchsetzungsfähig, energisch.",
+            "BFI04": "Ich bin vielseitig interessiert.",
+            "BFI05": "Ich schäume selten vor Begeisterung über.",
+            "BFI06": "Ich bin erfinderisch, mir fallen raffinierte Lösungen ein.",
+            "BFI07": "Ich bin eher ruhig.",
+            "BFI08": "Ich kann mich für Kunst, Musik und Literatur begeistern.",
+            "BFI09": "Ich neige dazu, die Führung zu übernehmen.",
+            "BFI10": "Ich meide philosophische Diskussionen.",
+            "BFI11": "Ich bin weniger aktiv und unternehmungslustig als andere.",
+            "BFI12": "Ich bin nicht besonders einfallsreich.",
+            "BFI13": "Ich bin eher schüchtern.",
+            "BFI14": "Ich weiß Kunst und Schönheit zu schätzen.",
+            "BFI15": "Mir fällt es schwer, andere zu beeinflussen.",
+            "BFI16": "Es macht mir Spaß, gründlich über komplexe Dinge nachzudenken und sie zu verstehen.",
+            "BFI17": "Ich bin voller Energie und Tatendrang.",
+            "BFI18": "Ich bin nicht sonderlich fantasievoll.",
+            "BFI19": "Ich bin gesprächig.",
+            "BFI20": "Ich finde Gedichte und Theaterstücke langweilig.",
+            "BFI21": "In einer Gruppe überlasse ich lieber anderen die Entscheidung.",
+            "BFI22": "Mich interessieren abstrakte Überlegungen wenig.",
+            "BFI23": "Ich bin begeisterungsfähig und kann andere leicht mitreißen.",
+            "BFI24": "Ich bin originell, entwickle neue Ideen.",
+            "BFI_options": ['1 stimme überhaupt nicht zu', '2 stimme nicht zu', '3 stimme eher nicht zu', '4 stimme eher zu', '5 stimme voll und ganz zu'],
+            "next": "Weiter"
+        }
+    }
     var surveyBFI2 = {
     type: jsPsychSurvey,
     data: { test_part: "BFI2" },
@@ -564,50 +628,78 @@ var surveyDemo = {
         {
             type: 'html',
             name: 'BFIIntro',
-            prompt: `<p>Here are a number of characteristics that may or may not apply to you. For example, do you agree that you are someone who likes to spend time with others? Please indicate the extent to which you agree or disagree with that statement from 1 = <i>disagree strongly</i> to 5 = <i>agree strongly</i>.</p>`,
+            prompt: txt(txt_BFI2, lang, 'BFIIntro')
         },
         {
             type: 'likert-table',
             name: 'BFI',
-            prompt: 'I am someone who...',
+            prompt: txt(txt_BFI2, lang, 'BFIprompt'),
             statements: [
-            { prompt: 'Is outgoing, sociable.', name: 'BFI01' },
-            { prompt: 'Has few artistic interests.', name: 'BFI02' },
-            { prompt: 'Has an assertive personality.', name: 'BFI03' },
-            { prompt: 'Is curious about many different things.', name: 'BFI04' },
-            { prompt: 'Rarely feels excited or eager.', name: 'BFI05' },
-            { prompt: 'Is inventive, finds clever ways to do things.', name: 'BFI06' },
-            { prompt: 'Tends to be quiet.', name: 'BFI07' },
-            { prompt: 'Is fascinated by art, music, or literature.', name: 'BFI08' },
-            { prompt: 'Is dominant, acts as a leader.', name: 'BFI09' },
-            { prompt: 'Avoids intellectual, philosophical discussions.', name: 'BFI10' },
-            { prompt: 'Is less active than other people.', name: 'BFI11' },
-            { prompt: 'Has little creativity.', name: 'BFI12' },
-            { prompt: 'Is sometimes shy, introverted.', name: 'BFI13' },
-            { prompt: 'Values art and beauty.', name: 'BFI14' },
-            { prompt: 'Finds it hard to influence people.', name: 'BFI15' },
-            { prompt: 'Is complex, a deep thinker.', name: 'BFI16' },
-            { prompt: 'Is full of energy.', name: 'BFI17' },
-            { prompt: 'Has difficulty imagining things.', name: 'BFI18' },
-            { prompt: 'Is talkative.', name: 'BFI19' },
-            { prompt: 'Thinks poetry and plays are boring.', name: 'BFI20' },
-            { prompt: 'Prefers to have others take charge.', name: 'BFI21' },
-            { prompt: 'Has little interest in abstract ideas.', name: 'BFI22' },
-            { prompt: 'Shows a lot of enthusiasm.', name: 'BFI23' },
-            { prompt: 'Is original, comes up with new ideas.', name: 'BFI24' }
+            { prompt: txt(txt_BFI2, lang, 'BFI01'), name: 'BFI01' },
+            { prompt: txt(txt_BFI2, lang, 'BFI02'), name: 'BFI02' },
+            { prompt: txt(txt_BFI2, lang, 'BFI03'), name: 'BFI03' },
+            { prompt: txt(txt_BFI2, lang, 'BFI04'), name: 'BFI04' },
+            { prompt: txt(txt_BFI2, lang, 'BFI05'), name: 'BFI05' },
+            { prompt: txt(txt_BFI2, lang, 'BFI06'), name: 'BFI06' },
+            { prompt: txt(txt_BFI2, lang, 'BFI07'), name: 'BFI07' },
+            { prompt: txt(txt_BFI2, lang, 'BFI08'), name: 'BFI08' },
+            { prompt: txt(txt_BFI2, lang, 'BFI09'), name: 'BFI09' },
+            { prompt: txt(txt_BFI2, lang, 'BFI10'), name: 'BFI10' },
+            { prompt: txt(txt_BFI2, lang, 'BFI11'), name: 'BFI11' },
+            { prompt: txt(txt_BFI2, lang, 'BFI12'), name: 'BFI12' },
+            { prompt: txt(txt_BFI2, lang, 'BFI13'), name: 'BFI13' },
+            { prompt: txt(txt_BFI2, lang, 'BFI14'), name: 'BFI14' },
+            { prompt: txt(txt_BFI2, lang, 'BFI15'), name: 'BFI15' },
+            { prompt: txt(txt_BFI2, lang, 'BFI16'), name: 'BFI16' },
+            { prompt: txt(txt_BFI2, lang, 'BFI17'), name: 'BFI17' },
+            { prompt: txt(txt_BFI2, lang, 'BFI18'), name: 'BFI18' },
+            { prompt: txt(txt_BFI2, lang, 'BFI19'), name: 'BFI19' },
+            { prompt: txt(txt_BFI2, lang, 'BFI20'), name: 'BFI20' },
+            { prompt: txt(txt_BFI2, lang, 'BFI21'), name: 'BFI21' },
+            { prompt: txt(txt_BFI2, lang, 'BFI22'), name: 'BFI22' },
+            { prompt: txt(txt_BFI2, lang, 'BFI23'), name: 'BFI23' },
+            { prompt: txt(txt_BFI2, lang, 'BFI24'), name: 'BFI24' }
             ],
-            options: ['1 disagree strongly', '2 disagree a little', '3 neutral / no opinion', '4 agree a little', '5 agree strongly'],
+            options: txt_BFI2[lang]['BFI_options'],
             required: true
         }
         ]
         ],
-        button_label_finish: 'Next',
+        button_label_finish: txt(txt_BFI2, lang, 'next'),
         on_finish: function(){
             jsPsych.setProgressBar(0.675); 
         }
     };
 
     /* The Brief Sensation Seeking Scale */
+    var txt_BSSS = {
+        "en": {
+            "BSSSIntro": "<p>Here are a number of characteristics that may or may not apply to you. Please select a number for each statement to indicate the extent to which you agree or disagree with that statement from 1 = <i>disagree strongly</i> to 5 = <i>agree strongly</i>.</p>",
+            "BSSS01": "I would like to explore strange places.",
+            "BSSS02": "I get restless when I spend too much time at home.",
+            "BSSS03": "I like to do frightening things.",
+            "BSSS04": "I like wild parties.",
+            "BSSS05": "I would like to take off on a trip with no pre-planned routes or timetables.",
+            "BSSS06": "I prefer friends who are excitingly unpredictable.",
+            "BSSS07": "I would like to try bungee jumping.",
+            "BSSS08": "I would love to have new and exciting experiences, even if they are illegal.",
+            "BSSS_options": ['1 disagree strongly', '2 disagree', '3 neither disagree nor agree', '4 agree', '5 agree strongly'],
+            "next": "Next"
+        },
+        "de": {
+            "BSSSIntro": "<p>Im Folgenden finden Sie eine Reihe von Merkmalen, die auf Sie zutreffen können oder auch nicht. Bitte geben Sie bei jeder Aussage an, inwieweit Sie dieser Aussage zustimmen oder nicht zustimmen, von 1 = <i>stimme überhaupt nicht zu</i> bis 5 = <i>stimme voll und ganz zu</i>.</p>",
+            "BSSS01": "Ich möchte sonderbare Orte erkunden.",
+            "BSSS02": "Ich werde unruhig, wenn ich zu viel Zeit zu Hause verbringe.",
+            "BSSS03": "Ich tue gerne furchterregende Dinge.",
+            "BSSS04": "Ich mag wilde Parties.",
+            "BSSS05": "Ich würde gerne auf eine Reise gehen, bei der es keine vorgeplanten Routen oder Fahrpläne gibt.",
+            "BSSS06": "Ich bevorzuge Freunde, die aufregend und unberechenbar sind.",
+            "BSSS07": "Ich würde gerne Bungee Jumping ausprobieren.",
+            "BSSS08": "Ich mag neue und spannende Erfahrungen, auch wenn ich dabei Regeln brechen muss.",
+            "BSSS_options": ['1 stimme überhaupt nicht zu', '2 stimme nicht zu', '3 stimme eher nicht zu', '4 stimme eher zu', '5 stimme voll und ganz zu'],
+            "next": "Weiter"
+        }
+    }
     var surveyBSSS = {
         type: jsPsychSurvey,
         data: { test_part: "BSSS" },
@@ -616,28 +708,28 @@ var surveyDemo = {
             {
                 type: 'html',
                 name: 'BSSSIntro',
-                prompt: '<p>Here are a number of characteristics that may or may not apply to you. Please select a number for each statement to indicate the extent to which you agree or disagree with that statement from 1 = <i>disagree strongly</i> to 5 = <i>agree strongly</i>.</p>',
+                prompt: txt(txt_BSSS, lang, 'BSSSIntro')
             },
             {
                 type: 'likert-table',
                 name: 'BSSS',
                 prompt: ' ',
                 statements: [
-                {prompt: 'I would like to explore strange places.', name: 'BSSI01'},
-                {prompt: 'I get restless when I spend too much time at home.', name: 'BSSI02'},
-                {prompt: 'I like to do frightening things.', name: 'BSSI03'},
-                {prompt: 'I like wild parties.', name: 'BSSI04'},
-                {prompt: 'I would like to take off on a trip with no pre-planned routes or timetables.', name: 'BSSI05'},
-                {prompt: 'I prefer friends who are excitingly unpredictable.', name: 'BSSI06'},
-                {prompt: 'I would like to try bungee jumping.', name: 'BSSI07'},
-                {prompt: 'I would love to have new and exciting experiences, even if they are illegal.', name: 'BSSI08'}
+                {prompt: txt(txt_BSSS, lang, "BSSS01"), name: 'BSSS01'},
+                {prompt: txt(txt_BSSS, lang, "BSSS02"), name: 'BSSS02'},
+                {prompt: txt(txt_BSSS, lang, "BSSS03"), name: 'BSSS03'},
+                {prompt: txt(txt_BSSS, lang, "BSSS04"), name: 'BSSS04'},
+                {prompt: txt(txt_BSSS, lang, "BSSS05"), name: 'BSSS05'},
+                {prompt: txt(txt_BSSS, lang, "BSSS06"), name: 'BSSS06'},
+                {prompt: txt(txt_BSSS, lang, "BSSS07"), name: 'BSSS07'},
+                {prompt: txt(txt_BSSS, lang, "BSSS08"), name: 'BSSS08'}
                 ],
-                options: ['1 disagree strongly', '2 disagree', '3 neither disagree nor agree', '4 agree', '5 agree strongly'],
+                options: txt(txt_BSSS, lang, 'BSSS_options'),
                 required: true
             }
         ]
         ],
-        button_label_finish: 'Next',
+        button_label_finish: txt(txt_BSSS, lang, 'next'),
         on_finish: function(){
             jsPsych.setProgressBar(0.75); 
         }
