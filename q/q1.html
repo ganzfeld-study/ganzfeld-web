@@ -151,13 +151,13 @@
         },
         "de": {
             "welcome": "Willkommen zur Sitzung 1!",
-            "preamble": "<h2>Willkommen zur Sitzung 1!</h2><div style='text-align:justify'><p>In dieser ersten Sitzung möchten wir Sie zunächst bitten, sieben Fragebögen auszufüllen. Es wird insgesamt etwa 30-45 Minuten dauern, aber nehmen Sie sich eine Pause, wann immer Sie möchten.</p><p style='border: 2px solid #555; padding:5px;'><b>WICHTIG:</b> Bitte aktualisieren Sie die Seite nicht oder verwenden Sie die Schaltflächen 'Zurück' oder 'Weiter', da Sie dadurch zur ersten Seite zurückgesendet werden und von vorne beginnen müssten.</p><p>Als Nächstes werden Sie im Labor gebeten, sich mit der Ganzfeldumgebung (einschließlich des roten Lichts und des rosa Rauschens) vertraut zu machen, damit Sie für die zweite Sitzung vorbereitet sind, in der Sie am Ganzfeldexperiment teilnehmen werden.</p><p>Bitte füllen Sie Ihre Teilnehmer-ID aus / stellen Sie sicher, dass sie korrekt ist, und klicken Sie auf <i>Fortfahren</i>, um mit dem Beantworten der Fragebögen zu beginnen.</div>",
+            "preamble": "<h2>Willkommen zu Sitzung 1!</h2><div style='text-align:justify'><p>In dieser ersten Sitzung möchten wir Sie zunächst bitten, sieben Fragebögen auszufüllen. Es wird insgesamt etwa 30-45 Minuten dauern, aber bitte machen Sie eine Pause, wann immer Sie wollen.</p><p style='border: 2px solid #555; padding:5px;'><b>WICHTIG:</b> Bitte aktualisieren Sie die Seite nicht und benutzen Sie nicht die Schaltflächen 'Zurück/Vorwärts', da Sie sonst zur ersten Seite zurückkehren und von vorne beginnen müssen. </p><p>Als Nächstes werden Sie im Labor gebeten, sich mit der Ganzfeld-Umgebung (einschließlich des roten Lichts und des rosa Rauschens) vertraut zu machen, damit Sie auf die zweite Sitzung vorbereitet sind, in der Sie am Ganzfeld-Experiment teilnehmen werden.</p><p>Bitte geben Sie Ihre Teilnehmer-ID ein / vergewissern Sie sich, dass sie korrekt ist, und klicken Sie auf <i>Fortfahren</i>, um mit der Beantwortung der Fragebögen zu beginnen.</div>",
             "pid": "Teilnehmer-ID",
             "button_next": "Fortfahren"
         },
         "se": {
-            "welcome": "Välkommen till Session 1!",
-            "preamble": "<h2>Välkommen till Session 1!</h2><div style='text-align:justify'><p>I denna första session skulle vi först vilja be dig att fylla i sju frågeformulär. Det kan ta cirka 30-45 minuter",
+            "welcome": "Välkommen till session 1!",
+            "preamble": "<h2>Välkommen till session 1!</h2><div style='text-align:justify'><p>I den här första sessionen vill vi först be dig att fylla i sju frågeformulär. Det kan ta cirka 30-45 minuter totalt, men ta gärna en paus när du vill.</p><p style='border: 2px solid #555; padding:5px;'><b>VIKTIGT:</b> Vänligen uppdatera inte sidan eller använd knapparna 'gå tillbaka/gå framåt', eftersom det skulle skicka dig tillbaka till första sidan och kräva att du börjar om. </p><p>Näst kommer du i laboratoriet att bli ombedd att bekanta dig med Ganzfeld-miljön (inklusive det röda ljuset och det rosa ljudet) så att du är förberedd för den andra sessionen, där du kommer att delta i Ganzfeld-experimentet.</p><p>Fyll i ditt deltagar-ID / se till att det är korrekt och klicka på <i>Fortsätt</i> för att börja svara på frågeformulären.</div>",
             "pid": "Deltagar-ID",
             "button_next": "Fortsätt"
         }
@@ -216,10 +216,10 @@
     /* Demographics */
     var txt_surveyDemo = {
     "en": {
-        "page1_prompt": "First, we would like to ask you for some personal information:",
-        "page2_prompt": "How old are you?",
-        "page3_prompt": "What gender do you identify with?",
-        "page4_prompt": "Which of the following best describes your diet?",
+        "intro": "First, we would like to ask you for some personal information:",
+        "age": "How old are you?",
+        "gender": "What gender do you identify with?",
+        "vegetarian": "Which of the following best describes your diet?",
         "options_gender": ['female', 'male', 'other / non-binary'],
         "options_diet": [
             'Vegan (or plant-based): a person who eats fruits, vegetables, and grains but no animal or seafood products',
@@ -230,18 +230,32 @@
         "button_next": "Next"
     },
     "de": {
-        "page1_prompt": "Zuerst möchten wir Sie um einige persönliche Informationen bitten:",
-        "page2_prompt": "Wie alt sind Sie?",
-        "page3_prompt": "Mit welchem Geschlecht identifizieren Sie sich?",
-        "page4_prompt": "Welche der folgenden Optionen beschreibt am besten Ihre Ernährung?",
+        "intro": "Zuerst möchten wir Sie um einige persönliche Informationen bitten:",
+        "age": "Wie alt sind Sie?",
+        "gender": "Mit welchem Geschlecht identifizieren Sie sich?",
+        "vegetarian": "Welche der folgenden Aussagen beschreibt Ihre Ernährung am besten?",
         "options_gender": ['weiblich', 'männlich', 'divers / non-binär'],
         "options_diet": [
-            'Vegan (oder pflanzlich): Eine Person, die Obst, Gemüse und Getreide isst, aber keine tierischen oder Meeresprodukte',
-            'Nicht-veganer Vegetarier: Eine Person, die Milchprodukte und/oder Eier isst, Obst, Gemüse, Getreide, aber keine anderen tierischen oder Meeresprodukte',
-            'Fleischreduzierer: Eine Person, die Milchprodukte, Eier, Obst, Gemüse, Getreide und eine reduzierte Menge an tierischen oder Meeresprodukten isst. Zum Beispiel ein Pescetarier (der Fisch, aber keine anderen Tiere isst) oder jemand, der seinen Verzehr von rotem Fleisch reduziert oder eliminiert',
-            'Allesfresser: Eine Person, die regelmäßig die meisten Fleisch-, Meeresfrüchte-, Eier-, Milchprodukte-, Obst-, Gemüse- und Getreidesorten isst.'
+            "Vegan (oder pflanzlich): eine Person, die Obst, Gemüse und Getreide, aber keine tierischen Produkte oder Meeresfrüchte isst",
+            "Nicht-veganer Vegetarier: eine Person, die Milchprodukte und/oder Eier, Obst, Gemüse, Getreide, aber keine anderen tierischen Produkte oder Meeresfrüchte isst",
+            "Fleischreduzierer: eine Person, die Milchprodukte, Eier, Obst, Gemüse, Getreide und eine reduzierte Menge an tierischen Produkten oder Meeresfrüchten isst. Zum Beispiel ein Pescetarier (der Fisch, aber keine anderen Tiere isst) oder jemand, der auf den Verzehr von rotem Fleisch verzichtet oder diesen reduziert",
+            "Omnivore: eine Person, die regelmäßig die meisten Fleischsorten, Meeresfrüchte, Eier, Milchprodukte, Obst, Gemüse und Getreideprodukte isst."
         ],
         "button_next": "Weiter"
+    },
+    "se": {
+        "intro": "Först skulle vi vilja be dig om lite personlig information:",
+        "age": "Hur gammal är du?",
+        "gender": "Vilket kön identifierar du dig med?",
+        "vegetarian": "Vilket av följande beskriver bäst din kosthållning?",
+        "options_gender": ["kvinna", "man", "annat/icke-binärt"],
+        "options_diet": [
+            "Vegan (eller växtbaserad): en person som äter frukt, grönsaker och spannmål men inga animaliska produkter eller fisk- och skaldjursprodukter",
+            "Icke-vegansk vegetarian: en person som äter mejeriprodukter och/eller ägg, frukt, grönsaker och spannmål, men inga andra animaliska produkter eller skaldjursprodukter",
+            "Köttreducerare: en person som äter mejeriprodukter, ägg, frukt, grönsaker, spannmål och en minskad mängd animaliska produkter eller skaldjursprodukter. Till exempel en pescetarian (som äter fisk men inga andra djur) eller någon som eliminerar eller minskar sin konsumtion av rött kött",
+            "Allätare: en person som regelbundet äter det mesta av kött, fisk och skaldjur, ägg, mejeriprodukter, frukt, grönsaker och spannmål."
+        ],
+        "button_next": "Nästa"
     }
     // Add translations for other languages as needed
 };
@@ -253,11 +267,11 @@ var surveyDemo = {
         [
             {
                 type: 'html',
-                prompt: txt(txt_surveyDemo, lang, 'page1_prompt')
+                prompt: txt(txt_surveyDemo, lang, 'intro')
             },
             {
                 type: 'text',
-                prompt: txt(txt_surveyDemo, lang, 'page2_prompt'), 
+                prompt: txt(txt_surveyDemo, lang, 'age'), 
                 name: 'age', 
                 textbox_columns: 5,
                 required: true,
@@ -265,14 +279,14 @@ var surveyDemo = {
             },
             {
                 type: 'multi-choice',
-                prompt: txt(txt_surveyDemo, lang, 'page3_prompt'), 
+                prompt: txt(txt_surveyDemo, lang, 'gender'), 
                 name: 'gender', 
                 options: txt_surveyDemo[lang]['options_gender'],
                 required: true
             },
             {
                 type: 'multi-choice',
-                prompt: txt(txt_surveyDemo, lang, 'page4_prompt'), 
+                prompt: txt(txt_surveyDemo, lang, 'vegetarian'), 
                 name: 'vegetarian', 
                 options: txt_surveyDemo[lang]['options_diet'],
                 required: true
@@ -287,6 +301,122 @@ var surveyDemo = {
 
 
     /* The Tellegen Absorption Scale */
+    var txt_TAS = {
+        "en": {
+            "TASIntro": "<p>This questionnaire consists of questions about experiences that you may have had in your life. We are interested in how often you have these experiences. It is important, however, that your answers show how often these experiences happen to you when you are not under the influence of alcohol or drugs.</p><p>Please indicate how much each statement applies to you from 1 = <i>strongly disagree</i> to 6 = <i>strongly agree</i>.</p>",
+            "TAS01": "Sometimes I feel and experience things as I did as a child.",
+            "TAS02": "I can be greatly moved by eloquent or poetic language.",
+            "TAS03": "While watching a movie, a TV show, or a play, I may become so involved that I may forget about myself and my surroundings and experience the story as if it were real and as if I were taking part in it.",
+            "TAS04": "If I stare at a picture and then look away from it, I can sometimes “see” an image of the picture almost as if I were still looking at it.",
+            "TAS05": "Sometimes I feel as if my mind could envelop the whole world.",
+            "TAS06": "I like to watch cloud shapes change in the sky.",
+            "TAS07": "If I wish, I can imagine (or daydream) some things so vividly that they hold my attention as a good movie or story does.",
+            "TAS08": "I think I really know what some people mean when they talk about mystical experiences.",
+            "TAS09": "I sometimes “step outside” my usual self and experience an entirely different state of being.",
+            "TAS10": "Textures—such as wool, sand, wood—sometimes remind me of colors or music.",
+            "TAS11": "Sometimes I experience things as if they were “doubly” real.",
+            "TAS12": "When I listen to music I can get so caught up in it that I don't notice anything else.",
+            "TAS13": "If I wish I can imagine that my body is so heavy that I could not move it if I wanted to.",
+            "TAS14": "I can often somehow sense the presence of another person before I actually see or hear her/him.",
+            "TAS15": "The crackle and flames of a wood fire stimulate my imagination.",
+            "TAS16": "It is sometimes possible for me to be completely immersed in nature or art and to feel as if my whole state of consciousness has somehow been temporarily altered.",
+            "TAS17": "Different colors have distinctive and special meanings for me.",
+            "TAS18": "I am able to wander off into my thoughts while doing a routine task and then find a few minutes later that I have completed it.",
+            "TAS19": "I can sometimes recollect certain past experiences in my life with such clarity and vividness that it is like living them again or almost so.",
+            "TAS20": "Things that might seem meaningless to others often make sense to me.",
+            "TAS21": "While acting in a play I think I could really feel the emotions of the character and “become” her/him for the time being, forgetting both myself and the audience.",
+            "TAS22": "My thoughts often don't occur as words but as visual images.",
+            "TAS23": "I often take delight in small things (like the five-pointed star shape that appears when you cut an apple across the core or the colors in soap bubbles).",
+            "TAS24": "When listening to organ music or other powerful music I sometimes feel as if I am being lifted into the air.",
+            "TAS25": "Sometimes I can change noise into music by the way I listen to it.",
+            "TAS26": "Some of my most vivid memories are called up by scents and smells.",
+            "TAS27": "Some music reminds me of pictures or changing color patterns.",
+            "TAS28": "I often know what someone is going to say before he or she says it.",
+            "TAS29": "I often have “physical memories”: for example, after I have been swimming I may still feel as if I am in the water.",
+            "TAS30": "The sound of a voice can be so fascinating to me that I can just go on listening to it.",
+            "TAS31": "At times I somehow feel the presence of someone who is not physically there.",
+            "TAS32": "Sometimes thoughts and images come to me without the slightest effort on my part.",
+            "TAS33": "I find that different odors have different colors.",
+            "TAS34": "I can be deeply moved by a sunset.",
+            "TAS_options": ['1 strongly disagree', '2 moderately disagree', '3 slightly disagree', '4 slightly agree', '5 moderately agree', '6 strongly agree'],
+        },
+        "de": {
+            "TASIntro": "<p>Der Fragebogen besteht aus Fragen zu Erfahrungen, die Sie in Ihrem Leben gemacht haben könnten. Wir interessieren uns dafür, wie oft Sie diese Erfahrungen gemacht haben. Es ist jedoch wichtig, dass Ihre Antworten zeigen, wie oft diese Erfahrungen bei Ihnen auftreten, wenn Sie nicht unter dem Einfluss von Alkohol oder Drogen stehen.</p><p>Bitte geben Sie an, inwieweit jede Aussage auf Sie zutrifft von 1 = <i>stimme überhaupt nicht zu</i> bis 6 = <i>stimme voll und ganz zu</i>.</p>",
+            "TAS01": "Manchmal empfinde und erlebe ich die Dinge wie in meiner Kindheit.",
+            "TAS02": "Wortgewandte oder poetische Sprache kann mich stark beeindrucken.",
+            "TAS03": "Filme, Fernsehspiele oder Theaterstücke können mich so mitreißen, dass ich mich und alles um mich herum vergesse und die Geschichte erlebe als wäre sie Realität und ich an ihr beteiligt.",
+            "TAS04": "Wenn ich ein Bild betrachte und danach wegsehe, habe ich manchmal ein Abbild davon, fast so als ob ich das Bild selber noch sehen würde.",
+            "TAS05": "Manchmal habe ich das Gefühl, mein Geist könnte die ganze Welt umfangen.",
+            "TAS06": "Ich beobachte gerne, wie Wolken ihre Form verändern.",
+            "TAS07": "Wenn ich will, kann ich Tagträumen oder mir manche Dinge so lebhaft vorstellen, dass sie meine Aufmerksamkeit fesseln wie ein guter Film oder eine gute Geschichte.",
+            "TAS08": "Ich glaube, dass ich weiß, was manche Leute meinen, wenn sie von mystischen Erfahrungen sprechen.",
+            "TAS09": "Ich kann manchmal aus mir heraustreten und einen völlig anderen Seinszustand erfahren.",
+            "TAS10": "Stoffe – wie etwa Wolle, Sand oder Holz – erinnern mich manchmal an Farben oder Musik.",
+            "TAS11": "Manchmal erlebe ich die Dinge als wären sie doppelt wirklich.",
+            "TAS12": "Wenn ich Musik höre, kann sie mich so gefangen nehmen, dass ich nichts anderes mehr beachte.",
+            "TAS13": "Wenn ich will, kann ich mir vorstellen, dass mein Körper so schwer ist, dass ich ihn nicht mehr bewegen kann, selbst wenn ich es wollte.",
+            "TAS14": "Oft kann ich die Gegenwart einer anderen Person spüren, noch bevor ich sie (oder ihn) wirklich sehe oder höre.",
+            "TAS15": "Das Knistern und die Flammen eines Holzfeuers regen meine Phantasie an.",
+            "TAS16": "Manchmal ist es mir möglich, mich völlig in Natur oder Kunst zu versenken, als ob sich mein Bewusstseinszustand vorübergehend verändert hätte.",
+            "TAS17": "Verschiedene Farben haben unterschiedliche und besondere Bedeutungen für mich.",
+            "TAS18": "Es kann mir passieren, dass ich während einer Routineaufgabe in Gedanken abschweife und dabei vergesse, was ich tue, bis ich nach einigen Minuten bemerke, dass ich die Aufgabe erledigt habe.",
+            "TAS19": "Ich kann mich manchmal an bestimmte Erfahrungen aus meiner Vergangenheit so lebhaft und klar erinnern, als ob ich sie noch einmal durchleben würde.",
+            "TAS20": "Dinge, die anderen bedeutungslos erscheinen mögen, haben für mich oft einen Sinn.",
+            "TAS21": "Ich glaube, wenn ich in einem Stück eine Rolle spielen würde, könnte ich die Gefühle des dargestellten Charakters tatsächlich empfinden und für diese Zeit als die betreffende Person wirklich leben, mich selbst und das Publikum vergessend.",
+            "TAS22": "Meine Gedanken erscheinen oft nicht als Worte, sondern als Bilder.",
+            "TAS23": "Ich kann mich oft an kleinen Dingen erfreuen (wie die Farbe von Seifenblasen, oder ähnliches).",
+            "TAS24": "Wenn ich mir Orgelmusik oder andere kraftvolle Musik anhöre, fühle ich mich manchmal wie in die Luft gehoben.",
+            "TAS25": "Manchmal kann ich Geräusche in Musik verwandeln, wenn ich auf eine bestimmte Art hinhöre.",
+            "TAS26": "Einige meiner lebhaftesten Erinnerungen werden von Düften und Gerüchen geweckt.",
+            "TAS27": "Manche Musik erinnert mich an Bilder oder sich ändernde Farbmuster.",
+            "TAS28": "Oft weiß ich, was jemand sagen wird, noch bevor er (oder sie) es ausspricht.",
+            "TAS29": "Ich habe oft eine Art „körperliche Erinnerungen“, z. B. wenn ich geschwommen bin, kann ich danach immer noch das Gefühl haben, im Wasser zu sein.",
+            "TAS30": "Der Klang einer Stimme kann so faszinierend für mich sein, dass ich einfach nur zuhöre.",
+            "TAS31": "Manchmal fühle ich die Anwesenheit einer Person, die physisch überhaupt nicht da ist.",
+            "TAS32": "Manchmal kommen mir Gedanken und Bilder ohne das geringste Hinzutun.",
+            "TAS33": "Ich finde, dass verschiedene Gerüche verschiedene Farben haben.",
+            "TAS34": "Ein Sonnenuntergang kann mich tief berühren.",
+            "TAS_options": ['1 stimme überhaupt nicht zu', '2 stimme nicht zu', '3 stimme eher nicht zu', '4 stimme eher zu', '5 stimme zu', '6 stimme voll und ganz zu']
+        },
+        "se": {
+            "TASIntro": "<p>Den här enkäten består av frågor om upplevelser som du kan ha haft i ditt liv. Vi är intresserade av hur ofta du har dessa upplevelser. Det är dock viktigt att dina svar visar hur ofta dessa upplevelser inträffar hos dig när du inte är under påverkan av alkohol eller droger.</p><p>Ange hur mycket varje påstående gäller för dig från 1 = <i>stämmer inte alls</i> till 6 = <i>stämmer helt och hållet</i>.</p>",
+            "TAS01": "Ibland känner och upplever jag saker på samma sätt som när jag var barn.",
+            "TAS02": "Jag kan bli väldigt tagen av uttrycksfullt eller poetiskt språk.",
+            "TAS03": "När jag ser en show eller en pjäs kan jag bli så engagerad att jag glömmer mig själv och min omgivning, och upplever historien som om den vore verklig och som om jag deltog i den.",
+            "TAS04": "Om jag stirrar på en bild, och sedan tittar bort från den, kan jag ibland “se” en 'kopia' av bilden, nästan som om jag fortfarande tittade på den.",
+            "TAS05": "Ibland känner jag det som att mitt sinne skulle kunna ta in hela världen.",
+            "TAS06": "Jag tycker om att titta på molnformationer på himlen.",
+            "TAS07": "Om jag vill kan jag föreställa mig (eller dagdrömma om) vissa saker så levande att de fångar min uppmärksamhet på samma sätt som en bra film eller historia gör.",
+            "TAS08": "Jag tror att jag verkligen vet vad somliga menar när de talar om mystika erfarenheter.",
+            "TAS09": "Ibland “går jag utanför” mitt vanliga själv och upplever ett helt annat sinnestillstånd.",
+            "TAS10": "Material – som ull, sand, trä – påminner mig ibland om färger eller musik.",
+            "TAS11": "Ibland erfar jag saker som om de vore alldeles särskilt verkliga.",
+            "TAS12": "När jag lyssnar på musik kan jag bli så fångad av den att jag inte lägger märke till något annat.",
+            "TAS13": "Om jag vill kan jag föreställa mig att min kropp är så tung att jag inte skulle kunna röra på den om jag ville.",
+            "TAS14": "Jag kan ofta känna närvaron av en annan person innan jag faktiskt ser eller hör honom/henne.",
+            "TAS15": "Knastret och flammorna från en brasa stimulerar min fantasi.",
+            "TAS16": "Ibland händer det att jag totalt går upp i naturen eller i konst och att jag känner det som att hela mitt medvetandetillstånd på något sätt tillfälligt förändrats.",
+            "TAS17": "Olika färger har distinkta och speciella betydelser för mig.",
+            "TAS18": "Jag har förmågan att låta mina tankar vandra iväg medan jag sysslar med en rutinuppgift och faktiskt glömma att jag sysslar med uppgiften, och sedan upptäcka en stund senare att jag slutfört den.",
+            "TAS19": "Jag kan ibland minnas vissa tidigare erfarenheter i mitt liv med sådan klarhet och livlighet att det är som att återuppleva dem, eller nästan så.",
+            "TAS20": "Saker som verkar meningslösa för andra är ofta meningsfulla för mig.",
+            "TAS21": "Som skådespelare i en pjäs tror jag att jag verkligen skulle kunna känna rollfigurens känslor och då “bli” henne/honom, och glömma bort både mig själv och publiken.",
+            "TAS22": "Mina tankar uppträder ofta inte som ord utan som visuella bilder.",
+            "TAS23": "Jag finner ofta stor glädje i små saker (som den fem-punktiga stjärnform som framträder när man skär ett äpple genom kärnan, eller färgerna i såpbubblor)",
+            "TAS24": "När jag lyssnar till orgelmusik eller annan mäktig musik känns det ibland som att jag lyfts upp i luften.",
+            "TAS25": "Ibland kan jag förvandla oljud till musik genom det sätt jag lyssnar på det.",
+            "TAS26": "Vissa av mina livligaste minnen väcks till liv av förnimmelser och lukter.",
+            "TAS27": "Viss musik påminner mig om bilder eller växlande färgmönster.",
+            "TAS28": "Jag vet ofta vad någon ska säga innan han eller hon säger det.",
+            "TAS29": "Jag har ofta “kroppsliga minnen”; till exempel när jag badat kan jag fortfarande känna det som att jag är kvar i vattnet.",
+            "TAS30": "Ljudet av en röst kan vara så fascinerande för mig att jag bara fortsätter lyssna på den.",
+            "TAS31": "Ibland känner jag att “någon är där”, trots att ingen är fysiskt närvarande.",
+            "TAS32": "Ibland kommer tankar och bilder till mig utan den minsta ansträngning från min sida.",
+            "TAS33": "Jag tycker ofta att olika lukter har olika färger.",
+            "TAS34": "Jag kan bli djupt berörd av en solnedgång.",
+            "TAS_options": ['1 stämmer inte alls', '2 stämmer inte', '3 stämmer inte riktigt', '4 stämmer ganska bra', '5 stämmer bra', '6 stämmer helt och hållet']
+        }
+    }
     var surveyTAS = {
         type: jsPsychSurvey,
         data: { test_part: "TAS" },
@@ -295,60 +425,49 @@ var surveyDemo = {
             {
                 type: 'html',
                 name: 'TASIntro',
-                prompt: `
-                <p>This questionnaire consists of questions about experiences that you may have had in your life. We are interested in how often you have these experiences. It is important, however, that your answers show how often these experiences happen to you when you are not under the influence of alcohol or drugs.</p>
-                <p>Please indicate how much each statement applies to you from 1 = <i>strongly disagree</i> to 6 = <i>strongly agree</i>.</p>`
-                /*<p>Please indicate whether each statement applies to you by using the following response scale:</p>
-                <ul>
-                    <li>1=strongly disagree</li>
-                    <li>2=moderately disagree</li>
-                    <li>3=slightly disagree</li>
-                    <li>4=slightly agree</li>
-                    <li>5=moderately agree</li>
-                    <li>6=strongly agree</li>
-                </ul>`*/
+                prompt: txt(txt_TAS, lang, 'TASIntro')
             },
             {
                 type: 'likert-table',
                 name: 'TAS',
                 prompt: ' ',
                 statements: [
-                {prompt: 'Sometimes I feel and experience things as I did as a child.', name: 'TAS01'},
-                {prompt: 'I can be greatly moved by eloquent or poetic language.', name: 'TAS02'},
-                {prompt: 'While watching a movie, a TV show, or a play, I may become so involved that I may forget about myself and my surroundings and experience the story as if it were real and as if I were taking part in it.', name: 'TAS03'},
-                {prompt: 'If I stare at a picture and then look away from it, I can sometimes “see” an image of the picture almost as if I were still looking at it.', name: 'TAS04'},
-                {prompt: 'Sometimes I feel as if my mind could envelop the whole world.', name: 'TAS05'},
-                {prompt: 'I like to watch cloud shapes change in the sky.', name: 'TAS06'},
-                {prompt: 'If I wish, I can imagine (or daydream) some things so vividly that they hold my attention as a good movie or story does.', name: 'TAS07'},
-                {prompt: 'I think I really know what some people mean when they talk about mystical experiences.', name: 'TAS08'},
-                {prompt: 'I sometimes “step outside” my usual self and experience an entirely different state of being.', name: 'TAS09'},
-                {prompt: 'Textures—such as wool, sand, wood—sometimes remind me of colors or music.', name: 'TAS10'},
-                {prompt: 'Sometimes I experience things as if they were “doubly” real.', name: 'TAS11'},
-                {prompt: 'When I listen to music I can get so caught up in it that I don\'t notice anything else.', name: 'TAS12'},
-                {prompt: 'If I wish I can imagine that my body is so heavy that I could not move it if I wanted to.', name: 'TAS13'},
-                {prompt: 'I can often somehow sense the presence of another person before I actually see or hear her/him.', name: 'TAS14'},
-                {prompt: 'The crackle and flames of a wood fire stimulate my imagination.', name: 'TAS15'},
-                {prompt: 'It is sometimes possible for me to be completely immersed in nature or art and to feel as if my whole state of consciousness has somehow been temporarily altered.', name: 'TAS16'},
-                {prompt: 'Different colors have distinctive and special meanings for me.', name: 'TAS17'},
-                {prompt: 'I am able to wander off into my thoughts while doing a routine task and then find a few minutes later that I have completed it.', name: 'TAS18'},
-                {prompt: 'I can sometimes recollect certain past experiences in my life with such clarity and vividness that it is like living them again or almost so.', name: 'TAS19'},
-                {prompt: 'Things that might seem meaningless to others often make sense to me.', name: 'TAS20'},
-                {prompt: 'While acting in a play I think I could really feel the emotions of the character and “become” her/him for the time being, forgetting both myself and the audience.', name: 'TAS21'},
-                {prompt: 'My thoughts often don\'t occur as words but as visual images.', name: 'TAS22'},
-                {prompt: 'I often take delight in small things (like the five-pointed star shape that appears when you cut an apple across the core or the colors in soap bubbles).', name: 'TAS23'},
-                {prompt: 'When listening to organ music or other powerful music I sometimes feel as if I am being lifted into the air.', name: 'TAS24'},
-                {prompt: 'Sometimes I can change noise into music by the way I listen to it.', name: 'TAS25'},
-                {prompt: 'Some of my most vivid memories are called up by scents and smells.', name: 'TAS26'},
-                {prompt: 'Some music reminds me of pictures or changing color patterns.', name: 'TAS27'},
-                {prompt: 'I often know what someone is going to say before he or she says it.', name: 'TAS28'},
-                {prompt: 'I often have “physical memories”: for example, after I have been swimming I may still feel as if I am in the water.', name: 'TAS29'},
-                {prompt: 'The sound of a voice can be so fascinating to me that I can just go on listening to it.', name: 'TAS30'},
-                {prompt: 'At times I somehow feel the presence of someone who is not physically there.', name: 'TAS31'},
-                {prompt: 'Sometimes thoughts and images come to me without the slightest effort on my part.', name: 'TAS32'},
-                {prompt: 'I find that different odors have different colors.', name: 'TAS33'},
-                {prompt: 'I can be deeply moved by a sunset.', name: 'TAS34'},
+                {prompt: txt(txt_TAS, lang, 'TAS01'), name: 'TAS01'},
+                {prompt: txt(txt_TAS, lang, 'TAS02'), name: 'TAS02'},
+                {prompt: txt(txt_TAS, lang, 'TAS03'), name: 'TAS03'},
+                {prompt: txt(txt_TAS, lang, 'TAS04'), name: 'TAS04'},
+                {prompt: txt(txt_TAS, lang, 'TAS05'), name: 'TAS05'},
+                {prompt: txt(txt_TAS, lang, 'TAS06'), name: 'TAS06'},
+                {prompt: txt(txt_TAS, lang, 'TAS07'), name: 'TAS07'},
+                {prompt: txt(txt_TAS, lang, 'TAS08'), name: 'TAS08'},
+                {prompt: txt(txt_TAS, lang, 'TAS09'), name: 'TAS09'},
+                {prompt: txt(txt_TAS, lang, 'TAS10'), name: 'TAS10'},
+                {prompt: txt(txt_TAS, lang, 'TAS11'), name: 'TAS11'},
+                {prompt: txt(txt_TAS, lang, 'TAS12'), name: 'TAS12'},
+                {prompt: txt(txt_TAS, lang, 'TAS13'), name: 'TAS13'},
+                {prompt: txt(txt_TAS, lang, 'TAS14'), name: 'TAS14'},
+                {prompt: txt(txt_TAS, lang, 'TAS15'), name: 'TAS15'},
+                {prompt: txt(txt_TAS, lang, 'TAS16'), name: 'TAS16'},
+                {prompt: txt(txt_TAS, lang, 'TAS17'), name: 'TAS17'},
+                {prompt: txt(txt_TAS, lang, 'TAS18'), name: 'TAS18'},
+                {prompt: txt(txt_TAS, lang, 'TAS19'), name: 'TAS19'},
+                {prompt: txt(txt_TAS, lang, 'TAS20'), name: 'TAS20'},
+                {prompt: txt(txt_TAS, lang, 'TAS21'), name: 'TAS21'},
+                {prompt: txt(txt_TAS, lang, 'TAS22'), name: 'TAS22'},
+                {prompt: txt(txt_TAS, lang, 'TAS23'), name: 'TAS23'},
+                {prompt: txt(txt_TAS, lang, 'TAS24'), name: 'TAS24'},
+                {prompt: txt(txt_TAS, lang, 'TAS25'), name: 'TAS25'},
+                {prompt: txt(txt_TAS, lang, 'TAS26'), name: 'TAS26'},
+                {prompt: txt(txt_TAS, lang, 'TAS27'), name: 'TAS27'},
+                {prompt: txt(txt_TAS, lang, 'TAS28'), name: 'TAS28'},
+                {prompt: txt(txt_TAS, lang, 'TAS29'), name: 'TAS29'},
+                {prompt: txt(txt_TAS, lang, 'TAS30'), name: 'TAS30'},
+                {prompt: txt(txt_TAS, lang, 'TAS31'), name: 'TAS31'},
+                {prompt: txt(txt_TAS, lang, 'TAS32'), name: 'TAS32'},
+                {prompt: txt(txt_TAS, lang, 'TAS33'), name: 'TAS33'},
+                {prompt: txt(txt_TAS, lang, 'TAS34'), name: 'TAS34'}
                 ],
-                options: ['1 strongly disagree', '2 moderately disagree', '3 slightly disagree', '4 slightly agree', '5 moderately agree', '6 strongly agree'],
+                options: txt_TAS[lang]['TAS_options'],
                 required: true
             }
         ]
@@ -360,6 +479,42 @@ var surveyDemo = {
     };
 
     /* The Boundary Questionnaire */
+    var txt_BQ = {
+        "en": {
+            "BQIntro": "<p>Please rate each of the statements from 1 = <i>\"not at all true of me\"</i> to 5 = <i>\"very true of me\"</i>. Try to respond to all of the statements as quickly as you can.</p>",
+            "BQ01": "My feelings blend into one another.",
+            "BQ02": "I am very close to my childhood feelings.",
+            "BQ03": "I am easily hurt.",
+            "BQ04": "I spend a lot of time daydreaming, fantasizing or in reverie.",
+            "BQ05": "Sometimes it's scary when one gets too involved with another person.",
+            "BQ06": "A good parent has to be a bit of a child, too.",
+            "BQ07": "I can easily imagine myself as an animal or what it might be like to be an animal.",
+            "BQ08": "When I work on a project, I don't like to tie myself down to a definite outline.  I rather like to let my mind wander.",
+            "BQ09": "In my dreams, people sometimes merge into each other or become other people.",
+            "BQ10": "I believe I am influenced by forces that no one can understand.",
+            "BQ11": "There are no sharp dividing lines between normal people, people with problems and people who are considered psychotic or crazy.",
+            "BQ12": "I think I would enjoy being some kind of creative artist.",
+            "BQ13": "I have had the experience of someone calling me or speaking my name and not being sure whether it was really happening or whether I was imagining it.",
+            "BQ_options": ['1 not at all true of me', '2', '3', '4', '5 very true of me'],
+        },
+        "de": {
+            "BQIntro": "<p>Bitte bewerten Sie jede der Aussagen von 1 = <i>\"trifft überhaupt nicht zu\"</i> bis 5 = <i>\"trifft voll und ganz zu\"</i>. Versuchen Sie, auf alle Aussagen so schnell wie möglich zu antworten.</p>",
+            "BQ01": "Meine Gefühle gehen ineinander über.", 
+            "BQ02": "Meine Kindheitserinnerungen sind mir sehr nahe.",
+            "BQ03": "Ich bin leicht verletzbar.",
+            "BQ04": "Ich verbringe viel Zeit mit Tagträumen oder Phantasien.",
+            "BQ05": "Manchmal ist es beängstigend, wenn die Beziehung zu einer anderen Person zu nah wird.",
+            "BQ06": "Gute Eltern müssen auch ein bisschen wie ein Kind sein.",
+            "BQ07": "Ich kann mir leicht vorstellen, wie es ist ein Tier zu sein.",
+            "BQ08": "Wenn ich an einem Projekt arbeite, mag ich mich nicht an ein vorgegebenes Konzept binden, ich lasse lieber meinen Gedanken freien Lauf.",
+            "BQ09": "In meinen Träumen verschmelzen die Leute manchmal oder sie verwandeln sich in andere Personen.",
+            "BQ10": "Ich glaube, dass ich von Kräften beeinflusst werde, die niemand verstehen kann.",
+            "BQ11": "Es gibt keine klare Grenzziehung zwischen normalen Menschen, Personen mit Problemen und Personen, die als verrückt oder psychotisch angesehen werden.",
+            "BQ12": "Ich glaube, es würde mir gefallen, irgendeine Art Künstler zu sein.",
+            "BQ13": "Ich habe schon die Erfahrung gemacht, dass jemand mich gerufen oder meinen Namen genannt hat, und ich nicht sicher war, ob es wirklich passiert ist oder ob ich es mir vorgestellt habe.",
+            "BQ_options": ['1 trifft überhaupt nicht zu', '2', '3', '4', '5 trifft voll und ganz zu']
+        }
+    }
     var surveyBQ = {
         type: jsPsychSurvey,
         data: { test_part: "BQ" },
@@ -368,28 +523,28 @@ var surveyDemo = {
             {
                 type: 'html',
                 name: 'BQIntro',
-                prompt: '<p>Please rate each of the statements from 1 = <i>"not at all true of me"</i> to 5 = <i>"very true of me"</i>. Try to respond to all of the statements as quickly as you can.</p>',
+                prompt: txt(txt_BQ, lang, 'BQIntro')
             },
             {
                 type: 'likert-table',
                 name: 'BQ',
                 prompt: ' ',
                 statements: [
-                {prompt: 'My feelings blend into one another.', name: 'BQ01'},
-                {prompt: 'I am very close to my childhood feelings.', name: 'BQ02'},
-                {prompt: 'I am easily hurt.', name: 'BQ03'},
-                {prompt: 'I spend a lot of time daydreaming, fantasizing or in reverie.', name: 'BQ04'},
-                {prompt: 'Sometimes it\'s scary when one gets too involved with another person.', name: 'BQ05'},
-                {prompt: 'A good parent has to be a bit of a child, too.', name: 'BQ06'},
-                {prompt: 'I can easily imagine myself as an animal or what it might be like to be an animal.', name: 'BQ07'},
-                {prompt: 'When I work on a project, I don\'t like to tie myself down to a definite outline.  I rather like to let my mind wander.', name: 'BQ08'},
-                {prompt: 'In my dreams, people sometimes merge into each other or become other people.', name: 'BQ09'},
-                {prompt: 'I believe I am influenced by forces that no one can understand.', name: 'BQ10'},
-                {prompt: 'There are no sharp dividing lines between normal people, people with problems and people who are considered psychotic or crazy.', name: 'BQ11'},
-                {prompt: 'I think I would enjoy being some kind of creative artist.', name: 'BQ12'},
-                {prompt: 'I have had the experience of someone calling me or speaking my name and not being sure whether it was really happening or whether I was imagining it.', name: 'BQ13'}
+                {prompt: txt(txt_BQ, lang, 'BQ01'), name: 'BQ01'},
+                {prompt: txt(txt_BQ, lang, 'BQ02'), name: 'BQ02'},
+                {prompt: txt(txt_BQ, lang, 'BQ03'), name: 'BQ03'},
+                {prompt: txt(txt_BQ, lang, 'BQ04'), name: 'BQ04'},
+                {prompt: txt(txt_BQ, lang, 'BQ05'), name: 'BQ05'},
+                {prompt: txt(txt_BQ, lang, 'BQ06'), name: 'BQ06'},
+                {prompt: txt(txt_BQ, lang, 'BQ07'), name: 'BQ07'},
+                {prompt: txt(txt_BQ, lang, 'BQ08'), name: 'BQ08'},
+                {prompt: txt(txt_BQ, lang, 'BQ09'), name: 'BQ09'},
+                {prompt: txt(txt_BQ, lang, 'BQ10'), name: 'BQ10'},
+                {prompt: txt(txt_BQ, lang, 'BQ11'), name: 'BQ11'},
+                {prompt: txt(txt_BQ, lang, 'BQ12'), name: 'BQ12'},
+                {prompt: txt(txt_BQ, lang, 'BQ13'), name: 'BQ13'}
                 ],
-                options: ['1 not at all true of me', '2', '3', '4', '5 very true of me'],
+                options: txt_BQ[lang]['BQ_options'],
                 required: true
             }
         ]
