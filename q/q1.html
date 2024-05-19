@@ -17,8 +17,8 @@
     <script src="jspsych/plugin-html-slider-response.js"></script>
     <script src="jspsych/plugin-audio-keyboard-response.js"></script>
     <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
-    <!--<link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css">-->
-    <link rel="stylesheet" href="jspsych/survey.css"></link>
+    <link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css">
+    <!--<link rel="stylesheet" href="jspsych/survey.css"></link>-->
     <!--<link rel="stylesheet" href="consent/consent.css"></link>-->
 
     <style>
@@ -77,6 +77,8 @@
     // subject & Lab ID
     let pid = jsPsych.data.urlVariables()['pid'];
     let lab = jsPsych.data.urlVariables()['l'];
+
+    let subject_id;
     
     // no Pid
     if(!pid){
@@ -110,7 +112,6 @@
     // Function to retrieve text based on language and key
     function txt(translations, language, key) {
         if (translations.hasOwnProperty(language) && translations[language].hasOwnProperty(key)) {
-            console.log(translations[language][key]);
             return translations[language][key];
         } else {
             // Return default text or empty string if translation not found
@@ -204,7 +205,7 @@
             });
         },
         on_finish: function(data){
-            var subject_id = data.response.subject_id;
+            subject_id = data.response.subject_id;
             jsPsych.data.addProperties({ 
                 subject: subject_id
             });
@@ -341,7 +342,7 @@ var surveyDemo = {
             "TAS_options": ['1 strongly disagree', '2 moderately disagree', '3 slightly disagree', '4 slightly agree', '5 moderately agree', '6 strongly agree'],
         },
         "de": {
-            "TASIntro": "<p>Der Fragebogen besteht aus Fragen zu Erfahrungen, die Sie in Ihrem Leben gemacht haben könnten. Wir interessieren uns dafür, wie oft Sie diese Erfahrungen gemacht haben. Es ist jedoch wichtig, dass Ihre Antworten zeigen, wie oft diese Erfahrungen bei Ihnen auftreten, wenn Sie nicht unter dem Einfluss von Alkohol oder Drogen stehen.</p><p>Bitte geben Sie an, inwieweit jede Aussage auf Sie zutrifft von 1 = <i>stimme überhaupt nicht zu</i> bis 6 = <i>stimme voll und ganz zu</i>.</p>",
+            "TASIntro": "<p>Der Fragebogen besteht aus Fragen zu Erfahrungen, die Sie in Ihrem Leben gemacht haben könnten. Wir interessieren uns dafür, wie oft Sie diese Erfahrungen gemacht haben. Es ist jedoch wichtig, dass Ihre Antworten zeigen, wie oft diese Erfahrungen bei Ihnen auftreten, wenn Sie nicht unter dem Einfluss von Alkohol oder Drogen stehen.</p><p>Bitte geben Sie an, inwieweit jede Aussage auf Sie zutrifft, von 1 = <i>stimme überhaupt nicht zu</i> bis 6 = <i>stimme voll und ganz zu</i>.</p>",
             "TAS01": "Manchmal empfinde und erlebe ich die Dinge wie in meiner Kindheit.",
             "TAS02": "Wortgewandte oder poetische Sprache kann mich stark beeindrucken.",
             "TAS03": "Filme, Fernsehspiele oder Theaterstücke können mich so mitreißen, dass ich mich und alles um mich herum vergesse und die Geschichte erlebe als wäre sie Realität und ich an ihr beteiligt.",
