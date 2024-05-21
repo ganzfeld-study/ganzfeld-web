@@ -7,9 +7,8 @@
     <script src="jspsych/plugin-preload.js"></script>
     <script src="jspsych/plugin-fullscreen.js"></script>
     <script src="jspsych/plugin-call-function.js"></script>
-    <!--<script src="jspsych/plugin-instructions.js"></script>-->
     <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.3"></script>
-    <script src="jspsych/plugin-survey.js"></script>
+    <!-- <script src="jspsych/plugin-survey.js"></script> -->
     <script src="jspsych/plugin-survey-text.js"></script>
     <script src="jspsych/plugin-survey-multi-choice.js"></script>
     <script src="jspsych/plugin-html-keyboard-response.js"></script>
@@ -17,9 +16,13 @@
     <script src="jspsych/plugin-html-slider-response.js"></script>
     <script src="jspsych/plugin-audio-keyboard-response.js"></script>
     <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css">
+    <!-- <link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css"> -->
     <!--<link rel="stylesheet" href="jspsych/survey.css"></link>-->
     <!--<link rel="stylesheet" href="consent/consent.css"></link>-->
+
+    <script src="https://unpkg.com/@jspsych/plugin-survey@1.0.0"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@1.0.0/css/survey.css">
+
 
     <style>
         /* Spinner for Audio Playback */
@@ -147,20 +150,17 @@
         "en": {
             "welcome": "Welcome to Session 1!",
             "preamble": "<h2>Welcome to Session 1!</h2><div style='text-align:justify'><p>In this first session, we would first like to ask you to fill out seven questionnaires. It may take about 30-45 minutes in total but please take a break whenever you want.</p><p style='border: 2px solid #555; padding:5px;'><b>IMPORTANT:</b> Please do not 'refresh' the page or use the 'go back/ go forward' buttons, as it would send you back to the first page and require you to start over.</p><p>Next, in the laboratory you will be asked to familiarize yourself with the Ganzfeld environment (including the red light and the pink noise) so that you are prepared for the second session, in which you will participate in the Ganzfeld experiment.</p><p>Please fill out your participant ID / make sure that it is correct and click <i>Continue</i> to begin answering the questionnaires.</div>",
-            "pid": "Participant ID",
-            "button_next": "Continue"
+            "pid": "Participant ID"
         },
         "de": {
             "welcome": "Willkommen zur Sitzung 1!",
             "preamble": "<h2>Willkommen zu Sitzung 1!</h2><div style='text-align:justify'><p>In dieser ersten Sitzung möchten wir Sie zunächst bitten, sieben Fragebögen auszufüllen. Es wird insgesamt etwa 30-45 Minuten dauern, aber bitte machen Sie eine Pause, wann immer Sie wollen.</p><p style='border: 2px solid #555; padding:5px;'><b>WICHTIG:</b> Bitte aktualisieren Sie die Seite nicht und benutzen Sie nicht die Schaltflächen 'Zurück/Vorwärts', da Sie sonst zur ersten Seite zurückkehren und von vorne beginnen müssen. </p><p>Als Nächstes werden Sie im Labor gebeten, sich mit der Ganzfeld-Umgebung (einschließlich des roten Lichts und des rosa Rauschens) vertraut zu machen, damit Sie auf die zweite Sitzung vorbereitet sind, in der Sie am Ganzfeld-Experiment teilnehmen werden.</p><p>Bitte geben Sie Ihre Teilnehmer-ID ein / vergewissern Sie sich, dass sie korrekt ist, und klicken Sie auf <i>Fortfahren</i>, um mit der Beantwortung der Fragebögen zu beginnen.</div>",
-            "pid": "Teilnehmer-ID",
-            "button_next": "Fortfahren"
+            "pid": "Teilnehmer-ID"
         },
         "se": {
             "welcome": "Välkommen till session 1!",
             "preamble": "<h2>Välkommen till session 1!</h2><div style='text-align:justify'><p>I den här första sessionen vill vi först be dig att fylla i sju frågeformulär. Det kan ta cirka 30-45 minuter totalt, men ta gärna en paus när du vill.</p><p style='border: 2px solid #555; padding:5px;'><b>VIKTIGT:</b> Vänligen uppdatera inte sidan eller använd knapparna 'gå tillbaka/gå framåt', eftersom det skulle skicka dig tillbaka till första sidan och kräva att du börjar om. </p><p>Näst kommer du i laboratoriet att bli ombedd att bekanta dig med Ganzfeld-miljön (inklusive det röda ljuset och det rosa ljudet) så att du är förberedd för den andra sessionen, där du kommer att delta i Ganzfeld-experimentet.</p><p>Fyll i ditt deltagar-ID / se till att det är korrekt och klicka på <i>Fortsätt</i> för att börja svara på frågeformulären.</div>",
-            "pid": "Deltagar-ID",
-            "button_next": "Fortsätt"
+            "pid": "Deltagar-ID"
         }
     };
     var welcome = {
@@ -173,7 +173,7 @@
                 name: 'subject_id'
             }
         ],
-        button_label: txt(txt_welcome, lang, 'button_next'),
+        button_label: txt(txt_survey, lang, 'next'),
         on_load: function(){
             var input = document.getElementById('input-0');
             var continueBtn = document.getElementById('jspsych-survey-text-next');
@@ -214,6 +214,18 @@
     }
 
     /* Surveys */
+    var txt_survey = {
+        "en": {
+            "next": "Next"
+        },
+        "de": {
+            "next": "Weiter"
+        },
+        "se": {
+            "next": "Nästa"
+        }
+    };
+
     /* Demographics */
     var txt_surveyDemo = {
     "en": {
@@ -227,8 +239,7 @@
             'Non-vegan vegetarian: a person who eats dairy products and/or eggs, fruits, vegetables, grains, but no other animal or seafood products',
             'Meat reducer: a person who eats dairy products, eggs, fruits, vegetables, grains, and a reduced amount of animal or seafood products. For example, a pescetarian (who eats fish but no other animals) or someone who eliminates or reduces their consumption of red meat',
             'Omnivore: a person who regularly eats most meats, seafood, eggs, dairy products, fruits, vegetables, and grains.'
-        ],
-        "button_next": "Next"
+        ]
     },
     "de": {
         "intro": "Zuerst möchten wir Sie um einige persönliche Informationen bitten:",
@@ -241,8 +252,7 @@
             "Nicht-veganer Vegetarier: eine Person, die Milchprodukte und/oder Eier, Obst, Gemüse, Getreide, aber keine anderen tierischen Produkte oder Meeresfrüchte isst",
             "Fleischreduzierer: eine Person, die Milchprodukte, Eier, Obst, Gemüse, Getreide und eine reduzierte Menge an tierischen Produkten oder Meeresfrüchten isst. Zum Beispiel ein Pescetarier (der Fisch, aber keine anderen Tiere isst) oder jemand, der auf den Verzehr von rotem Fleisch verzichtet oder diesen reduziert",
             "Omnivore: eine Person, die regelmäßig die meisten Fleischsorten, Meeresfrüchte, Eier, Milchprodukte, Obst, Gemüse und Getreideprodukte isst."
-        ],
-        "button_next": "Weiter"
+        ]
     },
     "se": {
         "intro": "Först skulle vi vilja be dig om lite personlig information:",
@@ -255,8 +265,7 @@
             "Icke-vegansk vegetarian: en person som äter mejeriprodukter och/eller ägg, frukt, grönsaker och spannmål, men inga andra animaliska produkter eller skaldjursprodukter",
             "Köttreducerare: en person som äter mejeriprodukter, ägg, frukt, grönsaker, spannmål och en minskad mängd animaliska produkter eller skaldjursprodukter. Till exempel en pescetarian (som äter fisk men inga andra djur) eller någon som eliminerar eller minskar sin konsumtion av rött kött",
             "Allätare: en person som regelbundet äter det mesta av kött, fisk och skaldjur, ägg, mejeriprodukter, frukt, grönsaker och spannmål."
-        ],
-        "button_next": "Nästa"
+        ]
     }
     // Add translations for other languages as needed
 };
@@ -264,37 +273,41 @@
 var surveyDemo = {
     type: jsPsychSurvey,
     data: { test_part: "survey" },
-    pages: [
-        [
+    survey_json: {
+        showQuestionNumbers: false,
+        completeText: txt(txt_survey, lang, 'next'),
+        elements: [
+
             {
                 type: 'html',
-                prompt: txt(txt_surveyDemo, lang, 'intro')
+                html: txt(txt_surveyDemo, lang, 'intro')
             },
             {
                 type: 'text',
-                prompt: txt(txt_surveyDemo, lang, 'age'), 
+                title: txt(txt_surveyDemo, lang, 'age'), 
                 name: 'age', 
                 textbox_columns: 5,
                 required: true,
                 input_type: "number"
             },
             {
-                type: 'multi-choice',
-                prompt: txt(txt_surveyDemo, lang, 'gender'), 
+                type: 'radiogroup',
+                title: txt(txt_surveyDemo, lang, 'gender'), 
                 name: 'gender', 
-                options: txt_surveyDemo[lang]['options_gender'],
+                choices: txt_surveyDemo[lang]['options_gender'],
                 required: true
             },
             {
-                type: 'multi-choice',
-                prompt: txt(txt_surveyDemo, lang, 'vegetarian'), 
+                type: 'radiogroup',
+                title: txt(txt_surveyDemo, lang, 'vegetarian'), 
                 name: 'vegetarian', 
-                options: txt_surveyDemo[lang]['options_diet'],
+                choices: txt_surveyDemo[lang]['options_diet'],
                 required: true
             }
-        ]
+
     ],
-    button_label_finish: txt(txt_surveyDemo, lang, 'button_next'),
+    },
+
     on_finish: function(){
         jsPsych.setProgressBar(0.25); 
     }
@@ -339,7 +352,25 @@ var surveyDemo = {
             "TAS32": "Sometimes thoughts and images come to me without the slightest effort on my part.",
             "TAS33": "I find that different odors have different colors.",
             "TAS34": "I can be deeply moved by a sunset.",
-            "TAS_options": ['1 strongly disagree', '2 moderately disagree', '3 slightly disagree', '4 slightly agree', '5 moderately agree', '6 strongly agree'],
+            "TAS_options": [{
+                "value": 1,
+                "text": '1 strongly disagree'
+            }, {
+                "value": 2,
+                "text": '2 moderately disagree'
+            }, {
+                "value": 3,
+                "text": '3 slightly disagree'
+            }, {
+                "value": 4,
+                "text": '4 slightly agree'
+            }, {
+                "value": 5,
+                "text": '5 moderately agree'
+            }, {
+                "value": 6,
+                "text": '6 strongly agree'
+            }]
         },
         "de": {
             "TASIntro": "<p>Der Fragebogen besteht aus Fragen zu Erfahrungen, die Sie in Ihrem Leben gemacht haben könnten. Wir interessieren uns dafür, wie oft Sie diese Erfahrungen gemacht haben. Es ist jedoch wichtig, dass Ihre Antworten zeigen, wie oft diese Erfahrungen bei Ihnen auftreten, wenn Sie nicht unter dem Einfluss von Alkohol oder Drogen stehen.</p><p>Bitte geben Sie an, inwieweit jede Aussage auf Sie zutrifft, von 1 = <i>stimme überhaupt nicht zu</i> bis 6 = <i>stimme voll und ganz zu</i>.</p>",
@@ -377,7 +408,25 @@ var surveyDemo = {
             "TAS32": "Manchmal kommen mir Gedanken und Bilder ohne das geringste Hinzutun.",
             "TAS33": "Ich finde, dass verschiedene Gerüche verschiedene Farben haben.",
             "TAS34": "Ein Sonnenuntergang kann mich tief berühren.",
-            "TAS_options": ['1 stimme überhaupt nicht zu', '2 stimme nicht zu', '3 stimme eher nicht zu', '4 stimme eher zu', '5 stimme zu', '6 stimme voll und ganz zu']
+            "TAS_options": [{
+                "value": 1,
+                "text": '1 stimme überhaupt nicht zu'
+            }, {
+                "value": 2,
+                "text": '2 stimme nicht zu'
+            }, {
+                "value": 3,
+                "text": '3 stimme eher nicht zu'
+            }, {
+                "value": 4,
+                "text": '4 stimme eher zu'
+            }, {
+                "value": 5,
+                "text": '5 stimme zu'
+            }, {
+                "value": 6,
+                "text": '6 stimme voll und ganz zu'
+            }]
         },
         "se": {
             "TASIntro": "<p>Den här enkäten består av frågor om upplevelser som du kan ha haft i ditt liv. Vi är intresserade av hur ofta du har dessa upplevelser. Det är dock viktigt att dina svar visar hur ofta dessa upplevelser inträffar hos dig när du inte är under påverkan av alkohol eller droger.</p><p>Ange hur mycket varje påstående gäller för dig från 1 = <i>stämmer inte alls</i> till 6 = <i>stämmer helt och hållet</i>.</p>",
@@ -415,65 +464,87 @@ var surveyDemo = {
             "TAS32": "Ibland kommer tankar och bilder till mig utan den minsta ansträngning från min sida.",
             "TAS33": "Jag tycker ofta att olika lukter har olika färger.",
             "TAS34": "Jag kan bli djupt berörd av en solnedgång.",
-            "TAS_options": ['1 stämmer inte alls', '2 stämmer inte', '3 stämmer inte riktigt', '4 stämmer ganska bra', '5 stämmer bra', '6 stämmer helt och hållet']
+            "TAS_options": [{
+                "value": 1,
+                "text": '1 stämmer inte alls'
+            }, {
+                "value": 2,
+                "text": '2 stämmer inte'
+            }, {
+                "value": 3,
+                "text": '3 stämmer inte riktigt'
+            }, {
+                "value": 4,
+                "text": '4 stämmer ganska bra'
+            }, {
+                "value": 5,
+                "text": '5 stämmer bra'
+            }, {
+                "value": 6,
+                "text": '6 stämmer helt och hållet'
+            }]
         }
     }
     var surveyTAS = {
         type: jsPsychSurvey,
         data: { test_part: "TAS" },
-        pages: [
+        survey_json: {
+            showQuestionNumbers: false,
+            completeText: txt(txt_survey, lang, 'next'),
+            elements:
         [
             {
                 type: 'html',
                 name: 'TASIntro',
-                prompt: txt(txt_TAS, lang, 'TASIntro')
+                html: txt(txt_TAS, lang, 'TASIntro')
             },
             {
-                type: 'likert-table',
+                type: 'matrix',
                 name: 'TAS',
-                prompt: ' ',
-                statements: [
-                {prompt: txt(txt_TAS, lang, 'TAS01'), name: 'TAS01'},
-                {prompt: txt(txt_TAS, lang, 'TAS02'), name: 'TAS02'},
-                {prompt: txt(txt_TAS, lang, 'TAS03'), name: 'TAS03'},
-                {prompt: txt(txt_TAS, lang, 'TAS04'), name: 'TAS04'},
-                {prompt: txt(txt_TAS, lang, 'TAS05'), name: 'TAS05'},
-                {prompt: txt(txt_TAS, lang, 'TAS06'), name: 'TAS06'},
-                {prompt: txt(txt_TAS, lang, 'TAS07'), name: 'TAS07'},
-                {prompt: txt(txt_TAS, lang, 'TAS08'), name: 'TAS08'},
-                {prompt: txt(txt_TAS, lang, 'TAS09'), name: 'TAS09'},
-                {prompt: txt(txt_TAS, lang, 'TAS10'), name: 'TAS10'},
-                {prompt: txt(txt_TAS, lang, 'TAS11'), name: 'TAS11'},
-                {prompt: txt(txt_TAS, lang, 'TAS12'), name: 'TAS12'},
-                {prompt: txt(txt_TAS, lang, 'TAS13'), name: 'TAS13'},
-                {prompt: txt(txt_TAS, lang, 'TAS14'), name: 'TAS14'},
-                {prompt: txt(txt_TAS, lang, 'TAS15'), name: 'TAS15'},
-                {prompt: txt(txt_TAS, lang, 'TAS16'), name: 'TAS16'},
-                {prompt: txt(txt_TAS, lang, 'TAS17'), name: 'TAS17'},
-                {prompt: txt(txt_TAS, lang, 'TAS18'), name: 'TAS18'},
-                {prompt: txt(txt_TAS, lang, 'TAS19'), name: 'TAS19'},
-                {prompt: txt(txt_TAS, lang, 'TAS20'), name: 'TAS20'},
-                {prompt: txt(txt_TAS, lang, 'TAS21'), name: 'TAS21'},
-                {prompt: txt(txt_TAS, lang, 'TAS22'), name: 'TAS22'},
-                {prompt: txt(txt_TAS, lang, 'TAS23'), name: 'TAS23'},
-                {prompt: txt(txt_TAS, lang, 'TAS24'), name: 'TAS24'},
-                {prompt: txt(txt_TAS, lang, 'TAS25'), name: 'TAS25'},
-                {prompt: txt(txt_TAS, lang, 'TAS26'), name: 'TAS26'},
-                {prompt: txt(txt_TAS, lang, 'TAS27'), name: 'TAS27'},
-                {prompt: txt(txt_TAS, lang, 'TAS28'), name: 'TAS28'},
-                {prompt: txt(txt_TAS, lang, 'TAS29'), name: 'TAS29'},
-                {prompt: txt(txt_TAS, lang, 'TAS30'), name: 'TAS30'},
-                {prompt: txt(txt_TAS, lang, 'TAS31'), name: 'TAS31'},
-                {prompt: txt(txt_TAS, lang, 'TAS32'), name: 'TAS32'},
-                {prompt: txt(txt_TAS, lang, 'TAS33'), name: 'TAS33'},
-                {prompt: txt(txt_TAS, lang, 'TAS34'), name: 'TAS34'}
+                titleLocation: 'hidden',
+                //description: txt(txt_TAS, lang, 'TASIntro'),
+                alternateRows: true,
+                isAllRowRequired: true,
+                rows: [
+                {text: txt(txt_TAS, lang, 'TAS01'), value: 'TAS01'},
+                {text: txt(txt_TAS, lang, 'TAS02'), value: 'TAS02'},
+                {text: txt(txt_TAS, lang, 'TAS03'), value: 'TAS03'},
+                {text: txt(txt_TAS, lang, 'TAS04'), value: 'TAS04'},
+                {text: txt(txt_TAS, lang, 'TAS05'), value: 'TAS05'},
+                {text: txt(txt_TAS, lang, 'TAS06'), value: 'TAS06'},
+                {text: txt(txt_TAS, lang, 'TAS07'), value: 'TAS07'},
+                {text: txt(txt_TAS, lang, 'TAS08'), value: 'TAS08'},
+                {text: txt(txt_TAS, lang, 'TAS09'), value: 'TAS09'},
+                {text: txt(txt_TAS, lang, 'TAS10'), value: 'TAS10'},
+                {text: txt(txt_TAS, lang, 'TAS11'), value: 'TAS11'},
+                {text: txt(txt_TAS, lang, 'TAS12'), value: 'TAS12'},
+                {text: txt(txt_TAS, lang, 'TAS13'), value: 'TAS13'},
+                {text: txt(txt_TAS, lang, 'TAS14'), value: 'TAS14'},
+                {text: txt(txt_TAS, lang, 'TAS15'), value: 'TAS15'},
+                {text: txt(txt_TAS, lang, 'TAS16'), value: 'TAS16'},
+                {text: txt(txt_TAS, lang, 'TAS17'), value: 'TAS17'},
+                {text: txt(txt_TAS, lang, 'TAS18'), value: 'TAS18'},
+                {text: txt(txt_TAS, lang, 'TAS19'), value: 'TAS19'},
+                {text: txt(txt_TAS, lang, 'TAS20'), value: 'TAS20'},
+                {text: txt(txt_TAS, lang, 'TAS21'), value: 'TAS21'},
+                {text: txt(txt_TAS, lang, 'TAS22'), value: 'TAS22'},
+                {text: txt(txt_TAS, lang, 'TAS23'), value: 'TAS23'},
+                {text: txt(txt_TAS, lang, 'TAS24'), value: 'TAS24'},
+                {text: txt(txt_TAS, lang, 'TAS25'), value: 'TAS25'},
+                {text: txt(txt_TAS, lang, 'TAS26'), value: 'TAS26'},
+                {text: txt(txt_TAS, lang, 'TAS27'), value: 'TAS27'},
+                {text: txt(txt_TAS, lang, 'TAS28'), value: 'TAS28'},
+                {text: txt(txt_TAS, lang, 'TAS29'), value: 'TAS29'},
+                {text: txt(txt_TAS, lang, 'TAS30'), value: 'TAS30'},
+                {text: txt(txt_TAS, lang, 'TAS31'), value: 'TAS31'},
+                {text: txt(txt_TAS, lang, 'TAS32'), value: 'TAS32'},
+                {text: txt(txt_TAS, lang, 'TAS33'), value: 'TAS33'},
+                {text: txt(txt_TAS, lang, 'TAS34'), value: 'TAS34'}
                 ],
-                options: txt_TAS[lang]['TAS_options'],
-                required: true
+                columns: txt(txt_TAS, lang, 'TAS_options'),
             }
         ]
-        ],
-        button_label_finish: 'Next',
+        },
         on_finish: function(){
             jsPsych.setProgressBar(0.375); 
         }
@@ -496,8 +567,22 @@ var surveyDemo = {
             "BQ11": "There are no sharp dividing lines between normal people, people with problems and people who are considered psychotic or crazy.",
             "BQ12": "I think I would enjoy being some kind of creative artist.",
             "BQ13": "I have had the experience of someone calling me or speaking my name and not being sure whether it was really happening or whether I was imagining it.",
-            "BQ_options": ['1 not at all true of me', '2', '3', '4', '5 very true of me'],
-            "next": "Next"
+            "BQ_options": [{
+                "value": 1,
+                "text": '1 not at all true of me'
+            }, {
+                "value": 2,
+                "text": '2'
+            }, {
+                "value": 3,
+                "text": '3'
+            }, {
+                "value": 4,
+                "text": '4'
+            }, {
+                "value": 5,
+                "text": '5 very true of me'
+            }]
         },
         "de": {
             "BQIntro": "<p>Bitte bewerten Sie jede der Aussagen von 1 = <i>\"trifft überhaupt nicht zu\"</i> bis 5 = <i>\"trifft voll und ganz zu\"</i>. Versuchen Sie, auf alle Aussagen so schnell wie möglich zu antworten.</p>",
@@ -514,45 +599,62 @@ var surveyDemo = {
             "BQ11": "Es gibt keine klare Grenzziehung zwischen normalen Menschen, Personen mit Problemen und Personen, die als verrückt oder psychotisch angesehen werden.",
             "BQ12": "Ich glaube, es würde mir gefallen, irgendeine Art Künstler zu sein.",
             "BQ13": "Ich habe schon die Erfahrung gemacht, dass jemand mich gerufen oder meinen Namen genannt hat, und ich nicht sicher war, ob es wirklich passiert ist oder ob ich es mir vorgestellt habe.",
-            "BQ_options": ['1 trifft überhaupt nicht zu', '2', '3', '4', '5 trifft voll und ganz zu'],
-            "next": "Weiter"
+            "BQ_options": [{
+                "value": 1,
+                "text": '1 trifft überhaupt nicht zu'
+            }, {
+                "value": 2,
+                "text": '2'
+            }, {
+                "value": 3,
+                "text": '3'
+            }, {
+                "value": 4,
+                "text": '4'
+            }, {
+                "value": 5,
+                "text": '5 trifft voll und ganz zu'
+            }]
         }
     }
     var surveyBQ = {
         type: jsPsychSurvey,
         data: { test_part: "BQ" },
-        pages: [
+        survey_json: {
+            showQuestionNumbers: false,
+            completeText: txt(txt_survey, lang, 'next'),
+            elements:
         [
             {
                 type: 'html',
                 name: 'BQIntro',
-                prompt: txt(txt_BQ, lang, 'BQIntro')
+                html: txt(txt_BQ, lang, 'BQIntro')
             },
             {
-                type: 'likert-table',
+                type: 'matrix',
                 name: 'BQ',
-                prompt: ' ',
-                statements: [
-                {prompt: txt(txt_BQ, lang, 'BQ01'), name: 'BQ01'},
-                {prompt: txt(txt_BQ, lang, 'BQ02'), name: 'BQ02'},
-                {prompt: txt(txt_BQ, lang, 'BQ03'), name: 'BQ03'},
-                {prompt: txt(txt_BQ, lang, 'BQ04'), name: 'BQ04'},
-                {prompt: txt(txt_BQ, lang, 'BQ05'), name: 'BQ05'},
-                {prompt: txt(txt_BQ, lang, 'BQ06'), name: 'BQ06'},
-                {prompt: txt(txt_BQ, lang, 'BQ07'), name: 'BQ07'},
-                {prompt: txt(txt_BQ, lang, 'BQ08'), name: 'BQ08'},
-                {prompt: txt(txt_BQ, lang, 'BQ09'), name: 'BQ09'},
-                {prompt: txt(txt_BQ, lang, 'BQ10'), name: 'BQ10'},
-                {prompt: txt(txt_BQ, lang, 'BQ11'), name: 'BQ11'},
-                {prompt: txt(txt_BQ, lang, 'BQ12'), name: 'BQ12'},
-                {prompt: txt(txt_BQ, lang, 'BQ13'), name: 'BQ13'}
+                titleLocation: 'hidden',
+                alternateRows: true,
+                isAllRowRequired: true,
+                rows: [
+                {text: txt(txt_BQ, lang, 'BQ01'), value: 'BQ01'},
+                {text: txt(txt_BQ, lang, 'BQ02'), value: 'BQ02'},
+                {text: txt(txt_BQ, lang, 'BQ03'), value: 'BQ03'},
+                {text: txt(txt_BQ, lang, 'BQ04'), value: 'BQ04'},
+                {text: txt(txt_BQ, lang, 'BQ05'), value: 'BQ05'},
+                {text: txt(txt_BQ, lang, 'BQ06'), value: 'BQ06'},
+                {text: txt(txt_BQ, lang, 'BQ07'), value: 'BQ07'},
+                {text: txt(txt_BQ, lang, 'BQ08'), value: 'BQ08'},
+                {text: txt(txt_BQ, lang, 'BQ09'), value: 'BQ09'},
+                {text: txt(txt_BQ, lang, 'BQ10'), value: 'BQ10'},
+                {text: txt(txt_BQ, lang, 'BQ11'), value: 'BQ11'},
+                {text: txt(txt_BQ, lang, 'BQ12'), value: 'BQ12'},
+                {text: txt(txt_BQ, lang, 'BQ13'), value: 'BQ13'}
                 ],
-                options: txt(txt_BQ, lang, 'BQ_options'),
-                required: true
+                columns: txt(txt_BQ, lang, 'BQ_options'),
             }
         ]
-        ],
-        button_label_finish: txt(txt_BQ, lang, 'next'),
+        },
         on_finish: function(){
             jsPsych.setProgressBar(0.5); 
         }
@@ -587,8 +689,23 @@ var surveyDemo = {
             "BFI22": "Has little interest in abstract ideas.",
             "BFI23": "Shows a lot of enthusiasm.",
             "BFI24": "Is original, comes up with new ideas.",
-            "BFI_options": ['1 disagree strongly', '2 disagree a little', '3 neutral / no opinion', '4 agree a little', '5 agree strongly'],
-            "next": "Next"
+            //"BFI_options": ['1 disagree strongly', '2 disagree a little', '3 neutral / no opinion', '4 agree a little', '5 agree strongly'],
+            "BFI_options": [{
+                "value": 1,
+                "text": '1 disagree strongly'
+            }, {
+                "value": 2,
+                "text": '2 disagree a little'
+            }, {
+                "value": 3,
+                "text": '3 neutral / no opinion'
+            }, {
+                "value": 4,
+                "text": '4 agree a little'
+            }, {
+                "value": 5,
+                "text": '5 agree strongly'
+            }],
         },
         "de": {
             "BFIIntro": "<p>Hier finden Sie eine Reihe von Eigenschaften, die auf Sie zutreffen können, aber nicht müssen. Stimmen Sie zum Beispiel zu, dass Sie gerne Zeit mit anderen verbringen? Bitte geben Sie bei jeder Aussage an, inwieweit Sie dieser zustimmen oder nicht zustimmen, von 1 = <i>stimme überhaupt nicht zu</i> bis 5 = <i>stimme voll und ganz zu</i>.</p>",
@@ -617,56 +734,74 @@ var surveyDemo = {
             "BFI22": "Mich interessieren abstrakte Überlegungen wenig.",
             "BFI23": "Ich bin begeisterungsfähig und kann andere leicht mitreißen.",
             "BFI24": "Ich bin originell, entwickle neue Ideen.",
-            "BFI_options": ['1 stimme überhaupt nicht zu', '2 stimme nicht zu', '3 stimme eher nicht zu', '4 stimme eher zu', '5 stimme voll und ganz zu'],
-            "next": "Weiter"
+            //"BFI_options": ['1 stimme überhaupt nicht zu', '2 stimme nicht zu', '3 stimme eher nicht zu', '4 stimme eher zu', '5 stimme voll und ganz zu'],
+            "BFI_options": [{
+                "value": 1,
+                "text": '1 stimme überhaupt nicht zu'
+            }, {
+                "value": 2,
+                "text": '2 stimme nicht zu'
+            }, {
+                "value": 3,
+                "text": '3 stimme eher nicht zu'
+            }, {
+                "value": 4,
+                "text": '4 stimme eher zu'
+            }, {
+                "value": 5,
+                "text": '5 stimme zu'
+            }]
         }
     }
     var surveyBFI2 = {
     type: jsPsychSurvey,
     data: { test_part: "BFI2" },
-    pages: [
+    survey_json: {
+        showQuestionNumbers: false,
+        completeText: txt(txt_survey, lang, 'next'),
+        elements:
     [
         {
             type: 'html',
             name: 'BFIIntro',
-            prompt: txt(txt_BFI2, lang, 'BFIIntro')
+            html: txt(txt_BFI2, lang, 'BFIIntro')
         },
         {
-            type: 'likert-table',
+            type: 'matrix',
             name: 'BFI',
-            prompt: txt(txt_BFI2, lang, 'BFIprompt'),
-            statements: [
-            { prompt: txt(txt_BFI2, lang, 'BFI01'), name: 'BFI01' },
-            { prompt: txt(txt_BFI2, lang, 'BFI02'), name: 'BFI02' },
-            { prompt: txt(txt_BFI2, lang, 'BFI03'), name: 'BFI03' },
-            { prompt: txt(txt_BFI2, lang, 'BFI04'), name: 'BFI04' },
-            { prompt: txt(txt_BFI2, lang, 'BFI05'), name: 'BFI05' },
-            { prompt: txt(txt_BFI2, lang, 'BFI06'), name: 'BFI06' },
-            { prompt: txt(txt_BFI2, lang, 'BFI07'), name: 'BFI07' },
-            { prompt: txt(txt_BFI2, lang, 'BFI08'), name: 'BFI08' },
-            { prompt: txt(txt_BFI2, lang, 'BFI09'), name: 'BFI09' },
-            { prompt: txt(txt_BFI2, lang, 'BFI10'), name: 'BFI10' },
-            { prompt: txt(txt_BFI2, lang, 'BFI11'), name: 'BFI11' },
-            { prompt: txt(txt_BFI2, lang, 'BFI12'), name: 'BFI12' },
-            { prompt: txt(txt_BFI2, lang, 'BFI13'), name: 'BFI13' },
-            { prompt: txt(txt_BFI2, lang, 'BFI14'), name: 'BFI14' },
-            { prompt: txt(txt_BFI2, lang, 'BFI15'), name: 'BFI15' },
-            { prompt: txt(txt_BFI2, lang, 'BFI16'), name: 'BFI16' },
-            { prompt: txt(txt_BFI2, lang, 'BFI17'), name: 'BFI17' },
-            { prompt: txt(txt_BFI2, lang, 'BFI18'), name: 'BFI18' },
-            { prompt: txt(txt_BFI2, lang, 'BFI19'), name: 'BFI19' },
-            { prompt: txt(txt_BFI2, lang, 'BFI20'), name: 'BFI20' },
-            { prompt: txt(txt_BFI2, lang, 'BFI21'), name: 'BFI21' },
-            { prompt: txt(txt_BFI2, lang, 'BFI22'), name: 'BFI22' },
-            { prompt: txt(txt_BFI2, lang, 'BFI23'), name: 'BFI23' },
-            { prompt: txt(txt_BFI2, lang, 'BFI24'), name: 'BFI24' }
+            title: txt(txt_BFI2, lang, 'BFIprompt'),
+            alternateRows: true,
+            isAllRowRequired: true,
+            rows: [
+            { text: txt(txt_BFI2, lang, 'BFI01'), value: 'BFI01' },
+            { text: txt(txt_BFI2, lang, 'BFI02'), value: 'BFI02' },
+            { text: txt(txt_BFI2, lang, 'BFI03'), value: 'BFI03' },
+            { text: txt(txt_BFI2, lang, 'BFI04'), value: 'BFI04' },
+            { text: txt(txt_BFI2, lang, 'BFI05'), value: 'BFI05' },
+            { text: txt(txt_BFI2, lang, 'BFI06'), value: 'BFI06' },
+            { text: txt(txt_BFI2, lang, 'BFI07'), value: 'BFI07' },
+            { text: txt(txt_BFI2, lang, 'BFI08'), value: 'BFI08' },
+            { text: txt(txt_BFI2, lang, 'BFI09'), value: 'BFI09' },
+            { text: txt(txt_BFI2, lang, 'BFI10'), value: 'BFI10' },
+            { text: txt(txt_BFI2, lang, 'BFI11'), value: 'BFI11' },
+            { text: txt(txt_BFI2, lang, 'BFI12'), value: 'BFI12' },
+            { text: txt(txt_BFI2, lang, 'BFI13'), value: 'BFI13' },
+            { text: txt(txt_BFI2, lang, 'BFI14'), value: 'BFI14' },
+            { text: txt(txt_BFI2, lang, 'BFI15'), value: 'BFI15' },
+            { text: txt(txt_BFI2, lang, 'BFI16'), value: 'BFI16' },
+            { text: txt(txt_BFI2, lang, 'BFI17'), value: 'BFI17' },
+            { text: txt(txt_BFI2, lang, 'BFI18'), value: 'BFI18' },
+            { text: txt(txt_BFI2, lang, 'BFI19'), value: 'BFI19' },
+            { text: txt(txt_BFI2, lang, 'BFI20'), value: 'BFI20' },
+            { text: txt(txt_BFI2, lang, 'BFI21'), value: 'BFI21' },
+            { text: txt(txt_BFI2, lang, 'BFI22'), value: 'BFI22' },
+            { text: txt(txt_BFI2, lang, 'BFI23'), value: 'BFI23' },
+            { text: txt(txt_BFI2, lang, 'BFI24'), value: 'BFI24' }
             ],
-            options: txt_BFI2[lang]['BFI_options'],
-            required: true
+            columns: txt(txt_BFI2, lang, 'BFI_options'),
         }
         ]
-        ],
-        button_label_finish: txt(txt_BFI2, lang, 'next'),
+    },
         on_finish: function(){
             jsPsych.setProgressBar(0.675); 
         }
@@ -684,8 +819,23 @@ var surveyDemo = {
             "BSSS06": "I prefer friends who are excitingly unpredictable.",
             "BSSS07": "I would like to try bungee jumping.",
             "BSSS08": "I would love to have new and exciting experiences, even if they are illegal.",
-            "BSSS_options": ['1 disagree strongly', '2 disagree', '3 neither disagree nor agree', '4 agree', '5 agree strongly'],
-            "next": "Next"
+            //"BSSS_options": ['1 disagree strongly', '2 disagree', '3 neither disagree nor agree', '4 agree', '5 agree strongly'],
+            "BSSS_options": [{
+                "value": 1,
+                "text": '1 disagree strongly'
+            }, {
+                "value": 2,
+                "text": '2 disagree'
+            }, {
+                "value": 3,
+                "text": '3 neither disagree nor agree'
+            }, {
+                "value": 4,
+                "text": '4 agree'
+            }, {
+                "value": 5,
+                "text": '5 agree strongly'
+            }],
         },
         "de": {
             "BSSSIntro": "<p>Im Folgenden finden Sie eine Reihe von Merkmalen, die auf Sie zutreffen können oder auch nicht. Bitte geben Sie bei jeder Aussage an, inwieweit Sie dieser Aussage zustimmen oder nicht zustimmen, von 1 = <i>stimme überhaupt nicht zu</i> bis 5 = <i>stimme voll und ganz zu</i>.</p>",
@@ -697,40 +847,58 @@ var surveyDemo = {
             "BSSS06": "Ich bevorzuge Freunde, die aufregend und unberechenbar sind.",
             "BSSS07": "Ich würde gerne Bungee Jumping ausprobieren.",
             "BSSS08": "Ich mag neue und spannende Erfahrungen, auch wenn ich dabei Regeln brechen muss.",
-            "BSSS_options": ['1 stimme überhaupt nicht zu', '2 stimme nicht zu', '3 stimme eher nicht zu', '4 stimme eher zu', '5 stimme voll und ganz zu'],
-            "next": "Weiter"
+            //"BSSS_options": ['1 stimme überhaupt nicht zu', '2 stimme nicht zu', '3 stimme eher nicht zu', '4 stimme eher zu', '5 stimme voll und ganz zu'],
+            "BSSS_options": [{
+                "value": 1,
+                "text": '1 stimme überhaupt nicht zu'
+            }, {
+                "value": 2,
+                "text": '2 stimme nicht zu'
+            }, {
+                "value": 3,
+                "text": '3 stimme eher nicht zu'
+            }, {
+                "value": 4,
+                "text": '4 stimme eher zu'
+            }, {
+                "value": 5,
+                "text": '5 stimme zu'
+            }]
         }
     }
     var surveyBSSS = {
         type: jsPsychSurvey,
         data: { test_part: "BSSS" },
-        pages: [
+        survey_json: {
+            showQuestionNumbers: false,
+            completeText: txt(txt_survey, lang, 'next'),
+            elements:
         [
             {
                 type: 'html',
                 name: 'BSSSIntro',
-                prompt: txt(txt_BSSS, lang, 'BSSSIntro')
+                html: txt(txt_BSSS, lang, 'BSSSIntro')
             },
             {
-                type: 'likert-table',
+                type: 'matrix',
                 name: 'BSSS',
-                prompt: ' ',
-                statements: [
-                {prompt: txt(txt_BSSS, lang, "BSSS01"), name: 'BSSS01'},
-                {prompt: txt(txt_BSSS, lang, "BSSS02"), name: 'BSSS02'},
-                {prompt: txt(txt_BSSS, lang, "BSSS03"), name: 'BSSS03'},
-                {prompt: txt(txt_BSSS, lang, "BSSS04"), name: 'BSSS04'},
-                {prompt: txt(txt_BSSS, lang, "BSSS05"), name: 'BSSS05'},
-                {prompt: txt(txt_BSSS, lang, "BSSS06"), name: 'BSSS06'},
-                {prompt: txt(txt_BSSS, lang, "BSSS07"), name: 'BSSS07'},
-                {prompt: txt(txt_BSSS, lang, "BSSS08"), name: 'BSSS08'}
+                titleLocation: 'hidden',
+                alternateRows: true,
+                isAllRowRequired: true,
+                rows: [
+                {text: txt(txt_BSSS, lang, "BSSS01"), value: 'BSSS01'},
+                {text: txt(txt_BSSS, lang, "BSSS02"), value: 'BSSS02'},
+                {text: txt(txt_BSSS, lang, "BSSS03"), value: 'BSSS03'},
+                {text: txt(txt_BSSS, lang, "BSSS04"), value: 'BSSS04'},
+                {text: txt(txt_BSSS, lang, "BSSS05"), value: 'BSSS05'},
+                {text: txt(txt_BSSS, lang, "BSSS06"), value: 'BSSS06'},
+                {text: txt(txt_BSSS, lang, "BSSS07"), value: 'BSSS07'},
+                {text: txt(txt_BSSS, lang, "BSSS08"), value: 'BSSS08'}
                 ],
-                options: txt(txt_BSSS, lang, 'BSSS_options'),
-                required: true
+                columns: txt(txt_BSSS, lang, 'BSSS_options'),
             }
         ]
-        ],
-        button_label_finish: txt(txt_BSSS, lang, 'next'),
+        },
         on_finish: function(){
             jsPsych.setProgressBar(0.75); 
         }
@@ -807,284 +975,286 @@ var surveyDemo = {
     }
 
     var surveyDESScaleValues = [
-                {value: '0%'},
-                {value: '10%'},
-                {value: '20%'},
-                {value: '30%'},
-                {value: '40%'},
-                {value: '50%'},
-                {value: '60%'},
-                {value: '70%'},
-                {value: '80%'},
-                {value: '90%'},
-                {value: '100%'},
+                {value: 0, text: '0%'},
+                {value: 10, text: '10%'},
+                {value: 20, text: '20%'},
+                {value: 30, text: '30%'},
+                {value: 40, text: '40%'},
+                {value: 50, text: '50%'},
+                {value: 60, text: '60%'},
+                {value: 70, text: '70%'},
+                {value: 80, text: '80%'},
+                {value: 90, text: '90%'},
+                {value: 100, text: '100%'}
                 ];
 
     var surveyDES = {
         type: jsPsychSurvey,
         data: { test_part: "DES" },
-        pages: [
+        survey_json: {
+            showQuestionNumbers: false,
+            completeText: txt(txt_survey, lang, 'next'),
+            elements:
         [
             {
                 type: 'html',
                 name: 'DESIntro',
-                prompt: txt(txt_DESS, lang, 'DESIntro')
+                html: txt(txt_DESS, lang, 'DESIntro')
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES1',
-                prompt: txt(txt_DESS, lang, 'DES01'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES01'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES2',
-                prompt: txt(txt_DESS, lang, 'DES02'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES02'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES3',
-                prompt: txt(txt_DESS, lang, 'DES03'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES03'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES4',
-                prompt: txt(txt_DESS, lang, 'DES04'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES04'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES5',
-                prompt: txt(txt_DESS, lang, 'DES05'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES05'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES6',
-                prompt: txt(txt_DESS, lang, 'DES06'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES06'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES7',
-                prompt: txt(txt_DESS, lang, 'DES07'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES07'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES8',
-                prompt: txt(txt_DESS, lang, 'DES08'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES08'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES9',
-                prompt: txt(txt_DESS, lang, 'DES09'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES09'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES10',
-                prompt: txt(txt_DESS, lang, 'DES10'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES10'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES11',
-                prompt: txt(txt_DESS, lang, 'DES11'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES11'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES12',
-                prompt: txt(txt_DESS, lang, 'DES12'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES12'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES13',
-                prompt: txt(txt_DESS, lang, 'DES13'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES13'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES14',
-                prompt: txt(txt_DESS, lang, 'DES14'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES14'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES15',
-                prompt: txt(txt_DESS, lang, 'DES15'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES15'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES16',
-                prompt: txt(txt_DESS, lang, 'DES16'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES16'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES17',
-                prompt: txt(txt_DESS, lang, 'DES17'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES17'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES18',
-                prompt: txt(txt_DESS, lang, 'DES18'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES18'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES19',
-                prompt: txt(txt_DESS, lang, 'DES19'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES19'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES20',
-                prompt: txt(txt_DESS, lang, 'DES20'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES20'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES21',
-                prompt: txt(txt_DESS, lang, 'DES21'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES21'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES22',
-                prompt: txt(txt_DESS, lang, 'DES22'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES22'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES23',
-                prompt: txt(txt_DESS, lang, 'DES23'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES23'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES24',
-                prompt: txt(txt_DESS, lang, 'DES24'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES24'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES25',
-                prompt: txt(txt_DESS, lang, 'DES25'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES25'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES26',
-                prompt: txt(txt_DESS, lang, 'DES26'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES26'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES27',
-                prompt: txt(txt_DESS, lang, 'DES27'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES27'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'DES28',
-                prompt: txt(txt_DESS, lang, 'DES28'),
-                likert_scale_min_label: txt(txt_DESS, lang, 'DESMin'),
-                likert_scale_max_label: txt(txt_DESS, lang, 'DESMax'),
-                likert_scale_values: surveyDESScaleValues,
-                required: true
+                title: txt(txt_DESS, lang, 'DES28'),
+                minRateDescription: txt(txt_DESS, lang, 'DESMin'),
+                maxRateDescription: txt(txt_DESS, lang, 'DESMax'),
+                rateValues: surveyDESScaleValues,
+                isRequired: true
             }
         ]
-        ],
-        button_label_finish: 'Next',
+        },
         on_finish: function(){
             jsPsych.setProgressBar(0.875); 
         }
@@ -1110,7 +1280,17 @@ var surveyDemo = {
             "ASGS14": "I believe that I have marked psychokinetic ability.",
             "ASGS15": "I believe that, on at least one occasion, an inexplicable (but non-recurrent) physical event of an apparently psychokinetic origin has occurred in my presence.",
             "ASGS16": "I believe that persistent inexplicable physical disturbances, of an apparently psychokinetic origin (as for example a 'poltergeist') have occurred in my presence at some time in the past.",
-            "ASGS_options": ['False', 'Uncertain', 'True']
+            //"ASGS_options": ['False', 'Uncertain', 'True']
+            "ASGS_options": [{
+                "value": 0,
+                "text": 'False'
+            }, {
+                "value": 1,
+                "text": 'Uncertain'
+            }, {
+                "value": 2,
+                "text": 'True'
+            }]
         },
         "de": {
             "ASGSIntro": "<p>Im Folgenden finden Sie 16 Aussagen über Ihre eigenen Überzeugungen und Einstellungen. Bitte lesen Sie jede Aussage sorgfältig durch und wählen Sie die Antwort, die Ihrer Meinung am besten entspricht.</p>",
@@ -1130,47 +1310,60 @@ var surveyDemo = {
             "ASGS14": "Ich habe ausgeprägte Psychokinese-Fähigkeiten.",
             "ASGS15": "In meiner Gegenwart hat sich schon einmal ein unerklärliches (aber einmaliges) physikalisches Ereignis von offenbar psychokinetischem Ursprung zugetragen.",
             "ASGS16": "In meiner Gegenwart traten schon einmal fortdauernde unerklärliche physikalische Phänomene auf, die offenbar psychokinetischen Ursprungs waren (z.B. „Spuk - Phänomene„).",
-            "ASGS_options": ['Falsch', 'Unsicher', 'Richtig']
+            //"ASGS_options": ['Falsch', 'Unsicher', 'Richtig']
+            "ASGS_options": [{
+                "value": 0,
+                "text": 'Falsch'
+            }, {
+                "value": 1,
+                "text": 'Unsicher'
+            }, {
+                "value": 2,
+                "text": 'Richtig'
+            }]
         }
     }
     var surveyASGS = {
         type: jsPsychSurvey,
         data: { test_part: "ASGS" },
-        pages: [
+        survey_json: {
+            showQuestionNumbers: false,
+            completeText: txt(txt_survey, lang, 'next'),
+            elements:
         [
             {
                 type: 'html',
                 name: 'ASGSIntro',
-                prompt: txt(txt_ASGS, lang, 'ASGSIntro')
+                html: txt(txt_ASGS, lang, 'ASGSIntro')
             },
             {
-                type: 'likert-table',
+                type: 'matrix',
                 name: 'ASGS',
-                prompt: ' ',
-                statements: [
-                    {prompt: txt(txt_ASGS, lang, 'ASGS01'), name: 'ASGS01'},
-                    {prompt: txt(txt_ASGS, lang, 'ASGS02'), name: 'ASGS02'},
-                    {prompt: txt(txt_ASGS, lang, 'ASGS03'), name: 'ASGS03'},
-                    {prompt: txt(txt_ASGS, lang, 'ASGS04'), name: 'ASGS04'},
-                    {prompt: txt(txt_ASGS, lang, 'ASGS05'), name: 'ASGS05'},
-                    {prompt: txt(txt_ASGS, lang, 'ASGS06'), name: 'ASGS06'},
-                    {prompt: txt(txt_ASGS, lang, 'ASGS07'), name: 'ASGS07'},
-                    {prompt: txt(txt_ASGS, lang, 'ASGS08'), name: 'ASGS08'},
-                    {prompt: txt(txt_ASGS, lang, 'ASGS09'), name: 'ASGS09'},
-                    {prompt: txt(txt_ASGS, lang, 'ASGS10'), name: 'ASGS10'},
-                    {prompt: txt(txt_ASGS, lang, 'ASGS11'), name: 'ASGS11'},
-                    {prompt: txt(txt_ASGS, lang, 'ASGS12'), name: 'ASGS12'},
-                    {prompt: txt(txt_ASGS, lang, 'ASGS13'), name: 'ASGS13'},
-                    {prompt: txt(txt_ASGS, lang, 'ASGS14'), name: 'ASGS14'},
-                    {prompt: txt(txt_ASGS, lang, 'ASGS15'), name: 'ASGS15'},
-                    {prompt: txt(txt_ASGS, lang, 'ASGS16'), name: 'ASGS16'}
+                titleLocation: 'hidden',
+                alternateRows: true,
+                isAllRowRequired: true,
+                rows: [
+                    {text: txt(txt_ASGS, lang, 'ASGS01'), value: 'ASGS01'},
+                    {text: txt(txt_ASGS, lang, 'ASGS02'), value: 'ASGS02'},
+                    {text: txt(txt_ASGS, lang, 'ASGS03'), value: 'ASGS03'},
+                    {text: txt(txt_ASGS, lang, 'ASGS04'), value: 'ASGS04'},
+                    {text: txt(txt_ASGS, lang, 'ASGS05'), value: 'ASGS05'},
+                    {text: txt(txt_ASGS, lang, 'ASGS06'), value: 'ASGS06'},
+                    {text: txt(txt_ASGS, lang, 'ASGS07'), value: 'ASGS07'},
+                    {text: txt(txt_ASGS, lang, 'ASGS08'), value: 'ASGS08'},
+                    {text: txt(txt_ASGS, lang, 'ASGS09'), value: 'ASGS09'},
+                    {text: txt(txt_ASGS, lang, 'ASGS10'), value: 'ASGS10'},
+                    {text: txt(txt_ASGS, lang, 'ASGS11'), value: 'ASGS11'},
+                    {text: txt(txt_ASGS, lang, 'ASGS12'), value: 'ASGS12'},
+                    {text: txt(txt_ASGS, lang, 'ASGS13'), value: 'ASGS13'},
+                    {text: txt(txt_ASGS, lang, 'ASGS14'), value: 'ASGS14'},
+                    {text: txt(txt_ASGS, lang, 'ASGS15'), value: 'ASGS15'},
+                    {text: txt(txt_ASGS, lang, 'ASGS16'), value: 'ASGS16'}
                 ],
-                options: txt(txt_ASGS, lang, 'ASGS_options'),
-                required: true
+                columns: txt(txt_ASGS, lang, 'ASGS_options'),
             }
         ]
-        ],
-        button_label_finish: 'Next',
+        },
         on_finish: function(){
             jsPsych.setProgressBar(1); 
         }
@@ -1273,7 +1466,7 @@ var surveyDemo = {
     timeline.push(preload);
     timeline.push(welcome);
     //timeline.push(informedConsent);
-    timeline.push(surveyDemo);
+    //timeline.push(surveyDemo);
     timeline.push(surveyTAS);
     timeline.push(surveyBQ);
     timeline.push(surveyBFI2);
