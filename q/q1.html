@@ -20,7 +20,8 @@
     <!--<link rel="stylesheet" href="jspsych/survey.css"></link>-->
     <!--<link rel="stylesheet" href="consent/consent.css"></link>-->
 
-    <script src="https://unpkg.com/@jspsych/plugin-survey@1.0.0"></script>
+    <!-- <script src="https://unpkg.com/@jspsych/plugin-survey@1.0.0"></script> -->
+    <script src="jspsych/plugin-survey-new.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@1.0.0/css/survey.css">
 
 
@@ -267,7 +268,6 @@
             "Allätare: en person som regelbundet äter det mesta av kött, fisk och skaldjur, ägg, mejeriprodukter, frukt, grönsaker och spannmål."
         ]
     }
-    // Add translations for other languages as needed
 };
 
 var surveyDemo = {
@@ -689,7 +689,6 @@ var surveyDemo = {
             "BFI22": "Has little interest in abstract ideas.",
             "BFI23": "Shows a lot of enthusiasm.",
             "BFI24": "Is original, comes up with new ideas.",
-            //"BFI_options": ['1 disagree strongly', '2 disagree a little', '3 neutral / no opinion', '4 agree a little', '5 agree strongly'],
             "BFI_options": [{
                 "value": 1,
                 "text": '1 disagree strongly'
@@ -734,7 +733,6 @@ var surveyDemo = {
             "BFI22": "Mich interessieren abstrakte Überlegungen wenig.",
             "BFI23": "Ich bin begeisterungsfähig und kann andere leicht mitreißen.",
             "BFI24": "Ich bin originell, entwickle neue Ideen.",
-            //"BFI_options": ['1 stimme überhaupt nicht zu', '2 stimme nicht zu', '3 stimme eher nicht zu', '4 stimme eher zu', '5 stimme voll und ganz zu'],
             "BFI_options": [{
                 "value": 1,
                 "text": '1 stimme überhaupt nicht zu'
@@ -819,7 +817,6 @@ var surveyDemo = {
             "BSSS06": "I prefer friends who are excitingly unpredictable.",
             "BSSS07": "I would like to try bungee jumping.",
             "BSSS08": "I would love to have new and exciting experiences, even if they are illegal.",
-            //"BSSS_options": ['1 disagree strongly', '2 disagree', '3 neither disagree nor agree', '4 agree', '5 agree strongly'],
             "BSSS_options": [{
                 "value": 1,
                 "text": '1 disagree strongly'
@@ -847,7 +844,6 @@ var surveyDemo = {
             "BSSS06": "Ich bevorzuge Freunde, die aufregend und unberechenbar sind.",
             "BSSS07": "Ich würde gerne Bungee Jumping ausprobieren.",
             "BSSS08": "Ich mag neue und spannende Erfahrungen, auch wenn ich dabei Regeln brechen muss.",
-            //"BSSS_options": ['1 stimme überhaupt nicht zu', '2 stimme nicht zu', '3 stimme eher nicht zu', '4 stimme eher zu', '5 stimme voll und ganz zu'],
             "BSSS_options": [{
                 "value": 1,
                 "text": '1 stimme überhaupt nicht zu'
@@ -1280,7 +1276,6 @@ var surveyDemo = {
             "ASGS14": "I believe that I have marked psychokinetic ability.",
             "ASGS15": "I believe that, on at least one occasion, an inexplicable (but non-recurrent) physical event of an apparently psychokinetic origin has occurred in my presence.",
             "ASGS16": "I believe that persistent inexplicable physical disturbances, of an apparently psychokinetic origin (as for example a 'poltergeist') have occurred in my presence at some time in the past.",
-            //"ASGS_options": ['False', 'Uncertain', 'True']
             "ASGS_options": [{
                 "value": 0,
                 "text": 'False'
@@ -1310,7 +1305,6 @@ var surveyDemo = {
             "ASGS14": "Ich habe ausgeprägte Psychokinese-Fähigkeiten.",
             "ASGS15": "In meiner Gegenwart hat sich schon einmal ein unerklärliches (aber einmaliges) physikalisches Ereignis von offenbar psychokinetischem Ursprung zugetragen.",
             "ASGS16": "In meiner Gegenwart traten schon einmal fortdauernde unerklärliche physikalische Phänomene auf, die offenbar psychokinetischen Ursprungs waren (z.B. „Spuk - Phänomene„).",
-            //"ASGS_options": ['Falsch', 'Unsicher', 'Richtig']
             "ASGS_options": [{
                 "value": 0,
                 "text": 'Falsch'
@@ -1466,7 +1460,7 @@ var surveyDemo = {
     timeline.push(preload);
     timeline.push(welcome);
     //timeline.push(informedConsent);
-    //timeline.push(surveyDemo);
+    timeline.push(surveyDemo);
     timeline.push(surveyTAS);
     timeline.push(surveyBQ);
     timeline.push(surveyBFI2);
