@@ -137,9 +137,14 @@
             //var subject_id = jsPsych.randomization.randomID(16);
         }
     } else {
-        //var subject_id = pid;
-        // set lab to first character of pid
-        lab = pid.charAt(0);
+        // set lab to first character of pid if it is a number
+        if(["1","2","3","4","5","6"].includes(pid.charAt(0))){
+            lab = pid.charAt(0);
+        }
+        else {
+            console.log("No lab transmitted. Redirecting...");
+            location.href = 'lab.html?exp=q1';
+        }
     }
 
     // set language

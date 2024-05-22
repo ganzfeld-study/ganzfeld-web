@@ -6,17 +6,14 @@
     </title>
     <script src="jspsych/jspsych.js"></script>
     <script src="jspsych/plugin-preload.js"></script>
-    <script src="jspsych/plugin-fullscreen.js"></script>
     <script src="jspsych/plugin-call-function.js"></script>
     <!--<script src="jspsych/plugin-instructions.js"></script>-->
     <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.3"></script>
     <script src="jspsych/plugin-survey.js"></script>
     <script src="jspsych/plugin-survey-text.js"></script>
-    <script src="jspsych/plugin-survey-multi-choice.js"></script>
     <script src="jspsych/plugin-html-keyboard-response.js"></script>
     <script src="jspsych/plugin-html-button-response.js"></script>
-    <script src="jspsych/plugin-html-slider-response.js"></script>
-    <script src="jspsych/plugin-audio-keyboard-response.js"></script>
+    <script src="jspsych/plugin-audio-button-response.js"></script>
     <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
     <!--<link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css">-->
     <link rel="stylesheet" href="jspsych/survey.css"></link>
@@ -70,14 +67,20 @@
     });
 
 
-    // SONA & subject ID
-    let pid = jsPsych.data.urlVariables()['pid'];
+    // subject & Lab ID
+    let lab = jsPsych.data.urlVariables()['l'];
     
-    if(!pid){
-        var subject_id = jsPsych.randomization.randomID(16);
-    } else {
-        var subject_id = pid;
-  }
+    var subject_id = jsPsych.randomization.randomID(16);
+
+    if(!["1","2","3","4","5","6"].includes(lab)){
+            console.log("No lab transmitted. Redirecting...");
+            location.href = 'lab.html?exp=familiarization';
+        }
+
+    // set language
+    let lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
+
+    console.log(" Lab: " + lab + " Language: " + lang);
 
     // specify starting time
     var start_time = new Date();
@@ -88,6 +91,15 @@
         time: start_time.toISOString()
     });
 
+    // Function to retrieve text based on language and key
+    function txt(translations, language, key) {
+        if (translations.hasOwnProperty(language) && translations[language].hasOwnProperty(key)) {
+            return translations[language][key];
+        } else {
+            // Return default text or empty string if translation not found
+            return 'No translation found.';
+        }
+    }
 
     /*
     // consent to participate.
@@ -110,58 +122,99 @@
         check_fn: check_consent
     };*/
 
+    // button text
+    var txt_survey = {
+        "en": {
+            "next": "Continue"
+        },
+        "de": {
+            "next": "Weiter"
+        },
+        "se": {
+            "next": "Nästa"
+        }
+    };
+
     /* welcome message & instructions */
+    var txt_welcome = {
+        "en": {
+            welcome: `<p>Now we would like you to become familiar with the ganzfeld setup. You will be asked wear a pair of goggles and headphones and listen to pink noise while sitting in a comfortable chair for 7 minutes.</p>
+        <p>Please tell the experimenter to assist you with the Ganzfeld equipment. The experimenter will click "Next" when you are ready to begin.</p>`,
+            welcome2: `p>The audio level for the ganzfeld can be adjusted while playing the audio sample below.</p>
+            <audio controls>
+                    <source src="../audio/pinknoise30.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            <p>Please put on the headphones and click "Next" when you are ready.</p>`
+        },
+        "de": {
+            welcome: `<p>Jetzt möchten wir, dass Sie sich mit dem Ganzfeld-Setup vertraut machen. Sie werden gebeten, eine Brille und Kopfhörer zu tragen und 7 Minuten lang rosa Rauschen zu hören, während Sie in einem bequemen Stuhl sitzen.</p>
+        <p>Bitte sagen Sie dem Experimentator, dass er Ihnen bei der Ganzfeld-Ausrüstung behilflich sein soll. Der Experimentator klickt auf "Weiter", wenn Sie bereit sind zu beginnen.</p>`,
+            welcome2: `<p>Der Audiopegel für das Ganzfeld kann während der Wiedergabe der unten stehenden Audiodatei angepasst werden.</p>
+            <audio controls>
+                    <source src="../audio/pinknoise30.mp3" type="audio/mpeg">
+                    Ihr Browser unterstützt das Audioelement nicht.
+                </audio>
+            <p>Bitte setzen Sie die Kopfhörer auf und klicken Sie auf "Weiter", wenn Sie bereit sind.</p>`
+        },
+        "se": {
+            welcome: `<p>Nu vill vi att du ska bekanta dig med ganzfeld-uppsättningen. Du kommer att bli ombedd att bära ett par glasögon och hörlurar och lyssna på rosa brus medan du sitter i en bekväm stol i 7 minuter.</p>
+        <p>Var god och be experimentledaren att hjälpa dig med Ganzfeld-utrustningen. Experimentledaren klickar på "Nästa" när du är redo att börja.</p>`,
+            welcome2: `<p>Ljudnivån för ganzfeld kan justeras medan du spelar ljudprovet nedan.</p>
+            <audio controls>
+                    <source src="../audio/pinknoise30.mp3" type="audio/mpeg">
+                    Din webbläsare stöder inte ljudelementet.
+                </audio>
+            <p>Sätt på hörlurarna och klicka på "Nästa" när du är redo.</p>`
+        }
+    };
     var welcome = {
         type: jsPsychInstructions,
         data: { test_part: 'welcome'},
-        pages:[ `<p>Now we would like you to become familiar with the ganzfeld setup. You will be asked wear a pair of goggles and headphones and listen to pink noise while sitting in a comfortable chair for 7 minutes.</p>
-        <p>Please tell the experimenter to assist you with the Ganzfeld equipment. The experimenter will click "Next" when you are ready to begin.</p>
-        <p>The audio level for the ganzfeld can be adjusted while playing the audio sample below..</p>`,
-        `<p>Now we would like you to listen to a relaxation exercise.</p>
-            <p>Please put on the headphones and click "Next" when you are ready.</p>`
-         ],
+        pages:[ txt(txt_welcome, lang, "welcome"), txt(txt_welcome, lang, "welcome2")],
         show_clickable_nav: true,
     }
 
     /* Relaxation exercise */
     // Relaxation Intro
-    var relaxIntro = {
-        type: jsPsychHtmlButtonResponse,
-        data: { test_part: "relaxIntro" },
-        stimulus: `<p>Now we would like you to listen to a relaxation exercise.</p>
-            <p>Please put on the headphones and click "Continue" when you are ready.</p>`,
-        choices: ['Continue']
-    };
+    // var relaxIntro = {
+    //     type: jsPsychHtmlButtonResponse,
+    //     data: { test_part: "relaxIntro" },
+    //     stimulus: `<p>Now we would like you to listen to a relaxation exercise.</p>
+    //         <p>Please put on the headphones and click "Continue" when you are ready.</p>`,
+    //     choices: ['Continue']
+    // };
 
     // Relaxation Playback
     var relaxPlay = {
-        type: jsPsychAudioKeyboardResponse,
+        type: jsPsychAudioButtonResponse,
         stimulus: '../audio/pinknoise30.mp3',
         choices: "NO_KEYS",
         prompt: '<span class="playaudio"></span>',
-        trial_duration: 420000 // 7 minutes
+        trial_duration: 420000, // 7 minutes
+        choices: [ txt(txt_survey, lang, "next") ]
     };
 
-    /* Time Estimation */
-    var timeEstimate1 = {
-        type: jsPsychHtmlSliderResponse,
-        data: { test_part: "time1" },
-        stimulus: `
-        <p><i>Please answer the following two questions about your experiences during the relaxation exercise.</i></p>
-        <p>1. How often did you think about time <b>during the exercise</b>?</p>`,
-        require_movement: true,
-        labels: ['Not at all', 'Extremely often']
-    };
+    // /* Time Estimation */
+    // var timeEstimate1 = {
+    //     type: jsPsychHtmlSliderResponse,
+    //     data: { test_part: "time1" },
+    //     stimulus: `
+    //     <p><i>Please answer the following two questions about your experiences during the relaxation exercise.</i></p>
+    //     <p>1. How often did you think about time <b>during the exercise</b>?</p>`,
+    //     require_movement: true,
+    //     labels: ['Not at all', 'Extremely often']
+    // };
 
-    var timeEstimate2 = {
-        type: jsPsychHtmlSliderResponse,
-        data: { test_part: "time2" },
-        stimulus: `
-        <p><i>Please answer the following two questions about your experiences during the relaxation exercise.</i></p>
-        <p>2. How fast did time pass for you <b>during the exercise</b>?</p>`,
-        require_movement: true,
-        labels: ['Extremely slowly', 'Extremely fast']
-    };
+    // var timeEstimate2 = {
+    //     type: jsPsychHtmlSliderResponse,
+    //     data: { test_part: "time2" },
+    //     stimulus: `
+    //     <p><i>Please answer the following two questions about your experiences during the relaxation exercise.</i></p>
+    //     <p>2. How fast did time pass for you <b>during the exercise</b>?</p>`,
+    //     require_movement: true,
+    //     labels: ['Extremely slowly', 'Extremely fast']
+    // };
 
     /* save data to csv */
     function saveData(name, data){
@@ -177,10 +230,10 @@
         stimulus: '<p>Thank you!</p><p>Your responses were recorded, you may close the window now.</p>',
         //choices: "ALL_KEYS",
         choices: "NO_KEYS",
-        on_start: function() {
-            // save Data
-            //saveData("/relax/ganzfeld_relax_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
-        }
+        // on_start: function() {
+        //     // save Data
+        //     saveData("/relax/ganzfeld_relax_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+        // }
     }
 
     /* helper */
@@ -190,16 +243,16 @@
         auto_preload: true
     }
     // fullscreen
-    var enterFullscreen = {
-        type: jsPsychFullscreen,
-        fullscreen_mode: true
-    }
+    // var enterFullscreen = {
+    //     type: jsPsychFullscreen,
+    //     fullscreen_mode: true
+    // }
 
-    var exitFullscreen = {
-        type: jsPsychFullscreen,
-        fullscreen_mode: false,
-        delay_after: 0
-    }
+    // var exitFullscreen = {
+    //     type: jsPsychFullscreen,
+    //     fullscreen_mode: false,
+    //     delay_after: 0
+    // }
 
     /*// Hide and Show cursor 
     var hide_cursor = {
