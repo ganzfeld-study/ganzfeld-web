@@ -296,6 +296,10 @@
         on_start: function() {
             // save Data
             saveData("/screening/" + lab + "/ganzfeld_screening_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+
+            // anonymized version
+            var anonData = jsPsych.data.get().ignore('name', 'email', 'phone').csv();
+            saveData("/screening-anon/" + lab + "/ganzfeld_screening_anon_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, anonData);
         }
     }
 
