@@ -147,7 +147,7 @@
     // button text
     var txt_survey = {
         "en": {
-            "next": "Next"
+            "next": "Continue"
         },
         "de": {
             "next": "Weiter"
@@ -172,7 +172,7 @@
         },
         "se": {
             "welcome": "Välkommen till session 1!",
-            "preamble": "<h2>Välkommen till session 1!</h2><div style='text-align:justify'><p>I den här första sessionen vill vi först be dig att fylla i sju frågeformulär. Det kan ta cirka 30-45 minuter totalt, men ta gärna en paus när du vill.</p><p style='border: 2px solid #555; padding:5px;'><b>VIKTIGT:</b> Vänligen uppdatera inte sidan eller använd knapparna 'gå tillbaka/gå framåt', eftersom det skulle skicka dig tillbaka till första sidan och kräva att du börjar om. </p><p>Näst kommer du i laboratoriet att bli ombedd att bekanta dig med Ganzfeld-miljön (inklusive det röda ljuset och det rosa ljudet) så att du är förberedd för den andra sessionen, där du kommer att delta i Ganzfeld-experimentet.</p><p>Fyll i ditt deltagar-ID / se till att det är korrekt och klicka på <i>Fortsätt</i> för att börja svara på frågeformulären.</div>",
+            "preamble": "<h2>Välkommen till session 1!</h2><div style='text-align:justify'><p>I den här första sessionen ombeds du först att fylla i sju frågeformulär. Det kan ta cirka 30-45 minuter totalt, men ta gärna en paus när du vill.</p><p style='border: 2px solid #555; padding:5px;'><b>VIKTIGT:</b> Vänligen uppdatera inte sidan eller använd knapparna 'gå tillbaka/gå framåt', eftersom det skulle skicka dig tillbaka till första sidan och kräva att du börjar om. </p><p>Efter det kommer du att bli ombedd att kort bekanta dig med Ganzfeld-miljön (inklusive det röda ljuset och det rosa ljudet, låter som radiobrus) så att du är förberedd för den andra sessionen, där du kommer att delta i Ganzfeld-experimentet.</p><p>Fyll i ditt deltagar-ID / kontrollera att det är korrekt och klicka på <i>Nästa</i> för att börja svara på frågeformulären.</div>",
             "pid": "Deltagar-ID"
         }
     };
@@ -264,7 +264,7 @@
         "options_diet": [
             "Vegan (eller växtbaserad): en person som äter frukt, grönsaker och spannmål men inga animaliska produkter eller fisk- och skaldjursprodukter",
             "Icke-vegansk vegetarian: en person som äter mejeriprodukter och/eller ägg, frukt, grönsaker och spannmål, men inga andra animaliska produkter eller skaldjursprodukter",
-            "Köttreducerare: en person som äter mejeriprodukter, ägg, frukt, grönsaker, spannmål och en minskad mängd animaliska produkter eller skaldjursprodukter. Till exempel en pescetarian (som äter fisk men inga andra djur) eller någon som eliminerar eller minskar sin konsumtion av rött kött",
+            "Kött-reducerare: en person som äter mejeriprodukter, ägg, frukt, grönsaker, spannmål och en minskad mängd animaliska produkter eller skaldjursprodukter. Till exempel en pescetarian (som äter fisk men inga andra djur) eller någon som eliminerar eller minskar sin konsumtion av rött kött",
             "Allätare: en person som regelbundet äter det mesta av kött, fisk och skaldjur, ägg, mejeriprodukter, frukt, grönsaker och spannmål."
         ]
     }
@@ -615,7 +615,40 @@ var surveyDemo = {
                 "value": 5,
                 "text": '5 trifft voll und ganz zu'
             }]
+        },
+        "se": {
+            "BQIntro": "<p>Vänligen skatta varje påstående på en skala från 1 = <i>\"stämmer inte alls in på mig\"</i> till 5 = <i>\"stämmer mycket bra in på mig\"</i>. Försök att svara på alla påståenden så snabbt som möjligt.</p>",
+            "BQ01": "Mina känslor smälter in i varandra.",
+            "BQ02": "Jag är mycket nära mina barndomskänslor.",
+            "BQ03": "Jag blir lätt sårad.",
+            "BQ04": "Jag tillbringar mycket tid med att dagdrömma, fantisera eller drömma mig bort.",
+            "BQ05": "Ibland är det skrämmande när man kommer alltför nära en annan person.",
+            "BQ06": "En bra förälder måste också vara lite av ett barn.",
+            "BQ07": "Jag kan lätt föreställa mig själv som ett djur eller hur det skulle vara att vara ett djur.",
+            "BQ08": "När jag arbetar med ett projekt gillar jag inte att binda mig till en bestämd plan. Jag gillar snarare att låta tankarna vandra.",
+            "BQ09": "I mina drömmar smälter människor ibland in i varandra eller blir till andra människor.",
+            "BQ10": "Jag tror att jag påverkas av krafter som ingen kan förstå.",
+            "BQ11": "Det finns inga skarpa gränser mellan normala människor, människor med problem och människor som anses vara psykotiska eller galna.",
+            "BQ12": "Jag tror att jag skulle tycka om att vara någon form av kreativ artist.",
+            "BQ13": "Jag har upplevt att någon har kallat på mig eller sagt mitt namn och varit osäker på om det verkligen hände eller om jag inbillade mig det.",
+            "BQ_options": [{
+                "value": 1,
+                "text": '1 stämmer inte alls in på mig'
+            }, {
+                "value": 2,
+                "text": '2'
+            }, {
+                "value": 3,
+                "text": '3'
+            }, {
+                "value": 4,
+                "text": '4'
+            }, {
+                "value": 5,
+                "text": '5 stämmer mycket bra in på mig'
+            }]
         }
+
     }
     var surveyBQ = {
         type: jsPsychSurvey,
@@ -749,7 +782,52 @@ var surveyDemo = {
                 "value": 5,
                 "text": '5 stimme zu'
             }]
+        },
+        "se": {
+            "BFIIntro": "<p>Här är ett antal egenskaper som kanske eller kanske inte stämmer in på dig. Instämmer du till exempel i att du är någon som tycker om att umgås med andra? Skriv en siffra fram för varje påstående för att ange hur mycket påståendet stämmer eller inte stämmer på en skala från 1 = <i>Stämmer absolut inte</i> till 5 = <i>Stämmer absolut</i>. Jag är en som...</p>",
+            "BFIprompt": " ",
+            "BFI01": "Är utåtriktad, sällskaplig.",
+            "BFI02": "Har få konstnärliga intressen.",
+            "BFI03": "Har en självhävdande personlighet.",
+            "BFI04": "Är nyfiken på många olika saker.",
+            "BFI05": "Sällan känner mig ivrig eller exalterad.",
+            "BFI06": "Är påhittig, finner smarta sätt att göra saker på.",
+            "BFI07": "Tenderar att vara tystlåten.",
+            "BFI08": "Fascineras av konst, musik eller litteratur.",
+            "BFI09": "Är dominant, agerar som en ledare",
+            "BFI10": "Undviker intellektuella, filosofiska diskussioner.",
+            "BFI11": "Är mindre aktiv än andra människor.",
+            "BFI12": "Inte är så kreativ.",
+            "BFI13": "Ibland är blyg, inåtvänd.",
+            "BFI14": "Värdesätter konst och skönhet.",
+            "BFI15": "Har svårt att påverka andra personer.",
+            "BFI16": "Är en sammansatt person, en djup tänkare.",
+            "BFI17": "Är full av energi.",
+            "BFI18": "Har svårt att föreställa mig saker.",
+            "BFI19": "Är pratsam.",
+            "BFI20": "Tycker att poesi och teater är tråkigt.",
+            "BFI21": "Föredrar att andra tar kommandot.",
+            "BFI22": "Har ett begränsat intresse för abstrakta idéer.",
+            "BFI23": "Visar mycket entusiasm.",
+            "BFI24": "Är originell, kommer på nya idéer.",
+            "BFI_options": [{
+                "value": 1,
+                "text": '1 stämmer absolut inte'
+            }, {
+                "value": 2,
+                "text": '2 stämmer ganska dåligt'
+            }, {
+                "value": 3,
+                "text": '3 stämmer varken bra eller dåligt'
+            }, {
+                "value": 4,
+                "text": '4 stämmer ganska bra'
+            }, {
+                "value": 5,
+                "text": '5 stämmer absolut'
+            }]
         }
+
     }
     var surveyBFI2 = {
     type: jsPsychSurvey,
@@ -860,7 +938,35 @@ var surveyDemo = {
                 "value": 5,
                 "text": '5 stimme zu'
             }]
+        },
+        "se": {
+            "BSSSIntro": "<p>Här är ett antal påståenden som kanske eller kanske inte stämmer in på dig. Markera den siffra som motsvarar i vilken utsträckning du håller med eller inte håller med om påståendet på en skala från 1 = <i>håller inte alls med</i> till 5 = <i>håller absolut med</i>.</p>",
+            "BSSS01": "Jag skulle vilja utforska främmande platser.",
+            "BSSS02": "Jag blir rastlös när jag tillbringar för mycket tid hemma.",
+            "BSSS03": "Jag gillar att göra skrämmande saker.",
+            "BSSS04": "Jag gillar vilda fester.",
+            "BSSS05": "Jag skulle vilja ge mig ut på en resa utan förutbestämda rutter eller tidtabeller.",
+            "BSSS06": "Jag föredrar vänner som är oförutsägbara—det är spännande att umgås med dem.",
+            "BSSS07": "Jag skulle vilja prova på bungyjump.",
+            "BSSS08": "Jag skulle älska att ha nya och spännande upplevelser, även om de vore olagliga.",
+            "BSSS_options": [{
+                "value": 1,
+                "text": '1 håller inte alls med'
+            }, {
+                "value": 2,
+                "text": '2 håller inte med'
+            }, {
+                "value": 3,
+                "text": '3 varken håller med eller håller inte med'
+            }, {
+                "value": 4,
+                "text": '4 håller med'
+            }, {
+                "value": 5,
+                "text": '5 håller absolut med'
+            }]
         }
+
     }
     var surveyBSSS = {
         type: jsPsychSurvey,
@@ -967,7 +1073,41 @@ var surveyDemo = {
             "DES28": "28. Manche Menschen fühlen sich manchmal so, als ob sie die Welt durch einen Nebel wahrnehmen würden, so dass Menschen und Gegenstände weit weg oder unklar erscheinen.",
             "DESMin": "Nie",
             "DESMax": "Immer"
+        },
+        "se": {
+            "DESIntro": "<p>Detta formulär innehåller 28 frågor om vissa upplevelser som man kan ha i det dagliga livet. Vi är intresserade av hur ofta du har haft dessa upplevelser de senaste två veckorna. Det är viktigt att du inte tar med tillfällen då du är påverkad av alkohol eller droger. Försök att avgöra hur ofta de beskrivna upplevelserna gäller dig, genom att kryssa för i en av rutorna där ”aldrig”= 0% och ”alltid”= 100%.</p>",
+            "DES01": "01. 1.	Under bilkörning kan man upptäcka att man helt eller delvis glömt vad som hänt under resan. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES02": "02. När man lyssnar på någon som talar, kan man plötsligt uppleva att man inte hört något alls eller bara delar av vad som sagts. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES03": "03. Man kan upptäcka att man hamnat på en plats utan att ha en aning om hur man kom dit. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES04": "04. Man kan upptäcka att man bär kläder som man inte kommer ihåg att man har satt på sig. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES05": "05. Man kan, bland sina tillhörigheter, upptäcka nya saker som man inte kommer ihåg att man har köpt. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES06": "06. Man kan uppleva att okända personer kommer fram och kallar en vid fel namn, eller påstår att man träffats förut. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES07": "07. Man kan ibland uppleva att man står bredvid sig själv eller tittar på sig själv som om man var en annan person. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES08": "08. Man kan få höra att man ibland inte känner igen sina vänner eller familjemedlemmar. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES09": "09. Man kan uppleva att man inte kommer ihåg viktiga händelser i livet (t ex giftermål eller examen). Kryssa för i en av rutorna hur ofta detta händer Dig",
+            "DES10": "10. Man kan bli anklagad för att ljuga fastän man vet att man inte har ljugit. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES11": "11. Man kan titta i en spegel och uppleva att man inte känner igen sig själv. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES12": "12. Man kan uppleva att omvärlden, andra människor och föremål, är overkliga. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES13": "13. Man kan känna det som om ens kropp inte tillhör en själv. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES14": "14. Man kan återuppleva en händelse så tydligt att det känns som att den händer på nytt igen. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES15": "15. Man kan uppleva att man är osäker på om händelser man minns verkligen har hänt eller bara är en dröm. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES16": "16. Man kan uppleva att man är på en välkänd plats som ter sig främmande eller obekant. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES17": "17. Man kan uppleva en film så fängslande att man är omedveten om händelser runt omkring en. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES18": "18. Man kan bli så absorberad av en dagdröm att den känns verklig. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES19": "19. Man kan ibland uppleva att man inte känner att det gör ont i kroppen. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES20": "20. Man kan komma på sig själv med att titta tomt framför sig utan att tänka eller vara medveten om tiden. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES21": "21. Man kan upptäcka att man pratar högt för sig själv när man är ensam. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES22": "22. Man kan ibland bete sig så annorlunda i en situation jämfört med en annan situation, att man nästan känner sig som om man vore två olika människor. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES23": "23. Man kan upptäcka att man ibland förvånansvärt lätt gör saker som annars skulle kännas svåra att göra, i till exempel sport, arbete och sällskapsliv. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES24": "24. Man kan glömma att man verkligen gjort något som man tänkt göra. (T ex att man inte vet om man verkligen postat ett brev eller bara tänkt göra det.) Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES25": "25. Man kan hitta bevis för att man gjort saker som man inte kommer ihåg att man har gjort. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES26": "26. Man kan bland sina tillhörigheter upptäcka anteckningar eller bilder man själv måste ha gjort utan att man kommer ihåg det. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES27": "27. Man kan uppleva att man hör röster inne i huvudet som säger att man ska göra något eller som kommenterar vad man gör. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DES28": "28. Man kan uppleva att man betraktar världen som genom en dimma, så att människor och föremål tycks avlägsna eller otydliga. Kryssa för i en av rutorna hur ofta detta händer Dig.",
+            "DESMin": "Aldrig",
+            "DESMax": "Alltid"
         }
+
     }
 
     var surveyDESScaleValues = [
@@ -1315,7 +1455,37 @@ var surveyDemo = {
                 "value": 2,
                 "text": 'Richtig'
             }]
+        },
+        "se": {
+            "ASGSIntro": "<p>Här följer 16 påståenden om dina egna uppfattningar och attityder. För varje nummer, läs påståendet noggrant och välj det svar som bäst motsvarar din åsikt.</p>",
+            "ASGS01": "Jag tror att extrasensorisk perception (ESP) existerar.",
+            "ASGS02": "Jag tror att jag har haft en personlig upplevelse av ESP.",
+            "ASGS03": "Jag tror att jag är synsk (att jag har extrasensoriska förmågor)",
+            "ASGS04": "Jag tror att det är möjligt att få information om framtiden innan den inträffar på ett sätt som inte beror på rationella förutsägelser eller normala sinnesintryck.",
+            "ASGS05": "Jag tror att jag har haft en magkänsla som visade sig vara korrekt och som (tror jag) inte bara var en tillfällighet.",
+            "ASGS06": "Jag tror att jag har haft åtminstone en föraning om framtiden som blev sann och som (tror jag) inte bara var en tillfällighet.",
+            "ASGS07": "Jag tror att jag har haft åtminstone en dröm som blev sann och som (tror jag) inte bara var en tillfällighet.",
+            "ASGS08": "Jag tror att jag har haft åtminstone en vision av en händelse som inte var en hallucination och från vilken jag fick information som jag annars inte kunde ha fått vid den tidpunkten och platsen.",
+            "ASGS09": "Jag tror att det är möjligt att få information om en annan persons tankar, känslor eller omständigheter på ett sätt som inte är beroende av rationella förutsägelser eller normala sinnesintryck.",
+            "ASGS10": "Jag tror att det är möjligt att sända ett \"mentalt meddelande\" till en annan person, eller på något sätt påverka dem på avstånd, på annat sätt än genom de normala kommunikations-kanalerna.",
+            "ASGS11": "Jag tror att jag har haft åtminstone en upplevelse av telepati mellan mig själv och en annan person.",
+            "ASGS12": "Jag tror att psykokinesi finns, dvs. sinnets direkta påverkan på fysiska system, utan förmedling av någon känd fysisk energi.",
+            "ASGS13": "Jag tror att jag personligen har utövat psykokinesi vid åtminstone ett tillfälle.",
+            "ASGS14": "Jag tror att jag har en påtaglig psykokinetisk förmåga.",
+            "ASGS15": "Jag tror att vid åtminstone ett tillfälle har en oförklarlig (men inte återkommande) fysisk händelse av till synes psykokinetiskt ursprung inträffat i min närvaro.",
+            "ASGS16": "Jag tror att återkommande oförklarliga fysiska störningar av till synes psykokinetiskt ursprung (t.ex. ett ”poltergeist-fenomen”) har inträffat i min närvaro någon gång tidigare.",
+            "ASGS_options": [{
+                "value": 0,
+                "text": 'Falskt'
+            }, {
+                "value": 1,
+                "text": 'Osäker'
+            }, {
+                "value": 2,
+                "text": 'Sant'
+            }]
         }
+
     }
     var surveyASGS = {
         type: jsPsychSurvey,

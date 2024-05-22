@@ -10,7 +10,9 @@
     <script src="jspsych/plugin-call-function.js"></script>
     <!--<script src="jspsych/plugin-instructions.js"></script>-->
     <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.3"></script>
-    <script src="jspsych/plugin-survey.js"></script>
+    <!-- <script src="jspsych/plugin-survey.js"></script> -->
+    <script src="jspsych/plugin-survey-new.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@1.0.0/css/survey.css">
     <script src="jspsych/plugin-survey-multi-choice.js"></script>
     <script src="jspsych/plugin-survey-text.js"></script>
     <script src="jspsych/plugin-survey-html-form.js"></script>
@@ -103,6 +105,7 @@
             padding: 0;
         }
 
+
     </style>
 
   </head>
@@ -117,25 +120,50 @@
       } */
     });
 
-    // SONA & subject ID
+    // subject & Lab ID
     let pid = jsPsych.data.urlVariables()['pid'];
-    
-    if(!pid){
-        var subject_id = jsPsych.randomization.randomID(16);
-    } else {
-        var subject_id = pid;
-  }
+    let lab = jsPsych.data.urlVariables()['l'];
 
+    let subject_id;
+    
+    // no Pid
+    if(!pid){
+        console.log("No PID transmitted.");
+        // no lab -> go to lab selection
+        if(!["1","2","3","4","5","6"].includes(lab)){
+            console.log("No lab transmitted. Redirecting...");
+            location.href = 'lab.html?exp=q2';
+        } else {
+            //var subject_id = jsPsych.randomization.randomID(16);
+        }
+    } else {
+        //var subject_id = pid;
+        // set lab to first character of pid
+        lab = pid.charAt(0);
+    }
+
+    // set language
+    let lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
+
+    console.log(" Lab: " + lab + " Language: " + lang);
     // specify starting time
     var start_time = new Date();
 
     // add to data file
     jsPsych.data.addProperties({ 
-        subject: subject_id, 
+        //subject: subject_id, 
         time: start_time.toISOString()
     });
 
-
+    // Function to retrieve text based on language and key
+    function txt(translations, language, key) {
+        if (translations.hasOwnProperty(language) && translations[language].hasOwnProperty(key)) {
+            return translations[language][key];
+        } else {
+            // Return default text or empty string if translation not found
+            return 'No translation found.';
+        }
+    }
     /*
     // consent to participate.
         var check_consent = function(elem) {
@@ -157,35 +185,99 @@
         check_fn: check_consent
     };*/
 
+    // button text
+    var txt_survey = {
+        "en": {
+            "next": "Continue"
+        },
+        "de": {
+            "next": "Weiter"
+        },
+        "se": {
+            "next": "Nästa"
+        }
+    };
+
     /* welcome message & instructions */
-    var welcome = {
-        type: jsPsychSurveyText,
-        data: { test_part: 'welcome'},
-        preamble: `<h2>Session 2</h2>
+    var txt_welcome = 
+    {
+        "en": {
+            "preamble": `<h2>Session 2</h2>
             <div style="text-align:justify">
                 <p>In this final session, we would like you to participate in a Ganzfeld experiment. You will be asked to make a gentle wish that during Ganzfeld you will have experiences related to a film clip that will be shown to you later. Specifically, you will be asked to:</p>
                 <ul>
                     <li>Answer a few questions about your attitude to the experiment.</li>
                     <li>Rest in a reclining chair for a few minutes and answer a few questions about this experience.</li>
                     <li>Do the ganzfeld experiment. This will include 8 minutes of relaxation instructions, followed by 30 minutes of Ganzfeld. During these 30 minutes, you will be asked to report your experiences (think-out-loud)</li>
-                        <li>After completing some questions about your Ganzfeld experience, you will be asked to watch two brief film clips, one of which is the "target", which will be shown to you again later. You will be asked to rate these two clips concerning their similarity to your Ganzfeld experience. Then, the target clip be shown to you.</li>
+                    <li>After completing some questions about your Ganzfeld experience, you will be asked to watch two brief film clips, one of which is the "target", which will be shown to you again later. You will be asked to rate these two clips concerning their similarity to your Ganzfeld experience. Then, the target clip be shown to you.</li>
                 </ul>
                 <p>Please answer honestly about your experiences and attitudes. There are no right or wrong answers. We value your genuine thoughts and opinions.</p>
                 <p>Please fill out your participant ID / make sure that it is correct and click <i>Continue</i> to begin.</p>
             </div>`,
-        questions: [
-            {prompt: 'Participant ID', name: 'pid'}
-        ],
-        button_label: 'Continue',
-        on_load: function(){
-            if(pid) document.getElementById('input-0').setAttribute('value', pid);
+            "pid": "Participant ID"
         },
-        /*on_finish: function(data) {
-            // save pid
-            jsPsych.data.addProperties({ 
-                subject: data.responses[0]
+        "de": {
+            "preamble": `<h2>Sitzung 2</h2>
+            <div style="text-align:justify">
+                <p>In dieser letzten Sitzung möchten wir Sie bitten, an einem Ganzfeld-Experiment teilzunehmen. Dabei bitten wir Sie, sich zu wünschen, dass Sie während des Ganzfeld-Experiments Erfahrungen machen werden, die mit einem Film zusammenhängen, der Ihnen später gezeigt wird. Im Einzelnen werden Sie um Folgendes gebeten:</p>
+                <ul>
+                    <li>Beantworten Sie ein paar Fragen zu Ihrer Einstellung zum Experiment.</li>
+                    <li>Setzen Sie sich für einige Minuten in einen Liegestuhl und beantworten Sie einige Fragen zu dieser Erfahrung.</li>
+                    <li>Führen Sie das Ganzfeld-Experiment durch. Dazu gehören 8 Minuten Entspannungsanweisungen, gefolgt von 30 Minuten Ganzfeld. Während dieser 30 Minuten werden Sie aufgefordert, über Ihre Erfahrungen zu berichten (lautes Denken)</li>
+                    <li>Nachdem Sie einige Fragen zu Ihrer Ganzfeld-Erfahrung beantwortet haben, werden Sie gebeten, sich zwei kurze Filmausschnitte anzusehen, von denen einer das "Ziel" ist, das Ihnen später erneut gezeigt wird. Sie werden gebeten, diese beiden Clips hinsichtlich ihrer Ähnlichkeit mit Ihrer Ganzfeld-Erfahrung zu bewerten. Danach wird Ihnen der Zielfilm gezeigt.</li>
+                </ul>
+                <p>Bitte geben Sie ehrliche Antworten zu Ihren Erfahrungen und Einstellungen. Es gibt keine richtigen oder falschen Antworten. Wir legen Wert auf Ihre ehrlichen Gedanken und Meinungen.</p>
+                <p>Bitte geben Sie Ihre Teilnehmer-ID ein / vergewissern Sie sich, dass sie korrekt ist und klicken Sie auf <i>Fortfahren</i>, um zu beginnen.</p>`,
+            "pid": "Teilnehmer-ID"
+        },
+    }
+    var welcome = {
+        type: jsPsychSurveyText,
+        data: { test_part: 'welcome'},
+        preamble: txt(txt_welcome, lang, 'preamble'),
+        questions: [
+            {
+                prompt: txt(txt_welcome, lang, 'pid'),
+                name: 'subject_id'
+            }
+        ],
+        button_label: txt(txt_survey, lang, 'next'),
+        on_load: function(){
+            var input = document.getElementById('input-0');
+            var continueBtn = document.getElementById('jspsych-survey-text-next');
+            
+            if(pid){
+                input.setAttribute('value', pid);
+            } else if (lab){
+                input.setAttribute('value', lab + "_");
+                // Set cursor position at the end
+
+                input.selectionStart = input.selectionEnd = input.value.length;
+
+                // Add red border to input
+                input.style.border = '2px solid red';
+                input.style.outline = 'none';
+                continueBtn.disabled = true;
+            }
+
+            // Listen for input events to remove red border after 6 characters have been added
+            input.addEventListener('input', function() {
+                if (input.value.length == 8) {
+                    // Remove red border after 8 characters have been entered
+                    input.style.border = '2px solid #ccc';
+                    continueBtn.disabled = false;
+                } else {
+                    input.style.border = '2px solid red';
+                    continueBtn.disabled = true;
+                }
             });
-        }*/
+        },
+        on_finish: function(data){
+            subject_id = data.response.subject_id;
+            jsPsych.data.addProperties({ 
+                subject: subject_id
+            });
+        }
     }
 
 
@@ -220,21 +312,42 @@
         ],
         button_label_finish: 'Next'
     };*/
+    var txt_preGanzfeld = {
+        "en": {
+            "successBelief": `<p>Before we begin, we would like to ask you about your attitude to the experiment.</p>
+            <p style="font-weight: bold;">How likely do you think it is that you personally will succeed in your precognitive test today?</p>`,
+            "comfortable": `<p style="font-weight: bold;">Do you feel comfortable with the Ganzfeld setup?</p>`,
+            "labels": ['not at all', 'very much']
+        },
+        "de": {
+            "successBelief": `<p>Bevor wir beginnen, möchten wir Sie nach Ihrer Einstellung zum Experiment fragen.</p>
+            <p style="font-weight: bold;">Wie wahrscheinlich halten Sie es, dass Sie persönlich bei Ihrem heutigen präkognitiven Test erfolgreich sein werden?</p>`,
+            "comfortable": `<p style="font-weight: bold;">Fühlen Sie sich wohl mit dem Ganzfeld-Setup?</p>`,
+            "labels": ['gar nicht', 'sehr']
+        },
+        "se": {
+            "successBelief": `<p>Before we begin, we would like to ask you about your attitude to the experiment.</p>
+            <p style="font-weight: bold;">How likely do you think it is that you personally will succeed in your precognitive test today?</p>`,
+            "comfortable": `<p style="font-weight: bold;">Do you feel comfortable with the Ganzfeld setup?</p>`,
+            "labels": ['not at all', 'very much']
+        }
+    }
     var surveyPreSB = {
         type: jsPsychHtmlSliderResponse,
         data: { test_part: "successBelief" },
-        stimulus: `<p>Before we begin, we would like to ask you about your attitude to the experiment.</p>
-        <p style="font-weight: bold;">How likely do you think it is that you personally will succeed in your precognitive test today?</p>`,
+        stimulus: txt(txt_preGanzfeld, lang, 'successBelief'),
         require_movement: true,
-        labels: ['0%', '50%', '100%']
+        labels: ['0%', '50%', '100%'],
+        button_label: txt(txt_survey, lang, 'next')
     };
 
     var surveyPreComf = {
         type: jsPsychHtmlSliderResponse,
         data: { test_part: "comfortable" },
-        stimulus: `<p style="font-weight: bold;">Do you feel comfortable with the Ganzfeld setup?</p>`,
+        stimulus: txt(txt_preGanzfeld, lang, 'comfortable'),
         require_movement: true,
-        labels: ['not at all', 'very much']
+        labels: txt(txt_preGanzfeld, lang, 'labels'),
+        button_label: txt(txt_survey, lang, 'next')
     };
 
 
@@ -245,13 +358,44 @@
          func: function(){
             document.querySelector('head').insertAdjacentHTML('beforeEnd', 
             `<style id="PCI">
-                .sv_q_rating_min_text, .sv_q_rating_max_text {
-                    display: inline-block;
-                    width: calc(50% - 10em);
-                    vertical-align: middle;
+                /* Ensure the container is using the full width */
+                .sd-question {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100% !important;
                 }
-                .sv_q_rating_min_text {
-                    text-align: right;
+
+                /* Align items to the center within the rating container */
+                .sd-rating {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    width: 100% !important;
+                }
+
+                /* Ensure min and max texts are centered and wrap properly */
+                .sd-rating__item-text.sd-rating__min-text,
+                .sd-rating__item-text.sd-rating__max-text {
+                    flex: 1 !important;
+                    text-align: center !important;
+                    white-space: normal !important; /* Allow text to wrap */
+                    overflow: hidden !important;    /* Hide overflow */
+                    text-overflow: ellipsis !important; /* Add ellipsis for overflow */
+                    margin: 0 8px !important; /* Add some margin to separate from the scale */
+                    max-width: 100% !important; /* Ensure text does not exceed container width */
+                }
+
+                /* Center the rating scale items */
+                .sd-rating__items {
+                    display: flex !important;
+                    justify-content: center !important;
+                    width: 100% !important;
+                    margin: 16px 0 !important;
+                }
+
+                /* Styling for individual rating items */
+                .sd-rating__item {
+                    margin: 0 4px !important;
                 }
             </style>`
             );
@@ -266,294 +410,372 @@
       };
 
     // 1. Relaxation
+    var txt_PCIRest = {
+        "en": {
+            "intro": `<p>Please read each statement carefully and answer as accurately as you can by indicating the number between “0” and “6” that best corresponds to your subjective experience <b>during the 3 minutes of resting</b>.</p>`,
+            "min": [
+                'I was forever distracted and unable to concentrate on anything.',
+                'My body ended at the boundary between my skin and the world.',
+                'My perception of the flow of time changed drastically.',
+                'The muscles of my body felt very tense and tight.',
+                'My state of consciousness was not any different or unusual from what it ordinarily is.',
+                'My bodily feelings seemed to expand into the world around me.',
+                'Time seemed to greatly speed up or slow down.',
+                'I was not distracted, but was able to be completely absorbed in what I was experiencing.',
+                'I felt no feelings of tension or tightness at all.',
+                'My state of awareness was very different from what I usually experience',
+                'I felt no sense of timelessness; time flowed as I usually experienced it.',
+                'I continually maintained a very strong sense of separation between myself and the environment.',
+                'My state of awareness was not unusual or different from what it ordinarily is.'
+            ],
+            "max": [
+                'I was able to concentrate quite well and was not distracted.',
+                'I felt my body greatly expanded beyond the boundaries of my skin.',
+                'I noticed no changes in my perception of the flow of time.',
+                'The muscles of my body felt very loose and relaxed.',
+                'I felt in an extremely different and unusual state of consciousness.',
+                'My bodily feelings were confined to the area within my skin.',
+                'Time was experienced with no changes in its rate of passage.',
+                'I was continually distracted by extraneous impressions or events.',
+                'I felt tense and tight.',
+                'My state of awareness was no different than usual.',
+                'Time stood still; there was no movement of time at all.',
+                'I experienced intense unity with the world; the boundaries between me and the environment dissolved away.',
+                'I felt in an extraordinarily unusual and non-ordinary state of awareness.'
+            ]
+        },
+        "de": {
+        }
+    }
     var surveyPCIRestTrial = {
         type: jsPsychSurvey,
         data: { test_part: "PCIRest" },
-        pages: [
+        survey_json: {
+            showQuestionNumbers: false,
+            completeText: txt(txt_survey, lang, 'next'),
+            elements:
         [
             {
                 type: 'html',
                 name: 'PCIIntro',
-                prompt: '<p>Please read each statement carefully and answer as accurately as you can by indicating the number between “0” and “6” that best corresponds to your subjective experience <b>during the 3 minutes of resting</b>.</p>',
+                html: txt(txt_PCIRest, lang, 'intro'),
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIRest1',
-                prompt: '1.',
-                likert_scale_min_label: 'I was forever distracted and unable to concentrate on anything.',
-                likert_scale_max_label: 'I was able to concentrate quite well and was not distracted.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '1.',
+                minRateDescription: txt(txt_PCIRest, lang, 'min')[0],
+                maxRateDescription: txt(txt_PCIRest, lang, 'max')[0],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIRest2',
-                prompt: '2.',
-                likert_scale_min_label: 'My body ended at the boundary between my skin and the world.',
-                likert_scale_max_label: 'I felt my body greatly expanded beyond the boundaries of my skin.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '2.',
+                minRateDescription: txt(txt_PCIRest, lang, 'min')[1],
+                maxRateDescription: txt(txt_PCIRest, lang, 'max')[1],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIRest3',
-                prompt: '3.',
-                likert_scale_min_label: 'My perception of the flow of time changed drastically.',
-                likert_scale_max_label: 'I noticed no changes in my perception of the flow of time.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '3.',
+                minRateDescription: txt(txt_PCIRest, lang, 'min')[2],
+                maxRateDescription: txt(txt_PCIRest, lang, 'max')[2],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIRest4',
-                prompt: '4.',
-                likert_scale_min_label: 'The muscles of my body felt very tense and tight.',
-                likert_scale_max_label: 'The muscles of my body felt very loose and relaxed.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '4.',
+                minRateDescription: txt(txt_PCIRest, lang, 'min')[3],
+                maxRateDescription: txt(txt_PCIRest, lang, 'max')[3],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIRest5',
-                prompt: '5.',
-                likert_scale_min_label: 'My state of consciousness was not any different or unusual from what it ordinarily is.',
-                likert_scale_max_label: 'I felt in an extremely different and unusual state of consciousness.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '5.',
+                minRateDescription: txt(txt_PCIRest, lang, 'min')[4],
+                maxRateDescription: txt(txt_PCIRest, lang, 'max')[4],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIRest6',
-                prompt: '6.',
-                likert_scale_min_label: 'My bodily feelings seemed to expand into the world around me.',
-                likert_scale_max_label: 'My bodily feelings were confined to the area within my skin.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '6.',
+                minRateDescription: txt(txt_PCIRest, lang, 'min')[5],
+                maxRateDescription: txt(txt_PCIRest, lang, 'max')[5],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIRest7',
-                prompt: '7.',
-                likert_scale_min_label: 'Time seemed to greatly speed up or slow down.',
-                likert_scale_max_label: 'Time was experienced with no changes in its rate of passage.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '7.',
+                minRateDescription: txt(txt_PCIRest, lang, 'min')[6],
+                maxRateDescription: txt(txt_PCIRest, lang, 'max')[6],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIRest8',
-                prompt: '8.',
-                likert_scale_min_label: 'I was not distracted, but was able to be completely absorbed in what I was experiencing.',
-                likert_scale_max_label: 'I was continually distracted by extraneous impressions or events.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '8.',
+                minRateDescription: txt(txt_PCIRest, lang, 'min')[7],
+                maxRateDescription: txt(txt_PCIRest, lang, 'max')[7],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIRest9',
-                prompt: '9.',
-                likert_scale_min_label: 'I felt no feelings of tension or tightness at all.',
-                likert_scale_max_label: 'I felt tense and tight.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '9.',
+                minRateDescription: txt(txt_PCIRest, lang, 'min')[8],
+                maxRateDescription: txt(txt_PCIRest, lang, 'max')[8],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIRest10',
-                prompt: '10.',
-                likert_scale_min_label: 'My state of awareness was very different from what I usually experience',
-                likert_scale_max_label: 'My state of awareness was no different than usual.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '10.',
+                minRateDescription: txt(txt_PCIRest, lang, 'min')[9],
+                maxRateDescription: txt(txt_PCIRest, lang, 'max')[9],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIRest11',
-                prompt: '11.',
-                likert_scale_min_label: 'I felt no sense of timelessness; time flowed as I usually experienced it.',
-                likert_scale_max_label: 'Time stood still; there was no movement of time at all.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '11.',
+                minRateDescription: txt(txt_PCIRest, lang, 'min')[10],
+                maxRateDescription: txt(txt_PCIRest, lang, 'max')[10],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIRest12',
-                prompt: '12.',
-                likert_scale_min_label: 'I continually maintained a very strong sense of separation between myself and the environment.',
-                likert_scale_max_label: 'I experienced intense unity with the world; the boundaries between me and the environment dissolved away.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '12.',
+                minRateDescription: txt(txt_PCIRest, lang, 'min')[11],
+                maxRateDescription: txt(txt_PCIRest, lang, 'max')[11],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIRest13',
-                prompt: '13.',
-                likert_scale_min_label: 'My state of awareness was not unusual or different from what it ordinarily is.',
-                likert_scale_max_label: 'I felt in an extraordinarily unusual and non-ordinary state of awareness.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '13.',
+                minRateDescription: txt(txt_PCIRest, lang, 'min')[12],
+                maxRateDescription: txt(txt_PCIRest, lang, 'max')[12],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             }
         ]
-        ],
-        button_label_finish: 'Next'
+        }
     };
 
+    var txt_PCIGanzfeld = {
+        "en": {
+            "intro": `<p>Please read each statement carefully and answer as accurately as you can by indicating the number between “0” and “6” that best corresponds to your subjective experience <b>during the 30 minutes of Ganzfeld</b>.</p>`,
+            "min": [
+                'I was forever distracted and unable to concentrate on anything.',
+                'My body ended at the boundary between my skin and the world.',
+                'My perception of the flow of time changed drastically.',
+                'The muscles of my body felt very tense and tight.',
+                'My state of consciousness was not any different or unusual from what it ordinarily is.',
+                'My bodily feelings seemed to expand into the world around me.',
+                'Time seemed to greatly speed up or slow down.',
+                'I was not distracted, but was able to be completely absorbed in what I was experiencing.',
+                'I felt no feelings of tension or tightness at all.',
+                'My state of awareness was very different from what I usually experience',
+                'I felt no sense of timelessness; time flowed as I usually experienced it.',
+                'I continually maintained a very strong sense of separation between myself and the environment.',
+                'My state of awareness was not unusual or different from what it ordinarily is.'
+            ],
+            "max": [
+                'I was able to concentrate quite well and was not distracted.',
+                'I felt my body greatly expanded beyond the boundaries of my skin.',
+                'I noticed no changes in my perception of the flow of time.',
+                'The muscles of my body felt very loose and relaxed.',
+                'I felt in an extremely different and unusual state of consciousness.',
+                'My bodily feelings were confined to the area within my skin.',
+                'Time was experienced with no changes in its rate of passage.',
+                'I was continually distracted by extraneous impressions or events.',
+                'I felt tense and tight.',
+                'My state of awareness was no different than usual.',
+                'Time stood still; there was no movement of time at all.',
+                'I experienced intense unity with the world; the boundaries between me and the environment dissolved away.',
+                'I felt in an extraordinarily unusual and non-ordinary state of awareness.'
+            ]
+        },
+        "de": {
+        }
+    }
     var surveyPCIGanzfeldTrial = {
         type: jsPsychSurvey,
         data: { test_part: "PCIGanzfeld" },
-        pages: [
+        survey_json: {
+            showQuestionNumbers: false,
+            completeText: txt(txt_survey, lang, 'next'),
+            elements:
         [
             {
                 type: 'html',
                 name: 'PCIIntro',
-                prompt: '<p>Please read each statement carefully and answer as accurately as you can by indicating the number between “0” and “6” that best corresponds to your subjective experience <b>during the 30 minutes of Ganzfeld</b>.</p>',
+                html: txt(txt_PCIGanzfeld, lang, 'intro'),
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIGanz1',
-                prompt: '1.',
-                likert_scale_min_label: 'I was forever distracted and unable to concentrate on anything.',
-                likert_scale_max_label: 'I was able to concentrate quite well and was not distracted.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '1.',
+                minRateDescription: txt(txt_PCIGanzfeld, lang, 'min')[0],
+                maxRateDescription: txt(txt_PCIGanzfeld, lang, 'max')[0],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIGanz2',
-                prompt: '2.',
-                likert_scale_min_label: 'My body ended at the boundary between my skin and the world.',
-                likert_scale_max_label: 'I felt my body greatly expanded beyond the boundaries of my skin.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '2.',
+                minRateDescription: txt(txt_PCIGanzfeld, lang, 'min')[1],
+                maxRateDescription: txt(txt_PCIGanzfeld, lang, 'max')[1],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIGanz3',
-                prompt: '3.',
-                likert_scale_min_label: 'My perception of the flow of time changed drastically.',
-                likert_scale_max_label: 'I noticed no changes in my perception of the flow of time.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '3.',
+                minRateDescription: txt(txt_PCIGanzfeld, lang, 'min')[2],
+                maxRateDescription: txt(txt_PCIGanzfeld, lang, 'max')[2],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIGanz4',
-                prompt: '4.',
-                likert_scale_min_label: 'The muscles of my body felt very tense and tight.',
-                likert_scale_max_label: 'The muscles of my body felt very loose and relaxed.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '4.',
+                minRateDescription: txt(txt_PCIGanzfeld, lang, 'min')[3],
+                maxRateDescription: txt(txt_PCIGanzfeld, lang, 'max')[3],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIGanz5',
-                prompt: '5.',
-                likert_scale_min_label: 'My state of consciousness was not any different or unusual from what it ordinarily is.',
-                likert_scale_max_label: 'I felt in an extremely different and unusual state of consciousness.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '5.',
+                minRateDescription: txt(txt_PCIGanzfeld, lang, 'min')[4],
+                maxRateDescription: txt(txt_PCIGanzfeld, lang, 'max')[4],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIGanz6',
-                prompt: '6.',
-                likert_scale_min_label: 'My bodily feelings seemed to expand into the world around me.',
-                likert_scale_max_label: 'My bodily feelings were confined to the area within my skin.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '6.',
+                minRateDescription: txt(txt_PCIGanzfeld, lang, 'min')[5],
+                maxRateDescription: txt(txt_PCIGanzfeld, lang, 'max')[5],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIGanz7',
-                prompt: '7.',
-                likert_scale_min_label: 'Time seemed to greatly speed up or slow down.',
-                likert_scale_max_label: 'Time was experienced with no changes in its rate of passage.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '7.',
+                minRateDescription: txt(txt_PCIGanzfeld, lang, 'min')[6],
+                maxRateDescription: txt(txt_PCIGanzfeld, lang, 'max')[6],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIGanz8',
-                prompt: '8.',
-                likert_scale_min_label: 'I was not distracted, but was able to be completely absorbed in what I was experiencing.',
-                likert_scale_max_label: 'I was continually distracted by extraneous impressions or events.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '8.',
+                minRateDescription: txt(txt_PCIGanzfeld, lang, 'min')[7],
+                maxRateDescription: txt(txt_PCIGanzfeld, lang, 'max')[7],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIGanz9',
-                prompt: '9.',
-                likert_scale_min_label: 'I felt no feelings of tension or tightness at all.',
-                likert_scale_max_label: 'I felt tense and tight.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '9.',
+                minRateDescription: txt(txt_PCIGanzfeld, lang, 'min')[8],
+                maxRateDescription: txt(txt_PCIGanzfeld, lang, 'max')[8],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIGanz10',
-                prompt: '10.',
-                likert_scale_min_label: 'My state of awareness was very different from what I usually experience',
-                likert_scale_max_label: 'My state of awareness was no different than usual.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '10.',
+                minRateDescription: txt(txt_PCIGanzfeld, lang, 'min')[9],
+                maxRateDescription: txt(txt_PCIGanzfeld, lang, 'max')[9],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIGanz11',
-                prompt: '11.',
-                likert_scale_min_label: 'I felt no sense of timelessness; time flowed as I usually experienced it.',
-                likert_scale_max_label: 'Time stood still; there was no movement of time at all.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '11.',
+                minRateDescription: txt(txt_PCIGanzfeld, lang, 'min')[10],
+                maxRateDescription: txt(txt_PCIGanzfeld, lang, 'max')[10],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIGanz12',
-                prompt: '12.',
-                likert_scale_min_label: 'I continually maintained a very strong sense of separation between myself and the environment.',
-                likert_scale_max_label: 'I experienced intense unity with the world; the boundaries between me and the environment dissolved away.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '12.',
+                minRateDescription: txt(txt_PCIGanzfeld, lang, 'min')[11],
+                maxRateDescription: txt(txt_PCIGanzfeld, lang, 'max')[11],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             },
             {
-                type: 'likert',
+                type: 'rating',
                 name: 'PCIGanz13',
-                prompt: '13.',
-                likert_scale_min_label: 'My state of awareness was not unusual or different from what it ordinarily is.',
-                likert_scale_max_label: 'I felt in an extraordinarily unusual and non-ordinary state of awareness.',
-                likert_scale_min: 0,
-                likert_scale_max: 6,
-                required: true
+                title: '13.',
+                minRateDescription: txt(txt_PCIGanzfeld, lang, 'min')[12],
+                maxRateDescription: txt(txt_PCIGanzfeld, lang, 'max')[12],
+                rateMin: 0,
+                rateMax: 6,
+                isrequired: true
             }
         ]
-        ],
-        button_label_finish: 'Next'
+        }
     };
 
     // create PCI timelines
@@ -566,46 +788,115 @@
     }
 
     /* The Dundee Stress State Questionnaire */
+    var txt_DSSQ = {
+        "en": {
+            "intro": `<p>This set of questions concerns the kinds of thoughts that go through people's heads at particular times, for example while they are doing some task or activity. Below is a list of thoughts, some of which you might have had recently.  Please indicate roughly how often you had each thought <b>during the 30 minutes of Ganzfeld</b>.</p>`,
+            "DSSQ01": 'I thought about how I should attend to the task more carefully.',
+            "DSSQ02": 'I thought about how much time I had left.',
+            "DSSQ03": 'I thought about how others have done on this task.',
+            "DSSQ04": 'I thought about the difficulty of the task.',
+            "DSSQ05": 'I thought about my level of ability.',
+            "DSSQ06": 'I thought about the purpose of the experiment.',
+            "DSSQ07": 'I thought about how I would feel if I were told how I performed.',
+            "DSSQ08": 'I thought about how often I get confused.',
+            "DSSQ_options": [{
+                "value": 1,
+                "text": "Never"
+            }, {
+                "value": 2,
+                "text": "Once"
+            }, {
+                "value": 3,
+                "text": "A few times"
+            }, {
+                "value": 4,
+                "text": "Often"
+            }, {
+                "value": 5,
+                "text": "Very often"
+            }]
+        },
+        "de": {
+            "intro": `<p>Die folgenden Fragen beziehen sich auf die Art von Gedanken, die Menschen zu bestimmten Zeiten durch den Kopf gehen, z. B. während sie eine Aufgabe oder Aktivität ausführen. Unten finden Sie eine Liste von Gedanken, die Sie kürzlich gehabt haben könnten. Bitte geben Sie an, wie oft Sie jeden Gedanken ungefähr <b>während der 30 Minuten Ganzfeld</b> hatten.</p>`,
+            "DSSQ01": 'Ich dachte darüber nach, wie ich die Aufgabe sorgfältiger erledigen sollte.',
+            "DSSQ02": 'Ich dachte darüber nach, wie viel Zeit mir noch blieb.',
+            "DSSQ03": 'Ich dachte darüber nach, wie andere bei dieser Aufgabe abgeschnitten haben.',
+            "DSSQ04": 'Ich dachte darüber nach, wie schwierig die Aufgabe war.',
+            "DSSQ05": 'Ich dachte darüber nach, wie mein Leistungsniveau war.',
+            "DSSQ06": 'Ich dachte darüber nach, was der Zweck des Experiments war.',
+            "DSSQ07": 'Ich dachte darüber nach, wie ich mich fühlen würde, wenn mir gesagt würde, wie ich abgeschnitten habe.',
+            "DSSQ08": 'Ich dachte darüber nach, wie oft ich verwirrt bin.',
+            "DSSQ_options": [{
+                "value": 1,
+                "text": "Nie"
+            }, {
+                "value": 2,
+                "text": "Einmal"
+            }, {
+                "value": 3,
+                "text": "Ein paar Mal"
+            }, {
+                "value": 4,
+                "text": "Oft"
+            }, {
+                "value": 5,
+                "text": "Sehr oft"
+            }]
+        }
+    }
     var surveyDSSQ = {
         type: jsPsychSurvey,
         data: { test_part: "DSSQ" },
-        pages: [
+        survey_json: {
+            showQuestionNumbers: false,
+            completeText: txt(txt_survey, lang, 'next'),
+            elements:
         [
             {
                 type: 'html',
                 name: 'DSSQIntro',
-                prompt: `<p>This set of questions concerns the kinds of thoughts that go through people's heads at particular times, for example while they are doing some task or activity. Below is a list of thoughts, some of which you might have had recently.  Please indicate roughly how often you had each thought <b>during the 30 minutes of Ganzfeld</b>.</p>`,
+                html: txt(txt_DSSQ, lang, 'intro'),
             },
             {
                 type: 'likert-table',
                 name: 'DSSQ',
-                prompt: ' ',
-                statements: [
-                {prompt: 'I thought about how I should attend to the task more carefully.', name: 'DSSQ01'},
-                {prompt: 'I thought about how much time I had left.', name: 'DSSQ02'},
-                {prompt: 'I thought about how others have done on this task.', name: 'DSSQ03'},
-                {prompt: 'I thought about the difficulty of the task.', name: 'DSSQ04'},
-                {prompt: 'I thought about my level of ability.', name: 'DSSQ05'},
-                {prompt: 'I thought about the purpose of the experiment.', name: 'DSSQ06'},
-                {prompt: 'I thought about how I would feel if I were told how I performed.', name: 'DSSQ07'},
-                {prompt: 'I thought about how often I get confused.', name: 'DSSQ08'},
+                titleLocation: 'hidden',
+                alternateRows: true,
+                isAllRowRequired: true,
+                rows: [
+                {text: txt(txt_DSSQ, lang, 'DSSQ01'), value: 'DSSQ01'},
+                {text: txt(txt_DSSQ, lang, 'DSSQ02'), value: 'DSSQ02'},
+                {text: txt(txt_DSSQ, lang, 'DSSQ03'), value: 'DSSQ03'},
+                {text: txt(txt_DSSQ, lang, 'DSSQ04'), value: 'DSSQ04'},
+                {text: txt(txt_DSSQ, lang, 'DSSQ05'), value: 'DSSQ05'},
+                {text: txt(txt_DSSQ, lang, 'DSSQ06'), value: 'DSSQ06'},
+                {text: txt(txt_DSSQ, lang, 'DSSQ07'), value: 'DSSQ07'},
+                {text: txt(txt_DSSQ, lang, 'DSSQ08'), value: 'DSSQ08'}
                 ],
-                options: ['Never', 'Once', 'A few times', 'Often', 'Very often'],
-                required: true
+                columns: txt(txt_DSSQ, lang, 'DSSQ_options')
             }
         ]
-        ],
-        button_label_finish: 'Next'
+        }
     };
 
 
     /* Resting */
     // Resting Intro
+    var txt_rest = {
+        "en": {
+            "restIntro": `<p>Next we would like you to rest in a reclining chair for 3 minutes. Press Continue when you are ready, then make yourself comfortable in the chair, and rest until you hear a beep signaling the end of the three minute interval. Afterwards you can return to this program to proceed.</p>`,
+            "rest": `. . . now make yourself comfortable in the reclining chair, and rest for 3 minutes . . . `
+        },
+        "de": {
+            "restIntro": `<p>Als nächstes möchten wir Sie bitten, sich für 3 Minuten in einen Liegestuhl zu setzen. Drücken Sie auf "Weiter", wenn Sie bereit sind, machen Sie es sich dann im Stuhl bequem und ruhen Sie sich aus, bis Sie ein Signalton am Ende des dreiminütigen Intervalls hören. Danach können Sie zu diesem Programm zurückkehren, um fortzufahren.</p>`,
+            "rest": `. . . Jetzt machen Sie es sich im Liegestuhl bequem und ruhen Sie sich für 3 Minuten aus . . .`
+        }
+    }
     var restIntro = {
         type: jsPsychHtmlButtonResponse,
         data: { test_part: "restIntro" },
-        stimulus: `<p>Next we would like you to rest in a reclining chair for 3 minutes. Press Continue when you are ready, then make yourself comfortable in the chair, and rest until you hear a beep signaling the end of the three minute interval. Afterwards you can return to this program to proceed.</p>`,
-        choices: ['Continue']
+        stimulus: txt(txt_rest, lang, 'restIntro'),
+        choices: [txt(txt_survey, lang, 'next')]
     };
 
     // Rest
@@ -642,22 +933,35 @@
             return '';
         },
         choices: "NO_KEYS",
-        prompt: '. . . now make yourself comfortable in the reclining chair, and rest for 3 minutes . . . ',
+        prompt: txt(txt_rest, lang, 'rest'),
         trial_duration: 182500
     };
 
     /* Ganzfeld */
     // Ganzfeld Intro
+    var txt_ganzfeld = {
+        "en": {
+            "ganzfeldIntro": `<p>Please tell the experimenter to assist you with the Ganzfeld equipment. The experimenter will click "Continue" when you are ready to begin.</p>
+            <p>The audio level for the ganzfeld can be adjusted while playing the audio sample below.</p>
+            <audio controls>
+                <source src="../audio/pinknoise30.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>`
+        },
+        "de": {
+            "ganzfeldIntro": `<p>Bitte sagen Sie dem Versuchsleiter, dass er Ihnen bei der Ganzfeld-Ausrüstung behilflich sein soll. Der Versuchsleiter wird auf "Weiter" klicken, wenn Sie bereit sind, um zu beginnen.</p>
+            <p>Der Audiopegel für das Ganzfeld kann während der Wiedergabe der unten stehenden Audiodatei angepasst werden.</p>
+            <audio controls>
+                <source src="../audio/pinknoise30.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>`
+        }
+    }
     var ganzfeldIntro = {
         type: jsPsychHtmlButtonResponse,
-        stimulus: `<p>Please tell the experimenter to assist you with the Ganzfeld equipment. The experimenter will click "Continue" when you are ready to begin.</p>
-        <p>The audio level for the ganzfeld can be adjusted while playing the audio sample below.</p>
-        <audio controls>
-            <source src="../audio/pinknoise30.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>`,
+        stimulus: txt(txt_ganzfeld, lang, 'ganzfeldIntro'),
         data: { test_part: "GanzfeldIntro" },
-        choices: ['Continue']
+        choices: [txt(txt_survey, lang, 'next')]
     };
 
     // Relaxation
@@ -682,24 +986,38 @@
     };
 
     /* Time Estimation */
+    var txt_time = {
+        "en": {
+            "time1": `<p><i>Please answer the following two questions about your experiences during the 30 minutes of Ganzfeld.</i></p>
+            <p>1. How often did you think about time <b>during the task</b>?</p>`,
+            "time1_options": ['Not at all', 'Extremely often'],
+            "time2": `<p><i>Please answer the following two questions about your experiences during the 30 minutes of Ganzfeld.</i></p>
+            <p>2. How fast did time pass for you <b>during the task</b>?</p>`,
+            "time2_options": ['Extremely slowly', 'Extremely fast']
+        },
+        "de": {
+            "time1": `<p><i>Bitte beantworten Sie die folgenden beiden Fragen zu Ihren Erfahrungen während der 30 Minuten Ganzfeld.</i></p>
+            <p>1. Wie oft haben Sie <b>während der Aufgabe</b> an die Zeit gedacht?</p>`,
+            "time1_options": ['Gar nicht', 'Sehr oft'],
+            "time2": `<p><i>Bitte beantworten Sie die folgenden beiden Fragen zu Ihren Erfahrungen während der 30 Minuten Ganzfeld.</i></p>
+            <p>2. Wie schnell verging die Zeit für Sie <b>während der Aufgabe</b>?</p>`,
+            "time2_options": ['Extrem langsam', 'Extrem schnell']
+        }
+    }
     var timeEstimate1 = {
         type: jsPsychHtmlSliderResponse,
         data: { test_part: "time1" },
-        stimulus: `
-        <p><i>Please answer the following two questions about your experiences during the 30 minutes of Ganzfeld.</i></p>
-        <p>1. How often did you think about time <b>during the task</b>?</p>`,
+        stimulus: txt(txt_time, lang, 'time1'),
         require_movement: true,
-        labels: ['Not at all', 'Extremely often']
+        labels: txt(txt_time, lang, 'time1_options')
     };
 
     var timeEstimate2 = {
         type: jsPsychHtmlSliderResponse,
         data: { test_part: "time2" },
-        stimulus: `
-        <p><i>Please answer the following two questions about your experiences during the 30 minutes of Ganzfeld.</i></p>
-        <p>2. How fast did time pass for you <b>during the task</b>?</p>`,
+        stimulus: txt(txt_time, lang, 'time2'),
         require_movement: true,
-        labels: ['Extremely slowly', 'Extremely fast']
+        labels: txt(txt_time, lang, 'time2_options')
     };
 
     /* Play random videos */
@@ -797,13 +1115,23 @@
     // number of sets
     var sets = vidStimuli.length / 4;
 
+    var txt_video = {
+        "en": {
+            "videoIntro": "<p>Now we would like you to watch two short videos and rate how similar they are to your Ganzfeld experience.</p><p>Please click \"Continue\" when you are ready.</p>",
+            "videoRating": "<p>Please rate the similarity of each clip to your Ganzfeld experiences on a scale from 0 (not at all similar) to 100 (extremely similar).</p>",
+            "videoTarget": "<p>We will now select the target video.</p><p>Please watch the selected video a second time.</p>"
+        },
+        "de": {
+            "videoIntro": `<p>Jetzt möchten wir, dass Sie sich zwei kurze Videos ansehen und bewerten, wie ähnlich sie Ihrem Ganzfeld-Erlebnis sind.</p>
+            <p>Bitte klicken Sie auf "Weiter", wenn Sie bereit sind.</p>`,
+            "videoRating": `<p>Bitte bewerten Sie die Ähnlichkeit jedes Clips zu Ihren Ganzfeld-Erfahrungen auf einer Skala von 0 (überhaupt nicht ähnlich) bis 100 (extrem ähnlich).</p>`
+        }
+    }
     var videoIntro = {
         type: jsPsychHtmlButtonResponse,
         data: { test_part: "videoIntro" },
-        stimulus:
-            `<p>Now we would like you to watch two short videos and rate how similar they are to your Ganzfeld experience.</p>
-            <p>Please click "Continue" when you are ready.</p>`,
-        choices: ['Continue'],
+        stimulus: txt(txt_video, lang, 'videoIntro'),
+        choices: [txt(txt_survey, lang, 'next')],
         on_finish: function(data) {
             // select video set
             var rndSet = parseInt(Zufallswert(sets-1), 10);
@@ -833,7 +1161,7 @@
         data: { test_part: 'videoRating'},
         //preamble: '<p>Now we would like you to watch two short videos and rate how similar they are to your Ganzfeld experience.</p>',
         html: '',
-        button_label: 'Continue',
+        button_label: txt(txt_survey, lang, 'next'),
         on_start: function(trial) {
             //get video data of trial with test_part: videoIntro
             var videoData = jsPsych.data.get().filter({test_part: "videoIntro"}).values()[0];
@@ -915,8 +1243,8 @@
     var videoTargetIntro = {
         type: jsPsychHtmlButtonResponse,
         data: { test_part: 'videoTargetIntro'},
-        stimulus: '<p>We will now select the target video.</p><p>Please watch the selected video a second time.</p>',
-        choices: ['Continue']
+        stimulus: txt(txt_video, lang, 'videoTarget'),
+        choices: [txt(txt_survey, lang, 'next')]
     }
     var videoTarget = {
         type: jsPsychVideoKeyboardResponse,
@@ -951,9 +1279,17 @@
     }
 
     /* end message */
+    var txt_ending = {
+        "en": {
+            "ending": `<p>Thank you!</p><p>Your responses were recorded, you may close the window now.</p>`
+        },
+        "de": {
+            "ending": `<p>Vielen Dank!</p><p>Ihre Antworten wurden aufgezeichnet, Sie können das Fenster jetzt schließen.</p>`
+        }
+    }
     var ending = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: '<p>Thank you!</p><p>Your responses were recorded, you may close the window now.</p>',
+        stimulus: txt(txt_ending, lang, 'ending'),
         //choices: "ALL_KEYS",
         choices: "NO_KEYS",
         on_start: function() {
@@ -1022,7 +1358,7 @@
     timeline.push(surveyPreSB);
     timeline.push(surveyPreComf);
     timeline.push(restIntro);
-    timeline.push(restPlay);
+    //timeline.push(restPlay);
     timeline.push(surveyPCIRest);
     timeline.push(ganzfeldIntro);
     timeline.push(ganzfeldPlayR);
