@@ -298,8 +298,12 @@
             saveData("/screening/" + lab + "/ganzfeld_screening_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
 
             // anonymized version
-            var anonData = jsPsych.data.get().ignore('name', 'email', 'phone').csv();
-            saveData("/screening-anon/" + lab + "/ganzfeld_screening_anon_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, anonData);
+            var anonData = jsPsych.data.get();
+            delete anonData.trials[2].response.name;
+            delete anonData.trials[2].response.email;
+            delete anonData.trials[2].response.phone;
+            console.log(anonData);
+            saveData("/screening-anon/" + lab + "/ganzfeld_screening_anon_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, anonData.csv());
         }
     }
 
