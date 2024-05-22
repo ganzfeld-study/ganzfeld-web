@@ -2,7 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Ganzfeld 1 Relaxation</title>
+    <title>Ganzfeld 1 Familiarization
+    </title>
     <script src="jspsych/jspsych.js"></script>
     <script src="jspsych/plugin-preload.js"></script>
     <script src="jspsych/plugin-fullscreen.js"></script>
@@ -186,7 +187,7 @@
         choices: "NO_KEYS",
         on_start: function() {
             // save Data
-            saveData("/relax/ganzfeld_relax_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+            //saveData("/relax/ganzfeld_relax_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
         }
     }
 
@@ -231,8 +232,8 @@
     timeline.push(welcome);
     timeline.push(relaxIntro);
     timeline.push(relaxPlay);
-    timeline.push(timeEstimate1);
-    timeline.push(timeEstimate2);
+    // timeline.push(timeEstimate1);
+    // timeline.push(timeEstimate2);
     timeline.push(ending);
 
 
