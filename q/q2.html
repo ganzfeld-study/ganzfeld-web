@@ -450,6 +450,37 @@
             ]
         },
         "de": {
+            "intro": `<p>Bitte lesen Sie jede Aussage langsam und sorgfältig und antworten Sie so genau wie möglich, indem Sie die Zahl zwischen "0" und "6" anklicken, die Ihrer subjektiven Erfahrung <b>während der 3 Minuten Ruhe</b> am besten entspricht.</p>`,
+            "min": [
+                'Ich war die ganze Zeit über abgelenkt und unfähig mich auf irgend etwas zu konzentrieren.',
+                'Mein Körper endete an der Grenze zwischen meiner Haut und der Umwelt.',
+                'Meine Wahrnehmung des Zeitflusses veränderte sich drastisch.',
+                'Die Muskeln meines Körpers fühlten sich sehr angespannt und fest an.',
+                'Mein Bewußtseinszustand war nicht verschieden oder ungewöhnlich anders als sonst.',
+                'Meine Körpergefühle schienen sich in die mich umgebende Welt auszudehnen.',
+                'Die Zeit schien sich stark zu beschleunigen oder zu verlangsamen.',
+                'Ich war nicht abgelenkt, sondern fähig, völlig in das zu versinken, was ich erfuhr.',
+                'Ich hatte keine Gefühle der Anspannung oder Festigkeit.',
+                'Mein Zustand der Bewusstheit war sehr verschieden von dem, was ich normal erlebe.',
+                'Ich hatte kein Gefühl der Zeitlosigkeit; die Zeit verging wie ich das gewöhnlich erlebe.',
+                'Ich behielt ständig ein starkes Gefühl der Trennung zwischen mir und der Umgebung.',
+                'Mein Zustand der Bewußtheit war nicht ungewöhnlich oder verschieden von dem, wie er normalerweise ist.'
+            ],
+            "max": [
+                'Ich war fähig, mich vollkommen gut zu konzentrieren und war nicht abgelenkt.',
+                'Ich fühlte meinen Körper weit über die Grenzen meiner Haut erweitert.',
+                'Ich nahm keine Veränderungen in meiner Zeitwahrnehmung wahr.',
+                'Die Muskeln meines Körpers fühlten sich locker und entspannt an.',
+                'Ich erlebte eine extrem veränderten und ungewöhnlichen Bewußtseinszustand.',
+                'Meine Körpergefühle waren auf den Bereich innerhalb meiner Haut begrenzt.',
+                'Das Verstreichen der Zeit veränderte sich nicht.',
+                'Ich war fortwährend durch äußere Eindrücke oder Ereignisse abgelenkt.',
+                'Ich fühlte mich angespannt und fest.',
+                'Mein Zustand der Bewusstheit war nicht anders als gewöhnlich.',
+                'Die Zeit stand still; da war überhaupt keine Bewegung der Zeit mehr.',
+                'Ich erfuhr eine intensive Einheit mit der Welt; die Grenzen zwischen mir und der Umgebung lösten sich auf.',
+                'Ich erlebte einen außerordentlich ungewöhnlichen und außerordentlichen Zustand der Bewußtheit.'
+            ]
         }
     }
     var surveyPCIRestTrial = {
@@ -634,6 +665,37 @@
             ]
         },
         "de": {
+            "intro": `<p>Bitte lesen Sie jede Aussage langsam und sorgfältig und antworten Sie so genau wie möglich, indem Sie die Zahl zwischen "0" und "6" anklicken, die Ihrer subjektiven Erfahrung <b>während der 30 Minuten Ganzfeld</b> am besten entspricht.</p>`,
+            "min": [
+                'Ich war die ganze Zeit über abgelenkt und unfähig mich auf irgend etwas zu konzentrieren.',
+                'Mein Körper endete an der Grenze zwischen meiner Haut und der Umwelt.',
+                'Meine Wahrnehmung des Zeitflusses veränderte sich drastisch.',
+                'Die Muskeln meines Körpers fühlten sich sehr angespannt und fest an.',
+                'Mein Bewußtseinszustand war nicht verschieden oder ungewöhnlich anders als sonst.',
+                'Meine Körpergefühle schienen sich in die mich umgebende Welt auszudehnen.',
+                'Die Zeit schien sich stark zu beschleunigen oder zu verlangsamen.',
+                'Ich war nicht abgelenkt, sondern fähig, völlig in das zu versinken, was ich erfuhr.',
+                'Ich hatte keine Gefühle der Anspannung oder Festigkeit.',
+                'Mein Zustand der Bewusstheit war sehr verschieden von dem, was ich normal erlebe.',
+                'Ich hatte kein Gefühl der Zeitlosigkeit; die Zeit verging wie ich das gewöhnlich erlebe.',
+                'Ich behielt ständig ein starkes Gefühl der Trennung zwischen mir und der Umgebung.',
+                'Mein Zustand der Bewußtheit war nicht ungewöhnlich oder verschieden von dem, wie er normalerweise ist.'
+            ],
+            "max": [
+                'Ich war fähig, mich vollkommen gut zu konzentrieren und war nicht abgelenkt.',
+                'Ich fühlte meinen Körper weit über die Grenzen meiner Haut erweitert.',
+                'Ich nahm keine Veränderungen in meiner Zeitwahrnehmung wahr.',
+                'Die Muskeln meines Körpers fühlten sich locker und entspannt an.',
+                'Ich erlebte eine extrem veränderten und ungewöhnlichen Bewußtseinszustand.',
+                'Meine Körpergefühle waren auf den Bereich innerhalb meiner Haut begrenzt.',
+                'Das Verstreichen der Zeit veränderte sich nicht.',
+                'Ich war fortwährend durch äußere Eindrücke oder Ereignisse abgelenkt.',
+                'Ich fühlte mich angespannt und fest.',
+                'Mein Zustand der Bewusstheit war nicht anders als gewöhnlich.',
+                'Die Zeit stand still; da war überhaupt keine Bewegung der Zeit mehr.',
+                'Ich erfuhr eine intensive Einheit mit der Welt; die Grenzen zwischen mir und der Umgebung lösten sich auf.',
+                'Ich erlebte einen außerordentlich ungewöhnlichen und außerordentlichen Zustand der Bewußtheit.'
+            ]
         }
     }
     var surveyPCIGanzfeldTrial = {
@@ -1249,7 +1311,11 @@
         type: jsPsychHtmlButtonResponse,
         data: { test_part: 'videoTargetIntro'},
         stimulus: txt(txt_video, lang, 'videoTarget'),
-        choices: [txt(txt_survey, lang, 'next')]
+        choices: [txt(txt_survey, lang, 'next')],
+        on_start: function(data){
+            // save data in case participants are unhappy with result
+            saveData("/session2/ganzfeld_2_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+        }
     }
     var videoTarget = {
         type: jsPsychVideoKeyboardResponse,
@@ -1260,6 +1326,7 @@
         choices: "NO_KEYS",
         controls: true,
         trial_ends_after_video: true,
+        post_trial_gap: 500,
         on_start: function(trial) {
             //get video data of trial with test_part: videoIntro
             var videoData = jsPsych.data.get().filter({test_part: "videoIntro"}).values()[0];
