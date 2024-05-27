@@ -1191,7 +1191,8 @@
         "de": {
             "videoIntro": `<p>Jetzt möchten wir, dass Sie sich zwei kurze Videos ansehen und bewerten, wie ähnlich sie Ihrem Ganzfeld-Erlebnis sind.</p>
             <p>Bitte klicken Sie auf "Weiter", wenn Sie bereit sind.</p>`,
-            "videoRating": `<p>Bitte bewerten Sie die Ähnlichkeit jedes Clips zu Ihren Ganzfeld-Erfahrungen auf einer Skala von 0 (überhaupt nicht ähnlich) bis 100 (extrem ähnlich).</p>`
+            "videoRating": `<p>Bitte bewerten Sie die Ähnlichkeit jedes Clips zu Ihren Ganzfeld-Erfahrungen auf einer Skala von 0 (überhaupt nicht ähnlich) bis 100 (extrem ähnlich).</p>`,
+            "videoTarget": `<p>Wir werden jetzt das Zielvideo auswählen.</p><p>Bitte sehen Sie sich das ausgewählte Video ein zweites Mal an.</p>`
         }
     }
     var videoIntro = {
@@ -1243,7 +1244,7 @@
 
             // set video stimulus
             trial.html = `
-            <p>Please rate the similarity of each clip to your Ganzfeld experiences on a scale from 0 (not at all similar) to 100 (extremely similar).</p>
+            <p>${ txt(txt_video, lang, 'videoRating') }</p>
             <div class="video-rating-container">
                 <div class="video-container">
                     <video id="video1" controls>
