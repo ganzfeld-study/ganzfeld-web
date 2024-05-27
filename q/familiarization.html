@@ -125,13 +125,16 @@
     // button text
     var txt_survey = {
         "en": {
-            "next": "Continue"
+            "next": "Continue",
+            "end": "Finish"
         },
         "de": {
-            "next": "Weiter"
+            "next": "Weiter",
+            "end": "Beenden"
         },
         "se": {
-            "next": "Nästa"
+            "next": "Nästa",
+            "end": "Slutför"
         }
     };
 
@@ -142,7 +145,7 @@
         <p>Please tell the experimenter to assist you with the Ganzfeld equipment. The experimenter will click "Next" when you are ready to begin.</p>`,
             welcome2: `p>The audio level for the ganzfeld can be adjusted while playing the audio sample below.</p>
             <audio controls>
-                    <source src="../audio/pinknoise30.mp3" type="audio/mpeg">
+                    <source src="../audio/pinknoise_7min_128.mp3" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>
             <p>Please put on the headphones and click "Next" when you are ready.</p>`
@@ -152,7 +155,7 @@
         <p>Bitte sagen Sie dem Experimentator, dass er Ihnen bei der Ganzfeld-Ausrüstung behilflich sein soll. Der Experimentator klickt auf "Weiter", wenn Sie bereit sind zu beginnen.</p>`,
             welcome2: `<p>Der Audiopegel für das Ganzfeld kann während der Wiedergabe der unten stehenden Audiodatei angepasst werden.</p>
             <audio controls>
-                    <source src="../audio/pinknoise30.mp3" type="audio/mpeg">
+                    <source src="../audio/pinknoise_7min_128.mp3" type="audio/mpeg">
                     Ihr Browser unterstützt das Audioelement nicht.
                 </audio>
             <p>Bitte setzen Sie die Kopfhörer auf und klicken Sie auf "Weiter", wenn Sie bereit sind.</p>`
@@ -162,7 +165,7 @@
         <p>Var god och be experimentledaren att hjälpa dig med Ganzfeld-utrustningen. Experimentledaren klickar på "Nästa" när du är redo att börja.</p>`,
             welcome2: `<p>Ljudnivån för ganzfeld kan justeras medan du spelar ljudprovet nedan.</p>
             <audio controls>
-                    <source src="../audio/pinknoise30.mp3" type="audio/mpeg">
+                    <source src="../audio/pinknoise_7min_128.mp3" type="audio/mpeg">
                     Din webbläsare stöder inte ljudelementet.
                 </audio>
             <p>Sätt på hörlurarna och klicka på "Nästa" när du är redo.</p>`
@@ -188,11 +191,11 @@
     // Relaxation Playback
     var relaxPlay = {
         type: jsPsychAudioButtonResponse,
-        stimulus: '../audio/pinknoise30.mp3',
+        stimulus: '../audio/pinknoise_7min_128.mp3',
         choices: "NO_KEYS",
         prompt: '<span class="playaudio"></span>',
         trial_duration: 420000, // 7 minutes
-        choices: [ txt(txt_survey, lang, "next") ]
+        choices: [ txt(txt_survey, lang, "end") ]
     };
 
     // /* Time Estimation */

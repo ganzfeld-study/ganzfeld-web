@@ -1011,7 +1011,7 @@
             "ganzfeldIntro": `<p>Please tell the experimenter to assist you with the Ganzfeld equipment. The experimenter will click "Continue" when you are ready to begin.</p>
             <p>The audio level for the ganzfeld can be adjusted while playing the audio sample below.</p>
             <audio controls>
-                <source src="../audio/pinknoise30.mp3" type="audio/mpeg">
+                <source src="../audio/pinknoise_7min_128.mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>`
         },
@@ -1019,7 +1019,7 @@
             "ganzfeldIntro": `<p>Bitte sagen Sie dem Versuchsleiter, dass er Ihnen bei der Ganzfeld-Ausrüstung behilflich sein soll. Der Versuchsleiter wird auf "Weiter" klicken, wenn Sie bereit sind, um zu beginnen.</p>
             <p>Der Audiopegel für das Ganzfeld kann während der Wiedergabe der unten stehenden Audiodatei angepasst werden.</p>
             <audio controls>
-                <source src="../audio/pinknoise30.mp3" type="audio/mpeg">
+                <source src="../audio/pinknoise_7min_128.mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>`
         }
@@ -1031,21 +1031,21 @@
         choices: [txt(txt_survey, lang, 'next')]
     };
 
-    // Relaxation
-    var ganzfeldPlayR = {
-        type: jsPsychAudioKeyboardResponse,
-        data: { test_part: "GanzfeldPlayR" },
-        stimulus: '../audio/relaxation-for-ganzfeld-CSM.mp3',
-        choices: "NO_KEYS",
-        prompt: '<span class="playaudio"></span>',
-        trial_ends_after_audio: true
-    };
+    // // Relaxation
+    // var ganzfeldPlayR = {
+    //     type: jsPsychAudioKeyboardResponse,
+    //     data: { test_part: "GanzfeldPlayR" },
+    //     stimulus: '../audio/relaxation-for-ganzfeld-CSM.mp3',
+    //     choices: "NO_KEYS",
+    //     prompt: '<span class="playaudio"></span>',
+    //     trial_ends_after_audio: true
+    // };
 
     // Play Pink Noise
     var ganzfeldPlay = {
         type: jsPsychAudioKeyboardResponse,
         data: { test_part: "GanzfeldPlay" },
-        stimulus: '../audio/pinknoise30.mp3',
+        stimulus: '../audio/CSM_Waves_pinknoise_128.mp3',
         choices: "NO_KEYS",
         prompt: '<span class="playaudio"></span>',
         trial_duration: 30*60*1000, // 30 minutes,
@@ -1435,7 +1435,6 @@
     timeline.push(restPlay);
     timeline.push(surveyPCIRest);
     timeline.push(ganzfeldIntro);
-    timeline.push(ganzfeldPlayR);
     timeline.push(ganzfeldPlay);
     timeline.push(surveyPCIGanzfeld);
     timeline.push(surveyDSSQ);
