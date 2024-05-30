@@ -1162,10 +1162,21 @@
     // };
 
     // Play Pink Noise
+    var txt_ganzfeldStim = {
+        "en": {
+            "ganzfeldStim": "../audio/English_Ganzfeld_Induction_v3.mp3"
+        },
+        "de": {
+            "ganzfeldStim": "../audio/German_Ganzfeld_Induction_v3.mp3"
+        },
+        "se": {
+            "ganzfeldStim": "../audio/English_Ganzfeld_Induction_v3.mp3"
+        }
+    }
     var ganzfeldPlay = {
         type: jsPsychAudioKeyboardResponse,
         data: { test_part: "GanzfeldPlay" },
-        stimulus: '../audio/CSM_Waves_pinknoise_128.mp3',
+        stimulus: txt(txt_ganzfeldStim, lang, 'ganzfeldStim'),
         choices: "NO_KEYS",
         prompt: '<span class="playaudio"></span>',
         trial_duration: 30*60*1000, // 30 minutes,
