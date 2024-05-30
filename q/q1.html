@@ -68,19 +68,12 @@
   <script>
 
     /* define parameters */
-    //initialize Experiment
-    const jsPsych = initJsPsych({
-        show_progress_bar: true,
-        auto_update_progress_bar: false
-        /* on_finish: function() {
-        jsPsych.data.displayData();
-      } */
-    });
-
 
     // subject & Lab ID
-    let pid = jsPsych.data.urlVariables()['pid'];
-    let lab = jsPsych.data.urlVariables()['l'];
+    const urlParams = new URLSearchParams(window.location.search);
+
+    let pid = urlParams.get('pid');
+    let lab = urlParams.get('l');
 
     let subject_id;
     
@@ -109,14 +102,9 @@
     let lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
 
     console.log(" Lab: " + lab + " Language: " + lang);
+    
     // specify starting time
     var start_time = new Date();
-
-    // add to data file
-    jsPsych.data.addProperties({ 
-        //subject: subject_id, 
-        time: start_time.toISOString()
-    });
 
     // Function to retrieve text based on language and key
     function txt(translations, language, key) {
@@ -127,6 +115,38 @@
             return 'No translation found.';
         }
     }
+
+    // button text
+    var txt_survey = {
+        "en": {
+            "next": "Continue",
+            "progress": "Completion Progress"
+        },
+        "de": {
+            "next": "Weiter",
+            "progress": "Fortschritt"
+        },
+        "se": {
+            "next": "Nästa",
+            "progress": "Framsteg"
+        }
+    };
+
+    //initialize Experiment
+    const jsPsych = initJsPsych({
+        show_progress_bar: true,
+        auto_update_progress_bar: false,
+        message_progress_bar: txt(txt_survey, lang, 'progress'),
+        /* on_finish: function() {
+        jsPsych.data.displayData();
+      } */
+    });
+
+    // add to data file
+    jsPsych.data.addProperties({ 
+        //subject: subject_id, 
+        time: start_time.toISOString()
+    });
 
     /*
     // consent to participate.
@@ -149,18 +169,6 @@
         check_fn: check_consent
     };*/
 
-    // button text
-    var txt_survey = {
-        "en": {
-            "next": "Continue"
-        },
-        "de": {
-            "next": "Weiter"
-        },
-        "se": {
-            "next": "Nästa"
-        }
-    };
 
     /* welcome message & instructions */
     var txt_welcome = 
