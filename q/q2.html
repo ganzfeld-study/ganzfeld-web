@@ -235,6 +235,20 @@
                 <p>Bitte geben Sie Ihre Teilnehmer-ID ein / vergewissern Sie sich, dass sie korrekt ist und klicken Sie auf <i>Fortfahren</i>, um zu beginnen.</p>`,
             "pid": "Teilnehmer-ID"
         },
+        "se": {
+            "preamble": `<h2>Session 2</h2>
+            <div style="text-align:justify">
+                <p>Under den här sista sessionen tillfrågas du att delta i ett Ganzfeld-experiment. Du kommer att bli ombedd att önska dig att du under Ganzfeld kommer att få upplevelser som är relaterade till ett filmklipp som kommer att visas för dig senare. Specifikt kommer du att bli ombedd att:</p>
+                <ul>
+                    <li>Svara på några frågor om din inställning till experimentet.</li>
+                    <li>Vila i en fåtölj i några minuter och svara på några frågor om denna upplevelse</li>
+                    <li>Göra Ganzfeld-experimentet. Detta kommer att omfatta 7 minuters avslappningsinstruktioner följt av 30 minuters Ganzfeld. Under dessa 30 minuter kommer du att bli ombedd att rapportera dina upplevelser (dvs, tänka högt)</li>
+                    <li>Efter att ha besvarat några frågor bland annat om din Ganzfeld-upplevelse får du titta på två korta filmklipp, varav det ena är ”måltavlan” som kommer att visas för dig igen senare. Du kommer att bli ombedd att bedöma dessa två klipp med avseende på deras likhet med din Ganzfeld-upplevelse. Sedan visas måltavlan för dig.</li>
+                </ul>
+                <p>Vänligen svara ärligt om dina upplevelser och attityder. Det finns inget rätt eller fel svar, utan vi värdesätter dina genuina tankar och åsikter.</p>
+                <p>Fyll i ditt deltagar-ID / kontrollera att det är korrekt och klicka på <i>Nästa</i> för att börja.</p>`,
+            "pid": "Deltagar-ID"
+        },
     }
     var welcome = {
         type: jsPsychSurveyText,
@@ -331,10 +345,10 @@
             "labels": ['gar nicht', 'sehr']
         },
         "se": {
-            "successBelief": `<p>Before we begin, we would like to ask you about your attitude to the experiment.</p>
-            <p style="font-weight: bold;">How likely do you think it is that you personally will succeed in your precognitive test today?</p>`,
-            "comfortable": `<p style="font-weight: bold;">Do you feel comfortable with the Ganzfeld setup?</p>`,
-            "labels": ['not at all', 'very much']
+            "successBelief": `<p>Innan vi börjar skulle vi vilja fråga dig om din inställning till experimentet.</p>
+            <p style="font-weight: bold;">Hur sannolikt tror du att det är att du personligen kommer att lyckas med ditt prekognitiva test idag?</p>`,
+            "comfortable": `<p style="font-weight: bold;">Känner du dig bekväm med Ganzfeld-miljön?</p>`,
+            "labels": ['inte alls', 'väldigt mycket']
         }
     }
     var surveyPreSB = {
@@ -480,6 +494,39 @@
                 'Die Zeit stand still; da war überhaupt keine Bewegung der Zeit mehr.',
                 'Ich erfuhr eine intensive Einheit mit der Welt; die Grenzen zwischen mir und der Umgebung lösten sich auf.',
                 'Ich erlebte einen außerordentlich ungewöhnlichen und außerordentlichen Zustand der Bewußtheit.'
+            ]
+        },
+        "se": {
+            "intro": `<p>Läs varje påstående noggrant och svara så exakt som möjligt genom att ange den siffra mellan ”0” och ”6” som bäst motsvarar din upplevelse <b>under de 3 minuterna av vila</b></p>`,
+            "min": [
+                'Jag var ständigt distraherad och kunde inte koncentrera mig på någonting.',
+                'Min kropp slutade vid gränsen mellan min hud och omvärlden.',
+                'Min tidsuppfattning förändrades kraftigt.',
+                'Mina muskler kändes väldigt spända och stela.',
+                'Mitt medvetandetillstånd var inte på något sätt annorlunda jämfört med vad det brukar vara.',
+                'Min kroppsuppfattning verkade expandera till världen runt omkring mig.',
+                'Tiden verkade gå mycket fortare eller långsammare.',
+                'Jag var inte distraherad, utan kunde vara helt försjunken i det jag upplevde.',
+                'Jag kände ingen spänning alls i musklerna.',
+                'Mitt medvetandetillstånd var väldigt annorlunda än det jag brukar uppleva.',
+                'Jag kände ingen känsla av tidlöshet; tiden flöt på som jag brukar uppleva den.',
+                'Jag upprätthöll hela tiden en mycket stark känsla av separation mellan mig själv och omgivningen.',
+                'Mitt medvetandetillstånd var inte ovanligt eller annorlunda än vad det brukar vara.'
+            ],
+            "max": [
+                'Jag kunde koncentrera mig väldigt väl och var inte distraherad.',
+                'Jag kände att min kropp expanderade bortom min hud.',
+                'Jag märkte inga förändringar i min uppfattning av tidens flöde.',
+                'Mina muskler kändes väldigt avslappnade och mjuka.',
+                'Jag kände mig i ett extremt annorlunda medvetandetillstånd.',
+                'Min kroppsuppfattning var begränsad till området inom min hud.',
+                'Jag upplevde inga förändringar i hur snabbt eller långsamt tiden gick.',
+                'Jag var ständigt distraherad av saker som skedde runtomkring mig.',
+                'Jag kände att musklerna var väldigt spända.',
+                'Mitt medvetandetillstånd var inte alls annorlunda än det jag brukar uppleva.',
+                'Tiden stod stilla; den gick inte alls.',
+                'Jag hade starka känslor av att jag var ett med världen; gränserna mellan mig och omgivningen suddades ut.',
+                'Jag upplevde att mitt medvetandetillstånd var väldigt annorlunda och något utöver det vanliga.'
             ]
         }
     }
@@ -696,6 +743,39 @@
                 'Ich erfuhr eine intensive Einheit mit der Welt; die Grenzen zwischen mir und der Umgebung lösten sich auf.',
                 'Ich erlebte einen außerordentlich ungewöhnlichen und außerordentlichen Zustand der Bewußtheit.'
             ]
+        },
+        "se": {
+            "intro": `<p>Läs varje påstående noggrant och svara så exakt som möjligt genom att ange den siffra mellan ”0” och ”6” som bäst motsvarar din upplevelse <b>under de 30 minuterna av Ganzfeld</b></p>`,
+            "min": [
+                'Jag var ständigt distraherad och kunde inte koncentrera mig på någonting.',
+                'Min kropp slutade vid gränsen mellan min hud och omvärlden.',
+                'Min tidsuppfattning förändrades kraftigt.',
+                'Mina muskler kändes väldigt spända och stela.',
+                'Mitt medvetandetillstånd var inte på något sätt annorlunda jämfört med vad det brukar vara.',
+                'Min kroppsuppfattning verkade expandera till världen runt omkring mig.',
+                'Tiden verkade gå mycket fortare eller långsammare.',
+                'Jag var inte distraherad, utan kunde vara helt försjunken i det jag upplevde.',
+                'Jag kände ingen spänning alls i musklerna.',
+                'Mitt medvetandetillstånd var väldigt annorlunda än det jag brukar uppleva.',
+                'Jag kände ingen känsla av tidlöshet; tiden flöt på som jag brukar uppleva den.',
+                'Jag upprätthöll hela tiden en mycket stark känsla av separation mellan mig själv och omgivningen.',
+                'Mitt medvetandetillstånd var inte ovanligt eller annorlunda än vad det brukar vara.'
+            ],
+            "max": [
+                'Jag kunde koncentrera mig väldigt väl och var inte distraherad.',
+                'Jag kände att min kropp expanderade bortom min hud.',
+                'Jag märkte inga förändringar i min uppfattning av tidens flöde.',
+                'Mina muskler kändes väldigt avslappnade och mjuka.',
+                'Jag kände mig i ett extremt annorlunda medvetandetillstånd.',
+                'Min kroppsuppfattning var begränsad till området inom min hud.',
+                'Jag upplevde inga förändringar i hur snabbt eller långsamt tiden gick.',
+                'Jag var ständigt distraherad av saker som skedde runtomkring mig.',
+                'Jag kände att musklerna var väldigt spända.',
+                'Mitt medvetandetillstånd var inte alls annorlunda än det jag brukar uppleva.',
+                'Tiden stod stilla; den gick inte alls.',
+                'Jag hade starka känslor av att jag var ett med världen; gränserna mellan mig och omgivningen suddades ut.',
+                'Jag upplevde att mitt medvetandetillstånd var väldigt annorlunda och något utöver det vanliga.'
+            ]
         }
     }
     var surveyPCIGanzfeldTrial = {
@@ -909,6 +989,33 @@
                 "value": 5,
                 "text": "Sehr oft"
             }]
+        },
+        "se": {
+            "intro": `<p>Dessa frågor handlar om vilka tankar som går genom människors huvuden vid vissa tillfällen, till exempel när de utför en uppgift eller aktivitet. Nedan följer en lista med tankar, varav några kan ha varit aktuella för dig nyligen. Ange ungefär hur ofta du hade varje tank<b>under de 30 minuterna av Ganzfeld</b> hatten.</p>`,
+            "DSSQ01": 'Jag tänkte på hur jag borde utföra uppgiften mer noggrant.',
+            "DSSQ02": 'Jag tänkte på hur mycket tid jag hade kvar.',
+            "DSSQ03": 'Jag tänkte på hur andra har presterat på den här uppgiften.',
+            "DSSQ04": 'Jag tänkte på hur svår uppgiften var.',
+            "DSSQ05": 'Jag tänkte på min förmåga.',
+            "DSSQ06": 'Jag tänkte på syftet med experimentet.',
+            "DSSQ07": 'Jag tänkte på hur jag skulle känna mig om jag fick veta hur jag presterade.',
+            "DSSQ08": 'Jag tänkte på hur ofta jag blir förvirrad.',
+            "DSSQ_options": [{
+                "value": 1,
+                "text": "Aldrig"
+            }, {
+                "value": 2,
+                "text": "En gång"
+            }, {
+                "value": 3,
+                "text": "Några gånger"
+            }, {
+                "value": 4,
+                "text": "Ofta"
+            }, {
+                "value": 5,
+                "text": "Mycket ofta"
+            }]
         }
     }
     var surveyDSSQ = {
@@ -957,6 +1064,11 @@
         "de": {
             "restIntro": `<p>Als nächstes möchten wir Sie bitten, sich für 3 Minuten in einen Liegestuhl zu setzen. Drücken Sie auf "Weiter", wenn Sie bereit sind, machen Sie es sich dann im Stuhl bequem und ruhen Sie sich aus, bis Sie ein Signalton am Ende des dreiminütigen Intervalls hören. Danach können Sie zu diesem Programm zurückkehren, um fortzufahren.</p>`,
             "rest": `. . . Jetzt machen Sie es sich im Liegestuhl bequem und ruhen Sie sich für 3 Minuten aus . . .`
+        },
+        "se": {
+            "restIntro": `<p>Härnäst vill vi att du vilar i en lutande fåtölj i 3 minuter. Tryck på Continue när du är redo, gör dig bekväm i fåtöljen och vila tills du hör ett pip som signalerar slutet på treminutersintervallet. Därefter kan du gå tillbaka till det här programmet för att fortsätta.</p>`,
+            "rest": `. . . Sätt dig nu bekvämt tillrätta i fåtöljen och vila i 3 minuter . . .`
+
         }
     }
     var restIntro = {
@@ -1022,6 +1134,14 @@
                 <source src="../audio/pinknoise_7min_128.mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>`
+        },
+        "se": {
+            "ganzfeldIntro": `<p>Säg åt försöksledaren att hjälpa dig med Ganzfeld-utrustningen. Försöksledaren kommer att klicka på Nästa när du är redo att börja.</p>
+            <p>Ljudnivån för Ganzfeld kan justeras medan du spelar upp ljud-exemplet nedan.</p>
+            <audio controls>
+                <source src="../audio/pinknoise_7min_128.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>`
         }
     }
     var ganzfeldIntro = {
@@ -1069,6 +1189,14 @@
             "time2": `<p><i>Bitte beantworten Sie die folgenden beiden Fragen zu Ihren Erfahrungen während der 30 Minuten Ganzfeld.</i></p>
             <p>2. Wie schnell verging die Zeit für Sie <b>während der Aufgabe</b>?</p>`,
             "time2_options": ['Extrem langsam', 'Extrem schnell']
+        },
+        "se": {
+            "time1": `<p><i>Vänligen besvara följande två frågor om dina upplevelser under de 30 minuterna av Ganzfeld.</i></p>
+            <p>1. Hur ofta tänkte du på tiden <b>under uppgiften</b>?</p>`,
+            "time1_options": ['Inte alls', 'Extremt ofta'],
+            "time2": `<p><i>Vänligen besvara följande två frågor om dina upplevelser under de 30 minuterna av Ganzfeld.</i></p>
+            <p>2. Hur snabbt gick tiden för dig <b>under uppgiften</b>?</p>`,
+            "time2_options": ['Extremt långsamt', 'Extremt snabbt']
         }
     }
     var timeEstimate1 = {
@@ -1193,6 +1321,13 @@
             <p>Bitte klicken Sie auf "Weiter", wenn Sie bereit sind.</p>`,
             "videoRating": `<p>Bitte bewerten Sie die Ähnlichkeit jedes Clips zu Ihren Ganzfeld-Erfahrungen auf einer Skala von 0 (überhaupt nicht ähnlich) bis 100 (extrem ähnlich).</p>`,
             "videoTarget": `<p>Wir werden jetzt das Zielvideo auswählen.</p><p>Bitte sehen Sie sich das ausgewählte Video ein zweites Mal an.</p>`
+        },
+        "se": {
+            "videoIntro": `<p>Nu vill vi att du tittar på två korta videoklipp och bedömer hur lika de är din Ganzfeld-upplevelse.</p>
+            <p>Klicka på Nästa när du är klar.</p>`,
+            "videoRating": `<p>Vänligen skatta hur likt varje klipp är dina Ganzfeld-upplevelser på en skala från 0 (inte alls likt) till 100 (extremt likt).</p>`,
+            "videoTarget": `<p>Vi kommer nu att visa det klipp som är måltavlan.</p><p>Vänligen titta noggrant på hela klippet en andra gång.</p>`
+
         }
     }
     var videoIntro = {
@@ -1360,6 +1495,9 @@
         },
         "de": {
             "ending": `<p>Vielen Dank!</p><p>Ihre Antworten wurden aufgezeichnet, Sie können das Fenster jetzt schließen.</p>`
+        },
+        "se": {
+            "ending": `<p>Tack så mycket!</p><p>Dina svar är registrerade, du kan nu stänga ned fönstret.</p>`
         }
     }
     var ending = {
