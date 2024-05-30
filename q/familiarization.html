@@ -2,91 +2,54 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Ganzfeld 1 Familiarization
-    </title>
+    <title>Ganzfeld Screening</title>
     <script src="jspsych/jspsych.js"></script>
     <script src="jspsych/plugin-preload.js"></script>
     <script src="jspsych/plugin-call-function.js"></script>
-    <!--<script src="jspsych/plugin-instructions.js"></script>-->
+    <script src="jspsych/plugin-external-html.js"></script>
     <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.3"></script>
     <script src="jspsych/plugin-survey.js"></script>
-    <script src="jspsych/plugin-survey-text.js"></script>
     <script src="jspsych/plugin-html-keyboard-response.js"></script>
-    <script src="jspsych/plugin-html-button-response.js"></script>
-    <script src="jspsych/plugin-audio-button-response.js"></script>
     <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
     <!--<link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@0.2.1/css/survey.css">-->
     <link rel="stylesheet" href="jspsych/survey.css"></link>
-    <!--<link rel="stylesheet" href="consent/consent.css"></link>-->
+    <link rel="stylesheet" href="consent/consent.css"></link>
 
-    <style>
-        /* Spinner for Audio Playback */
-        .playaudio {
-        width: 48px;
-        height: 48px;
-        display: inline-block;
-        position: relative;
-        }
-        .playaudio::after,
-        .playaudio::before {
-        content: '';  
-        box-sizing: border-box;
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        border: 2px solid #000;
-        position: absolute;
-        left: 0;
-        top: 0;
-        animation: animloader 2s linear infinite;
-        }
-        .playaudio::after {
-        animation-delay: 1s;
-        }
 
-        @keyframes animloader {
-        0% {
-            transform: scale(0);
-            opacity: 1;
-        }
-        100% {
-            transform: scale(1);
-            opacity: 0;
-        }
-        }
-
-    </style>
   </head>
-  <body>
-  </body>
+  <body></body>
   <script>
 
     /* define parameters */
     //initialize Experiment
     const jsPsych = initJsPsych({
+        /* on_finish: function() {
+        jsPsych.data.displayData();
+      } */
     });
 
 
-    // subject & Lab ID
     let lab = jsPsych.data.urlVariables()['l'];
-    
-    var subject_id = jsPsych.randomization.randomID(16);
 
+    // no lab -> go to lab selection
     if(!["1","2","3","4","5","6"].includes(lab)){
-            console.log("No lab transmitted. Redirecting...");
-            location.href = 'lab.html?exp=familiarization';
-        }
+        console.log("No lab transmitted. Redirecting...");
+        location.href = 'lab.html?exp=screen';
+    }
+
+    // subject ID
+    var subject_id = lab + "_" + jsPsych.randomization.randomID(6);
+    console.log("Subject ID: " + subject_id);
 
     // set language
     let lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
-
-    console.log(" Lab: " + lab + " Language: " + lang);
 
     // specify starting time
     var start_time = new Date();
 
     // add to data file
     jsPsych.data.addProperties({ 
+        lab: lab,
         subject: subject_id, 
         time: start_time.toISOString()
     });
@@ -97,11 +60,20 @@
             return translations[language][key];
         } else {
             // Return default text or empty string if translation not found
-            return 'No translation found.';
+            return '<i>No translation found</i>';
         }
     }
 
-    /*
+    // Compensation of Labs
+    var compensation = [
+        'Those involved in the sessions will get a cinema ticket for each session.',
+        '',
+        'You will receive $20 via Paypal for completing both sessions.',
+        '',
+        'Für die Teilnahme an den Sitzungen erhalten Sie nach Abschluss eine Vergütung in Höhe von 20 € (10 € pro Sitzung). Die Vergütung wird Ihnen in bar ausgezahlt.',
+        'Für die Teilnahme an den Sitzungen erhalten Sie nach Abschluss eine Vergütung in Höhe von 20 € (10 € pro Sitzung). Die Vergütung wird Ihnen in bar ausgezahlt.'
+    ];
+    
     // consent to participate.
         var check_consent = function(elem) {
         if (document.getElementById('consent_checkbox').checked) {
@@ -117,171 +89,232 @@
     // declare the block.
     var informedConsent = {
         type: jsPsychExternalHtml,
-        url: "../consent/pana_consent.html",
+        url: "consent/consent" + lab + ".html",
         cont_btn: "start",
         check_fn: check_consent
-    };*/
-
-    // button text
-    var txt_survey = {
-        "en": {
-            "next": "Continue",
-            "end": "Finish"
-        },
-        "de": {
-            "next": "Weiter",
-            "end": "Beenden"
-        },
-        "se": {
-            "next": "Nästa",
-            "end": "Slutför"
-        }
     };
 
     /* welcome message & instructions */
     var txt_welcome = {
         "en": {
-            welcome: `<p>Now we would like you to become familiar with the ganzfeld setup. You will be asked wear a pair of goggles and headphones and listen to pink noise while sitting in a comfortable chair for 7 minutes.</p>
-        <p>Please tell the experimenter to assist you with the Ganzfeld equipment. The experimenter will click "Next" when you are ready to begin.</p>`,
-            welcome2: `p>The audio level for the ganzfeld can be adjusted while playing the audio sample below.</p>
-            <audio controls>
-                    <source src="../audio/pinknoise_7min_128.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
-            <p>Please put on the headphones and click "Next" when you are ready.</p>`
+            "instruction": `<h1>Instructions to Potential Participants</h1>
+            
+            <h3>What?</h3>
+            <p>This experiment is directed to interested people with varying experiences, beliefs, and habits, and who have not had any serious psychological problems (e.g., depression or psychosis) or neurological disorders (e.g., epilepsy) in the past 12 months. The experiment evaluates potential parapsychological (psi) phenomena and changes in states of consciousness. In psi phenomena, it seems as if the person gets information on an event that s/he could not have anticipated through the senses or reason. For instance, unexpectedly thinking of a person s/he had not been in contact for a long time before getting a text/sms, call, or email from them that day, or having a dream about something unexpected that happens the next day. Even if such experiences might be quite compelling, it is difficult to rule out alternative explanations, such as chance, in everyday life. We are therefore interested in examining these experiences systematically using the scientific method.</p>
+
+            <h3>Who?</h3>
+            <p>Interested people with varying experiences, beliefs, and habits.</p>
+
+            <h3>How?</h3>
+            <p>Answering the three questions on the next screen. If called back, you will be invited to take part in two sessions for a total of around 2-2.5 hours. ${compensation[lab-1]} In the sessions, participants will be asked to look at a red light while listening to pink noise (like the noise in a radio between stations), a procedure called ganzfeld (or sensory homogenization).</p>
+            
+            <p>Please click Next to answer some questions.</p>`
         },
         "de": {
-            welcome: `<p>Jetzt möchten wir, dass Sie sich mit dem Ganzfeld-Setup vertraut machen. Sie werden gebeten, eine Brille und Kopfhörer zu tragen und 7 Minuten lang rosa Rauschen zu hören, während Sie in einem bequemen Stuhl sitzen.</p>
-        <p>Bitte sagen Sie dem Experimentator, dass er Ihnen bei der Ganzfeld-Ausrüstung behilflich sein soll. Der Experimentator klickt auf "Weiter", wenn Sie bereit sind zu beginnen.</p>`,
-            welcome2: `<p>Der Audiopegel für das Ganzfeld kann während der Wiedergabe der unten stehenden Audiodatei angepasst werden.</p>
-            <audio controls>
-                    <source src="../audio/pinknoise_7min_128.mp3" type="audio/mpeg">
-                    Ihr Browser unterstützt das Audioelement nicht.
-                </audio>
-            <p>Bitte setzen Sie die Kopfhörer auf und klicken Sie auf "Weiter", wenn Sie bereit sind.</p>`
+            "instruction": `<h1>Hinweise für potenzielle Teilnehmer</h1>
+            
+            <h3>Was?</h3>
+            <p>Dieses Experiment richtet sich an interessierte Personen mit unterschiedlichen Erfahrungen, Überzeugungen und Gewohnheiten, die in den letzten 12 Monaten keine ernsthaften psychischen Probleme (z.B. Depressionen oder Psychosen) oder neurologischen Störungen (z.B. Epilepsie) hatten. Bei dem Experiment werden potenzielle parapsychologische (Psi-)Phänomene und Veränderungen des Bewusstseinszustands untersucht. Bei Psi-Phänomenen hat es den Anschein, als ob die Person Informationen über ein Ereignis erhält, das sie mit ihren Sinnen oder ihrem Verstand nicht hätte vorhersehen können. Zum Beispiel denkt man unerwartet an eine Person, mit der man lange keinen Kontakt mehr hatte, bevor man an diesem Tag eine SMS, einen Anruf oder eine E-Mail von ihr erhält, oder man träumt von etwas Unerwartetem, das am nächsten Tag passiert. Auch wenn solche Erlebnisse sehr überzeugend sein mögen, ist es schwierig, im Alltag alternative Erklärungen, wie etwa den Zufall, auszuschließen. Wir sind daher daran interessiert, diese Erfahrungen systematisch mit der wissenschaftlichen Methode zu untersuchen.</p>
+
+            <h3>Wer?</h3>
+            <p>Interessierte Menschen mit unterschiedlichen Erfahrungen, Überzeugungen und Gewohnheiten.</p>
+
+            <h3>Wie?</h3>
+            <p>Beantworten Sie die drei Fragen auf dem nächsten Bildschirm. Wenn Sie zurückgerufen werden, werden Sie zu zwei Sitzungen eingeladen, die insgesamt etwa 2-2,5 Stunden dauern. ${compensation[lab-1]} In den Sitzungen werden die Teilnehmer gebeten, auf ein rotes Licht zu schauen, während sie rosa Rauschen hören (wie das Rauschen in einem Radio zwischen den Sendern), ein Verfahren, das Ganzfeld (oder sensorische Homogenisierung) genannt wird.</p>
+            
+            <p>Bitte klicken Sie auf Weiter, um einige Fragen zu beantworten.</p>`
         },
         "se": {
-            welcome: `<p>Nu vill vi att du ska få en chans att bekanta dig med ganzfeld-miljön. Du kommer att bli ombedd att bära ett par glasögon och hörlurar och lyssna på rosa brus medan du sitter i en bekväm stol i 7 minuter.</p>
-        <p>Var god och be experimentledaren att hjälpa dig med Ganzfeld-utrustningen. Experimentledaren klickar på "Nästa" när du är redo att börja.</p>`,
-            welcome2: `<p>Ljudnivån för ganzfeld kan justeras medan du spelar ett sample av ljudklippet nedan.</p>
-            <audio controls>
-                    <source src="../audio/pinknoise_7min_128.mp3" type="audio/mpeg">
-                    Din webbläsare stöder inte ljudelementet.
-                </audio>
-            <p>Sätt på hörlurarna och klicka på "Nästa" när du är redo.</p>`
+            "instruction": `<h1>Instruktioner till potentiella deltagare</h1>
+            
+            <h3>Vad?</h3>
+            <p>Detta experiment riktar sig till intresserade personer med olika bakgrund, attityder och vanor, och som inte har haft några allvarliga psykologiska problem (t.ex. depression eller psykos) eller neurologiska störningar (t.ex. epilepsi) under de senaste 12 månaderna. Experimentet utvärderar potentiella parapsykologiska (psi-) fenomen och förändringar i medvetandetillstånd. Vid upplevelser av psi-fenomen verkar det som om personen får information om en händelse som han eller hon inte hade kunnat förutse med hjälp av sinnena eller förnuftet. Det kan t.ex. handla om att man oväntat tänker på en person som man inte har haft kontakt med på länge innan man får ett sms, samtal eller e-post från personen samma dag, eller att man drömmer om något oväntat som händer nästa dag. Även om sådana upplevelser kan vara ganska övertygande är det svårt att utesluta alternativa förklaringar, som t.ex. slumpen, i vardagslivet. Vi är därför intresserade av att undersöka dessa upplevelser systematiskt med hjälp av den vetenskapliga metoden.</p>
+
+            <h3>Vem? </h3>
+            <p>Intresserade människor med olika bakgrund, attityder och vanor, 18 år eller äldre.</p>
+
+            <h3>Hur?</h3>
+            <p>Svara på de tre frågorna på nästa skärm. Frågorna handlar om tidigare erfarenheter av olika kreativa aktiviteter och attityder till parapsykologiska fenomen. Om du blir kontaktad kommer du att bli inbjuden att delta i två sessioner på totalt cirka 2-2,5 timmar. Deltagarna får en biobiljett för varje session, dvs totalt 2 st biobiljetter. Under sessionerna kommer deltagarna att bli ombedda att titta på ett rött ljus samtidigt som de lyssnar på rosa brus (det låter som ljudet från en radio när frekvensen ligger mellan olika kanaler), en procedur som kallas ganzfeld (eller sensorisk homogenisering).</p> <p>Klicka på Nästa.
+            
+            <p>Klicka på Nästa för att svara på några frågor.</p>`
         }
-    };
+    }
     var welcome = {
         type: jsPsychInstructions,
-        data: { test_part: 'welcome'},
-        pages:[ txt(txt_welcome, lang, "welcome"), txt(txt_welcome, lang, "welcome2")],
-        show_clickable_nav: true,
-    }
-
-    /* Relaxation exercise */
-    // Relaxation Intro
-    // var relaxIntro = {
-    //     type: jsPsychHtmlButtonResponse,
-    //     data: { test_part: "relaxIntro" },
-    //     stimulus: `<p>Now we would like you to listen to a relaxation exercise.</p>
-    //         <p>Please put on the headphones and click "Continue" when you are ready.</p>`,
-    //     choices: ['Continue']
-    // };
-
-    // Relaxation Playback
-    var relaxPlay = {
-        type: jsPsychAudioButtonResponse,
-        stimulus: '../audio/pinknoise_7min_128.mp3',
-        choices: "NO_KEYS",
-        prompt: '<span class="playaudio"></span>',
-        trial_duration: 420000, // 7 minutes
-        choices: [ txt(txt_survey, lang, "end") ]
+        data: { test_part: "instruction" },
+        pages: [
+                txt(txt_welcome, lang, "instruction")
+            ],
+        show_clickable_nav: true
     };
 
-    // /* Time Estimation */
-    // var timeEstimate1 = {
-    //     type: jsPsychHtmlSliderResponse,
-    //     data: { test_part: "time1" },
-    //     stimulus: `
-    //     <p><i>Please answer the following two questions about your experiences during the relaxation exercise.</i></p>
-    //     <p>1. How often did you think about time <b>during the exercise</b>?</p>`,
-    //     require_movement: true,
-    //     labels: ['Not at all', 'Extremely often']
-    // };
 
-    // var timeEstimate2 = {
-    //     type: jsPsychHtmlSliderResponse,
-    //     data: { test_part: "time2" },
-    //     stimulus: `
-    //     <p><i>Please answer the following two questions about your experiences during the relaxation exercise.</i></p>
-    //     <p>2. How fast did time pass for you <b>during the exercise</b>?</p>`,
-    //     require_movement: true,
-    //     labels: ['Extremely slowly', 'Extremely fast']
-    // };
+    /* Screening */
+    var txt_screening = {
+        "en": {
+            "intro": "<p>Please indicate the most appropriate answer by clicking on the circle or the answer.</p>",
+            "mentality": "Do you engage in an artistic/creative activity or practice mind-body disciplines such as meditation or yoga?",
+            "mentality_options": ['(1) Never', '(2) Rarely', '(3) Sometimes', '(4) On a monthly basis', '(5) On a weekly basis'],
+            "psi": "Regardless of how you interpreted them, have you had experiences that could be seen as parapsychological (psi)?",
+            "succeed": "Do you believe that you may succeed in a psi experiment?",
+            "succeed_options": ['(1) Not at all', '(2) Probably not', '(3) Do not know', '(4) Probably yes', '(5) Yes'], 
+            "contact": "<p>Please provide your email address and/or phone number to be contacted if you are eligible for the study.</p>",
+            "name": "Name",
+            "email": "Email address",
+            "phone": "Phone number",
+            "button_label_finish": "Finish"
+        },
+        "de": {
+            "intro": "<p>Bitte geben Sie die zutreffendste Antwort an, indem Sie auf den Kreis oder die Antwort klicken.</p>",
+            "mentality": "Üben Sie eine künstlerische/kreative Tätigkeit aus oder praktizieren Sie geistig-körperliche Disziplinen wie Meditation oder Yoga?",
+            "mentality_options": ['(1) Nie', '(2) Selten', '(3) Manchmal', '(4) Auf monatlicher Basis', '(5) Auf wöchentlicher Basis'],
+            "psi": "Hatten Sie unabhängig davon, wie Sie sie interpretiert haben, Erfahrungen, die als parapsychologisch (psi) angesehen werden können?",
+            "succeed": "Glauben Sie, dass Sie bei einem Psi-Experiment erfolgreich sein könnten?",
+            "succeed_options": ['(1) Überhaupt nicht', '(2) Wahrscheinlich nicht', '(3) Ich weiß nicht', '(4) Wahrscheinlich ja', '(5) Ja'], 
+            "contact": "<p>Bitte geben Sie Ihre E-Mail-Adresse und/oder Telefonnummer an, um kontaktiert zu werden, wenn Sie für die Studie in Frage kommen.</p>",
+            "name": "Name",
+            "email": "Email-Adresse",
+            "phone": "Telefonnummer",
+            "button_label_finish": "Beenden"
+        },
+        "se": {
+            "intro": "Nedan följer tre frågor. Vänligen markera det svar som stämmer bäst in på dig.",
+            "mentality": "Utövar du en konstnärlig/kreativ aktivitet eller kropp/själ-disciplin som meditation eller yoga?",
+            "mentality_options": ['(1) Aldrig', '(2) Sällan', '(3) Ibland', '(4) På månadsbasis', '(5) På veckobasis'],
+            "psi": "Oavsett hur du tolkat dem, har du haft upplevelser som kan ses som parapsykologiska (psi)?",
+            "succeed": "Tror du att du kan lyckas i ett psi-experiment?",
+            "succeed_options": ['(1) Inte alls', '(2) Förmodligen inte', '(3) Vet inte', '(4) Förmodligen ja', '(5) Ja'], 
+            "contact": "Ange din e-postadress och/eller ditt telefonnummer för att bli kontaktad om du är behörig för studien.",
+            "name": "Namn",
+            "email": "Email",
+            "phone": "Telefonnummer",
+            "button_label_finish": "Avsluta"
+        }
+    }
+    var screening = {
+        type: jsPsychSurvey,
+        data: { test_part: "screening" },
+        pages: [
+        [
+            {
+                type: 'html',
+                name: 'intro',
+                prompt: txt(txt_screening, lang, "intro"),
+            },
+            {
+                type: 'multi-choice',
+                name: 'mentality',
+                prompt: txt(txt_screening, lang, "mentality"),
+                options: txt(txt_screening, lang, "mentality_options"),
+                required: true
+            },
+            {
+                type: 'multi-choice',
+                name: 'psi',
+                prompt: txt(txt_screening, lang, "psi"),
+                options: txt(txt_screening, lang, "mentality_options"), 
+                required: true
+            },
+            {
+                type: 'multi-choice',
+                name: 'succeed',
+                prompt: txt(txt_screening, lang, "succeed"),
+                options: txt(txt_screening, lang, "succeed_options"),
+                required: true
+            },
+            {
+                type: 'html',
+                name: 'contact',
+                prompt: txt(txt_screening, lang, "contact"),
+            },
+            {
+                type: 'text',
+                prompt: txt(txt_screening, lang, "name"),
+                name: 'name',
+                input_type: 'text',
+            },
+            {
+                type: 'text',
+                prompt: txt(txt_screening, lang, "email"),
+                name: 'email',
+                input_type: 'email',
+            },
+            {
+                type: 'text',
+                prompt: txt(txt_screening, lang, "phone"),
+                name: 'phone',
+                input_type: 'tel',
+            },
+        ]
+        ],
+        button_label_finish: txt(txt_screening, lang, "button_label_finish")
+    };
 
-    /* save data to csv */
+    /* save data to csv 
     function saveData(name, data){
       var xhr = new XMLHttpRequest();
       xhr.open('POST', 'save-data6.php');
       xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
       xhr.send(JSON.stringify({filename: name, filedata: data}));
+    } */
+    function saveData(name, data) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'save-data6.php');
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+        
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log('File successfully saved.');
+                } else {
+                    console.log('Error saving the file.');
+                    console.log('HTTP status: ' + xhr.status);
+                }
+            }
+        };
+
+        xhr.send(JSON.stringify({ filename: name, filedata: data }));
     }
 
     /* end message */
+    var txt_ending = {
+        "en": {
+            "ending": "<p>Thank you!</p><p>Your responses were recorded, you may close the window now.</p>"
+        },
+        "de": {
+            "ending": "<p>Vielen Dank!</p><p>Ihre Antworten wurden gespeichert, Sie können das Fenster jetzt schließen.</p>"
+        },
+        "se": {
+            "ending": "<p>Tack så mycket!</p><p>Dina svar har registrerats, du kan stänga ned fönstret nu.</p>"
+        }
+    }
     var ending = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: '<p>Thank you!</p><p>Your responses were recorded, you may close the window now.</p>',
+        stimulus: txt(txt_ending, lang, "ending"),
         //choices: "ALL_KEYS",
         choices: "NO_KEYS",
-        // on_start: function() {
-        //     // save Data
-        //     saveData("/relax/ganzfeld_relax_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
-        // }
+        on_start: function() {
+            // save Data
+            saveData("/screening/" + lab + "/ganzfeld_screening_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+
+            // anonymized version
+            var anonData = jsPsych.data.get();
+            delete anonData.trials[2].response.name;
+            delete anonData.trials[2].response.email;
+            delete anonData.trials[2].response.phone;
+            console.log(anonData);
+            saveData("/screening-anon/" + lab + "/ganzfeld_screening_anon_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, anonData.csv());
+        }
     }
 
-    /* helper */
-    // preload
-    var preload = {
-        type: jsPsychPreload,
-        auto_preload: true
-    }
-    // fullscreen
-    // var enterFullscreen = {
-    //     type: jsPsychFullscreen,
-    //     fullscreen_mode: true
-    // }
 
-    // var exitFullscreen = {
-    //     type: jsPsychFullscreen,
-    //     fullscreen_mode: false,
-    //     delay_after: 0
-    // }
 
-    /*// Hide and Show cursor 
-    var hide_cursor = {
-         type: jsPsychCallFunction,
-         func: function(){
-            document.querySelector('head').insertAdjacentHTML('beforeEnd', '<style id="hide-cursor">body { cursor: none; }</style>');
-         }
-      };
-  
-      var show_cursor = {
-         type: jsPsychCallFunction,
-         func: function(){
-            document.querySelector('#hide-cursor').remove();
-         }
-      };*/
 
     /* create timeline */
-    
-    //control condition
     var timeline = [];
-    timeline.push(preload);
     timeline.push(welcome);
-    //timeline.push(relaxIntro);
-    timeline.push(relaxPlay);
-    // timeline.push(timeEstimate1);
-    // timeline.push(timeEstimate2);
+    timeline.push(informedConsent);
+    timeline.push(screening);
     timeline.push(ending);
 
 
