@@ -1607,9 +1607,20 @@ var surveyDemo = {
     }
 
     /* end message */
+    var txt_ending = {
+        "en": {
+            "ending": "<p>Thank you!</p><p>Your responses were recorded, you may close the window now.</p>"
+        },
+        "de": {
+            "ending": "<p>Vielen Dank!</p><p>Ihre Antworten wurden gespeichert, Sie können das Fenster jetzt schließen.</p>"
+        },
+        "se": {
+            "ending": "<p>Tack så mycket!</p><p>Dina svar har registrerats, du kan stänga ned fönstret nu.</p>"
+        }
+    }
     var ending = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: '<p>Thank you!</p><p>Your responses were recorded, you may close the window now.</p>',
+        stimulus: txt(txt_ending, lang, 'ending'),
         //choices: "ALL_KEYS",
         choices: "NO_KEYS",
         on_start: function() {
