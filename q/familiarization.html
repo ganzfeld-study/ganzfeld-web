@@ -126,14 +126,17 @@
     var txt_survey = {
         "en": {
             "next": "Continue",
+            "previous": "Previous",
             "end": "Finish"
         },
         "de": {
             "next": "Weiter",
+            "previous": "Zurück",
             "end": "Beenden"
         },
         "se": {
             "next": "Nästa",
+            "previous": "Föregående",
             "end": "Slutför"
         }
     };
@@ -176,6 +179,8 @@
         data: { test_part: 'welcome'},
         pages:[ txt(txt_welcome, lang, "welcome"), txt(txt_welcome, lang, "welcome2")],
         show_clickable_nav: true,
+        button_label_previous: txt(txt_survey, lang, "previous"),
+        button_label_next: txt(txt_survey, lang, "next")
     }
 
     /* Relaxation exercise */
@@ -230,13 +235,13 @@
     /* end message */
     var txt_ending = {
         "en": {
-            "ending": "<p>Thank you!</p><p>Your responses were recorded, you may close the window now.</p>"
+            "ending": "<p>Thank you!</p><p>You may close the window now.</p>"
         },
         "de": {
-            "ending": "<p>Vielen Dank!</p><p>Ihre Antworten wurden gespeichert, Sie können das Fenster jetzt schließen.</p>"
+            "ending": "<p>Vielen Dank!</p><p>Sie können das Fenster jetzt schließen.</p>"
         },
         "se": {
-            "ending": "<p>Tack så mycket!</p><p>Dina svar har registrerats, du kan stänga ned fönstret nu.</p>"
+            "ending": "<p>Tack så mycket!</p><p>Du kan stänga ned fönstret nu.</p>"
         }
     }
     var ending = {

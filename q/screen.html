@@ -108,7 +108,9 @@
             <h3>How?</h3>
             <p>Answering the three questions on the next screen. If called back, you will be invited to take part in two sessions for a total of around 2-2.5 hours. ${compensation[lab-1]} In the sessions, participants will be asked to look at a red light while listening to pink noise (like the noise in a radio between stations), a procedure called ganzfeld (or sensory homogenization).</p>
             
-            <p>Please click Next to answer some questions.</p>`
+            <p>Please click Next to answer some questions.</p>`,
+            "next": "Next",
+            "previous": "Previous"
         },
         "de": {
             "instruction": `<h1>Hinweise für potenzielle Teilnehmer</h1>
@@ -122,7 +124,9 @@
             <h3>Wie?</h3>
             <p>Beantworten Sie die drei Fragen auf dem nächsten Bildschirm. Wenn Sie zurückgerufen werden, werden Sie zu zwei Sitzungen eingeladen, die insgesamt etwa 2-2,5 Stunden dauern. ${compensation[lab-1]} In den Sitzungen werden die Teilnehmer gebeten, auf ein rotes Licht zu schauen, während sie rosa Rauschen hören (wie das Rauschen in einem Radio zwischen den Sendern), ein Verfahren, das Ganzfeld (oder sensorische Homogenisierung) genannt wird.</p>
             
-            <p>Bitte klicken Sie auf Weiter, um einige Fragen zu beantworten.</p>`
+            <p>Bitte klicken Sie auf Weiter, um einige Fragen zu beantworten.</p>`,
+            "next": "Weiter",
+            "previous": "Zurück"
         },
         "se": {
             "instruction": `<h1>Instruktioner till potentiella deltagare</h1>
@@ -136,7 +140,9 @@
             <h3>Hur?</h3>
             <p>Svara på de tre frågorna på nästa skärm. Frågorna handlar om tidigare erfarenheter av olika kreativa aktiviteter och attityder till parapsykologiska fenomen. Om du blir kontaktad kommer du att bli inbjuden att delta i två sessioner på totalt cirka 2-2,5 timmar. Deltagarna får en biobiljett för varje session, dvs totalt 2 st biobiljetter. Under sessionerna kommer deltagarna att bli ombedda att titta på ett rött ljus samtidigt som de lyssnar på rosa brus (det låter som ljudet från en radio när frekvensen ligger mellan olika kanaler), en procedur som kallas ganzfeld (eller sensorisk homogenisering).</p> <p>Klicka på Nästa.
             
-            <p>Klicka på Nästa för att svara på några frågor.</p>`
+            <p>Klicka på Nästa för att svara på några frågor.</p>`,
+            "next": "Nästa",
+            "previous": "Föregående"
         }
     }
     var welcome = {
@@ -145,7 +151,9 @@
         pages: [
                 txt(txt_welcome, lang, "instruction")
             ],
-        show_clickable_nav: true
+        show_clickable_nav: true,
+        button_label_previous: txt(txt_welcome, lang, "previous"),
+        button_label_next: txt(txt_welcome, lang, "next")
     };
 
 

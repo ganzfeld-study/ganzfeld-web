@@ -1124,7 +1124,8 @@
         data: { test_part: "time1" },
         stimulus: txt(txt_time, lang, 'time1'),
         require_movement: true,
-        labels: txt(txt_time, lang, 'time1_options')
+        labels: txt(txt_time, lang, 'time1_options'),
+        button_label: txt(txt_survey, lang, 'next')
     };
 
     var timeEstimate2 = {
@@ -1132,7 +1133,8 @@
         data: { test_part: "time2" },
         stimulus: txt(txt_time, lang, 'time2'),
         require_movement: true,
-        labels: txt(txt_time, lang, 'time2_options')
+        labels: txt(txt_time, lang, 'time2_options'),
+        button_label: txt(txt_survey, lang, 'next')
     };
 
     /* Play random videos */
@@ -1367,10 +1369,22 @@
 
     var videoTargetIntro = {
         type: jsPsychHtmlButtonResponse,
-        data: { test_part: 'videoTargetIntro'},
+        data: { test_part: 'videoTargetIntro', videoStimulus: ''},
         stimulus: txt(txt_video, lang, 'videoTarget'),
         choices: [txt(txt_survey, lang, 'next')],
-        on_start: function(data){
+        on_finish(data) {
+            //get video data of trial with test_part: videoIntro
+            var videoData = jsPsych.data.get().filter({test_part: "videoIntro"}).values()[0];
+
+            // decide the target video
+            var Z = parseInt(Zufallswert(), 10);
+
+            if(Z == 0) var t = videoData.rndSet * 4 + videoData.rndV1;
+            else var t = videoData.rndSet * 4 + videoData.rndV2;
+
+            // set video stimulus
+            data.videoStimulus = [ vidStimuli[t] ];
+
             // save data in case participants are unhappy with result
             saveData("/session2/ganzfeld_2_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
         }
@@ -1387,16 +1401,12 @@
         post_trial_gap: 500,
         on_start: function(trial) {
             //get video data of trial with test_part: videoIntro
-            var videoData = jsPsych.data.get().filter({test_part: "videoIntro"}).values()[0];
-
-            // decide the target video
-            var Z = parseInt(Zufallswert(), 10);
-
-            if(Z == 0) var t = videoData.rndSet * 4 + videoData.rndV1;
-            else var t = videoData.rndSet * 4 + videoData.rndV2;
+            console.log(jsPsych.data.get().filter({test_part: "videoTargetIntro"}).trials[0].videoStimulus)
+            var videoStimulus = jsPsych.data.get().filter({test_part: "videoTargetIntro"}).trials[0].videoStimulus;
 
             // set video stimulus
-            trial.stimulus = [ vidStimuli[t] ];
+            trial.stimulus = videoStimulus;
+
         }
     };
 
@@ -1486,19 +1496,19 @@
     
     //control condition
     var timeline = [];
-    timeline.push(preload);
-    timeline.push(welcome);
-    timeline.push(surveyPreSB);
-    timeline.push(surveyPreComf);
-    timeline.push(restIntro);
-    timeline.push(restPlay);
-    timeline.push(surveyPCIRest);
-    timeline.push(ganzfeldIntro);
-    timeline.push(ganzfeldPlay);
-    timeline.push(surveyPCIGanzfeld);
-    timeline.push(surveyDSSQ);
-    timeline.push(timeEstimate1);
-    timeline.push(timeEstimate2);
+    // timeline.push(preload);
+    // timeline.push(welcome);
+    // timeline.push(surveyPreSB);
+    // timeline.push(surveyPreComf);
+    // timeline.push(restIntro);
+    // timeline.push(restPlay);
+    // timeline.push(surveyPCIRest);
+    // timeline.push(ganzfeldIntro);
+    // timeline.push(ganzfeldPlay);
+    // timeline.push(surveyPCIGanzfeld);
+    // timeline.push(surveyDSSQ);
+    // timeline.push(timeEstimate1);
+    // timeline.push(timeEstimate2);
     timeline.push(videoIntro);
     timeline.push(preloadVideos);
     timeline.push(videoDisplay);
