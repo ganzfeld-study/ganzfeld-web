@@ -1336,16 +1336,37 @@
                     </datalist>
                 </div>
             </div>
+            <p id="duplicate-message" style="color: red;"></p>
             `;
         },
         on_load: function() {
+            function checkDuplicateValues() {
+                const values = [];
+                values.push(document.getElementById('ClipA').value);
+                values.push(document.getElementById('ClipB').value);
+
+                const uniqueValues = new Set(values);
+
+                if (values.length - uniqueValues.size >= 1) {
+                    document.getElementById('duplicate-message').textContent = "Please rate the videos differently";
+                    document.getElementById('jspsych-survey-html-form-next').disabled = true;
+                } else {
+                    document.getElementById('duplicate-message').textContent = "";
+                    document.getElementById('jspsych-survey-html-form-next').disabled = false;
+                }
+            }
+
+            checkDuplicateValues();
+
             // Update output elements when sliders are changed
             document.getElementById('ClipA').addEventListener('input', function() {
                 document.getElementById('ClipA-value').textContent = this.value;
+                checkDuplicateValues();
             });
 
             document.getElementById('ClipB').addEventListener('input', function() {
                 document.getElementById('ClipB-value').textContent = this.value;
+                checkDuplicateValues();
             });
         }
     }
@@ -1401,7 +1422,7 @@
         post_trial_gap: 500,
         on_start: function(trial) {
             //get video data of trial with test_part: videoIntro
-            console.log(jsPsych.data.get().filter({test_part: "videoTargetIntro"}).trials[0].videoStimulus)
+
             var videoStimulus = jsPsych.data.get().filter({test_part: "videoTargetIntro"}).trials[0].videoStimulus;
 
             // set video stimulus
@@ -1496,19 +1517,19 @@
     
     //control condition
     var timeline = [];
-    // timeline.push(preload);
-    // timeline.push(welcome);
-    // timeline.push(surveyPreSB);
-    // timeline.push(surveyPreComf);
-    // timeline.push(restIntro);
-    // timeline.push(restPlay);
-    // timeline.push(surveyPCIRest);
-    // timeline.push(ganzfeldIntro);
-    // timeline.push(ganzfeldPlay);
-    // timeline.push(surveyPCIGanzfeld);
-    // timeline.push(surveyDSSQ);
-    // timeline.push(timeEstimate1);
-    // timeline.push(timeEstimate2);
+    timeline.push(preload);
+    timeline.push(welcome);
+    timeline.push(surveyPreSB);
+    timeline.push(surveyPreComf);
+    timeline.push(restIntro);
+    timeline.push(restPlay);
+    timeline.push(surveyPCIRest);
+    timeline.push(ganzfeldIntro);
+    timeline.push(ganzfeldPlay);
+    timeline.push(surveyPCIGanzfeld);
+    timeline.push(surveyDSSQ);
+    timeline.push(timeEstimate1);
+    timeline.push(timeEstimate2);
     timeline.push(videoIntro);
     timeline.push(preloadVideos);
     timeline.push(videoDisplay);
