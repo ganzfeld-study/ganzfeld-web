@@ -29,6 +29,10 @@
     <!--<link rel="stylesheet" href="consent/consent.css"></link>-->
 
     <style>
+        .jspsych-html-slider-response-container {
+            width: 50vh !important;
+        }
+
         .jspsych-slider {
             min-width: 40em;
         }
@@ -377,6 +381,11 @@
          func: function(){
             document.querySelector('head').insertAdjacentHTML('beforeEnd', 
             `<style id="PCI">
+                .jspsych-question-content {
+                    display: inline-block;
+                    width: 100%;
+                }
+
                 /* Ensure the container is using the full width */
                 .sd-question {
                     display: flex;
@@ -388,6 +397,7 @@
                 .sd-rating {
                     display: flex;
                     flex-direction: column;
+                    justify-content: space-between;
                     align-items: center;
                     width: 100% !important;
                 }
@@ -1487,16 +1497,16 @@
         }
     }
     // fullscreen
-    var enterFullscreen = {
-        type: jsPsychFullscreen,
-        fullscreen_mode: true
-    }
+    // var enterFullscreen = {
+    //     type: jsPsychFullscreen,
+    //     fullscreen_mode: true
+    // }
 
-    var exitFullscreen = {
-        type: jsPsychFullscreen,
-        fullscreen_mode: false,
-        delay_after: 0
-    }
+    // var exitFullscreen = {
+    //     type: jsPsychFullscreen,
+    //     fullscreen_mode: false,
+    //     delay_after: 0
+    // }
 
     /*// Hide and Show cursor 
     var hide_cursor = {
@@ -1534,9 +1544,7 @@
     timeline.push(preloadVideos);
     timeline.push(videoDisplay);
     timeline.push(videoTargetIntro);
-    //timeline.push(enterFullscreen);
     timeline.push(videoTarget);
-    //timeline.push(exitFullscreen);
     timeline.push(ending);
 
     /* start the experiment */
