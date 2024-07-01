@@ -208,6 +208,40 @@
     };
 
     /* welcome message & instructions */
+    var txt_testrun = 
+    {
+        "en": {
+            "testrun": "Trial type?",
+            "choices": ["Experiment", "Pilot (Test run)"]
+        },
+        "de": {
+            "testrun": "Versuchstyp?",
+            "choices": ["Experiment", "Pilot (Testlauf)"]
+        },
+        "se": {
+            "testrun": "Försökstyp?",
+            "choices": ["Experiment", "Pilot (Testkörning)"]
+        }
+    }
+
+    var testrun = {
+        type: jsPsychSurvey,
+        data: { test_part: 'testrun'},
+        survey_json: {
+            showQuestionNumbers: false,
+            completeText: txt(txt_survey, lang, 'next'),
+            elements: [
+                {
+                    type: "radiogroup",
+                    name: "testrun",
+                    title: txt(txt_testrun, lang, 'testrun'),
+                    isRequired: true,
+                    choices: txt(txt_testrun, lang, 'choices')
+                }
+            ]
+        },
+    }
+
     var txt_welcome = 
     {
         "en": {
@@ -1528,6 +1562,7 @@
     //control condition
     var timeline = [];
     timeline.push(preload);
+    timeline.push(testrun);
     timeline.push(welcome);
     timeline.push(surveyPreSB);
     timeline.push(surveyPreComf);
