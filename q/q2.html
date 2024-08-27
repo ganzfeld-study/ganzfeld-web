@@ -117,9 +117,15 @@
     // specify starting time
     var start_time = new Date();
 
+    var subject_id = null;
+
     //initialize Experiment
     const jsPsych = initJsPsych({
-        on_trial_finish: saveData("/session2/ganzfeld_2_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv())
+        on_trial_finish: function() {
+            if (subject_id !== null) {
+                saveData("/session2/ganzfeld_2_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv())
+            }
+        }
         /* on_finish: function() {
         jsPsych.data.displayData();
       } */
@@ -128,8 +134,6 @@
     // subject & Lab ID
     let pid = jsPsych.data.urlVariables()['pid'];
     let lab = jsPsych.data.urlVariables()['l'];
-
-    let subject_id;
     
     // no Pid
     if(!pid){
