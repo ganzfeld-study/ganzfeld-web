@@ -76,7 +76,7 @@
     let lab = urlParams.get('l');
     let lang = urlParams.get('lang');
 
-    let subject_id;
+    var subject_id = null;
     
     // no Pid
     if(!pid){
@@ -138,6 +138,11 @@
         show_progress_bar: true,
         auto_update_progress_bar: false,
         message_progress_bar: txt(txt_survey, lang, 'progress'),
+        on_trial_finish: function() {
+            if (subject_id !== null) {
+                saveData("/session1/ganzfeld_1_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+            }
+        }
         /* on_finish: function() {
         jsPsych.data.displayData();
       } */
@@ -1646,10 +1651,10 @@ var surveyDemo = {
         stimulus: txt(txt_ending, lang, 'ending'),
         //choices: "ALL_KEYS",
         choices: "NO_KEYS",
-        on_start: function() {
-            // save Data
-            saveData("/session1/ganzfeld_1_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
-        }
+        // on_start: function() {
+        //     // save Data
+        //     saveData("/session1/ganzfeld_1_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+        // }
     }
 
     /* helper */
