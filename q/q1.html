@@ -74,6 +74,7 @@
 
     let pid = urlParams.get('pid');
     let lab = urlParams.get('l');
+    let lang = urlParams.get('lang');
 
     let subject_id;
     
@@ -99,7 +100,7 @@
     }
 
     // set language
-    let lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
+    if(!lang) lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
 
     console.log(" Lab: " + lab + " Language: " + lang);
     
@@ -176,68 +177,90 @@
         "en": {
             "welcome": "Welcome to Session 1!",
             "preamble": "<h2>Welcome to Session 1!</h2><div style='text-align:justify'><p>In this first session, we would first like to ask you to fill out seven questionnaires. It may take about 30-45 minutes in total but please take a break whenever you want.</p><p style='border: 2px solid #555; padding:5px;'><b>IMPORTANT:</b> Please do not 'refresh' the page or use the 'go back/ go forward' buttons, as it would send you back to the first page and require you to start over.</p><p>Next, in the laboratory you will be asked to familiarize yourself with the Ganzfeld environment (including the red light and the pink noise) so that you are prepared for the second session, in which you will participate in the Ganzfeld experiment.</p><p>Please fill out your participant ID / make sure that it is correct and click <i>Continue</i> to begin answering the questionnaires.</div>",
-            "pid": "Participant ID"
+            "pid": "Participant ID",
+            "language_prompt": "Language:"
         },
         "de": {
             "welcome": "Willkommen zur Sitzung 1!",
             "preamble": "<h2>Willkommen zu Sitzung 1!</h2><div style='text-align:justify'><p>In dieser ersten Sitzung möchten wir Sie zunächst bitten, sieben Fragebögen auszufüllen. Es wird insgesamt etwa 30-45 Minuten dauern, aber bitte machen Sie eine Pause, wann immer Sie wollen.</p><p style='border: 2px solid #555; padding:5px;'><b>WICHTIG:</b> Bitte aktualisieren Sie die Seite nicht und benutzen Sie nicht die Schaltflächen 'Zurück/Vorwärts', da Sie sonst zur ersten Seite zurückkehren und von vorne beginnen müssen. </p><p>Als Nächstes werden Sie im Labor gebeten, sich mit der Ganzfeld-Umgebung (einschließlich des roten Lichts und des rosa Rauschens) vertraut zu machen, damit Sie auf die zweite Sitzung vorbereitet sind, in der Sie am Ganzfeld-Experiment teilnehmen werden.</p><p>Bitte geben Sie Ihre Teilnehmer-ID ein / vergewissern Sie sich, dass sie korrekt ist, und klicken Sie auf <i>Fortfahren</i>, um mit der Beantwortung der Fragebögen zu beginnen.</div>",
-            "pid": "Teilnehmer-ID"
+            "pid": "Teilnehmer-ID",
+            "language_prompt": "Sprache:"
         },
         "se": {
             "welcome": "Välkommen till session 1!",
             "preamble": "<h2>Välkommen till session 1!</h2><div style='text-align:justify'><p>I den här första sessionen ombeds du först att fylla i sju frågeformulär. Det kan ta cirka 30-45 minuter totalt, men ta gärna en paus när du vill.</p><p style='border: 2px solid #555; padding:5px;'><b>VIKTIGT:</b> Vänligen uppdatera inte sidan eller använd knapparna 'gå tillbaka/gå framåt', eftersom det skulle skicka dig tillbaka till första sidan och kräva att du börjar om. </p><p>Efter det kommer du att bli ombedd att kort bekanta dig med Ganzfeld-miljön (inklusive det röda ljuset och det rosa ljudet, låter som radiobrus) så att du är förberedd för den andra sessionen, där du kommer att delta i Ganzfeld-experimentet.</p><p>Fyll i ditt deltagar-ID / kontrollera att det är korrekt och klicka på <i>Nästa</i> för att börja svara på frågeformulären.</div>",
-            "pid": "Deltagar-ID"
+            "pid": "Deltagar-ID",
+            "language_prompt": "Språk:"
         }
     };
     var welcome = {
-        type: jsPsychSurveyText,
-        data: { test_part: 'welcome'},
-        preamble: txt(txt_welcome, lang, 'preamble'),
-        questions: [
-            {
-                prompt: txt(txt_welcome, lang, 'pid'),
-                name: 'subject_id'
-            }
-        ],
-        button_label: txt(txt_survey, lang, 'next'),
-        on_load: function(){
-            var input = document.getElementById('input-0');
-            var continueBtn = document.getElementById('jspsych-survey-text-next');
-            
-            if(pid){
-                input.setAttribute('value', pid);
-            } else if (lab){
-                input.setAttribute('value', lab + "_");
-                // Set cursor position at the end
+    type: jsPsychSurveyText,
+    data: { test_part: 'welcome'},
+    preamble: function() {
+        return `
+            <div style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding: 20px;">
+                <label for="language-select">${txt(txt_welcome, lang, 'language_prompt')}</label>
+                <select id="language-select">
+                    <option value="en" ${lang === 'en' ? 'selected' : ''}>English</option>
+                    <option value="de" ${lang === 'de' ? 'selected' : ''}>Deutsch</option>
+                    <option value="se" ${lang === 'se' ? 'selected' : ''}>Svenska</option>
+                </select>
+            </div>
+            <div id="preamble-text">
+                ${txt(txt_welcome, lang, 'preamble')}
+            </div>
+        `;
+    },
+    questions: [
+        {
+            prompt: function() { return txt(txt_welcome, lang, 'pid'); },
+            name: 'subject_id'
+        }
+    ],
+    button_label: function() { return txt(txt_survey, lang, 'next'); },
+    on_load: function(){
+        var input = document.getElementById('input-0');
+        var continueBtn = document.getElementById('jspsych-survey-text-next');
+        var langSelect = document.getElementById('language-select');
 
-                input.selectionStart = input.selectionEnd = input.value.length;
+        if (pid) {
+            input.setAttribute('value', pid);
+        } else if (lab) {
+            input.setAttribute('value', lab + "_");
+            input.selectionStart = input.selectionEnd = input.value.length;
+            input.style.border = '2px solid red';
+            input.style.outline = 'none';
+            continueBtn.disabled = true;
+        }
 
-                // Add red border to input
+        input.addEventListener('input', function() {
+            if (input.value.length == 8) {
+                input.style.border = '2px solid #ccc';
+                continueBtn.disabled = false;
+            } else {
                 input.style.border = '2px solid red';
-                input.style.outline = 'none';
                 continueBtn.disabled = true;
             }
+        });
 
-            // Listen for input events to remove red border after 6 characters have been added
-            input.addEventListener('input', function() {
-                if (input.value.length == 8) {
-                    // Remove red border after 8 characters have been entered
-                    input.style.border = '2px solid #ccc';
-                    continueBtn.disabled = false;
-                } else {
-                    input.style.border = '2px solid red';
-                    continueBtn.disabled = true;
-                }
-            });
-        },
-        on_finish: function(data){
-            subject_id = data.response.subject_id;
-            jsPsych.data.addProperties({ 
-                subject: subject_id
-            });
-            jsPsych.setProgressBar(0.125); // set progress bar to 85% full.
-        }
+        // Change language and reload the experiment
+        langSelect.addEventListener('change', function() {
+            var newLang = langSelect.value;
+            var url = new URL(window.location.href);
+            url.searchParams.set('lang', newLang);
+            window.location.href = url.href; // Reload with new language parameter
+        });
+    },
+    on_finish: function(data){
+        subject_id = data.response.subject_id;
+        jsPsych.data.addProperties({ 
+            subject: subject_id
+        });
+        jsPsych.setProgressBar(0.125); // set progress bar to 12.5%
     }
+};
+
+
 
     /* Surveys */
     /* Demographics */

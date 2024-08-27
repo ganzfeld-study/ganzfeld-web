@@ -69,6 +69,7 @@
 
     // subject & Lab ID
     let lab = jsPsych.data.urlVariables()['l'];
+    let lang = jsPsych.data.urlVariables()['lang'];
     
     var subject_id = jsPsych.randomization.randomID(16);
 
@@ -78,7 +79,7 @@
         }
 
     // set language
-    let lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
+    if(!lang) lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
 
     console.log(" Lab: " + lab + " Language: " + lang);
 
@@ -151,7 +152,8 @@
                     <source src="../audio/pinknoise_7min_128.mp3" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>
-            <p>Please put on the headphones and click "Next" when you are ready.</p>`
+            <p>Please put on the headphones and click "Next" when you are ready.</p>`,
+            language_prompt: "Language:"
         },
         "de": {
             welcome: `<p>Jetzt möchten wir, dass Sie sich mit dem Ganzfeld-Setup vertraut machen. Sie werden gebeten, eine Brille und Kopfhörer zu tragen und 7 Minuten lang rosa Rauschen zu hören, während Sie in einem bequemen Stuhl sitzen.</p>
@@ -161,7 +163,8 @@
                     <source src="../audio/pinknoise_7min_128.mp3" type="audio/mpeg">
                     Ihr Browser unterstützt das Audioelement nicht.
                 </audio>
-            <p>Bitte setzen Sie die Kopfhörer auf und klicken Sie auf "Weiter", wenn Sie bereit sind.</p>`
+            <p>Bitte setzen Sie die Kopfhörer auf und klicken Sie auf "Weiter", wenn Sie bereit sind.</p>`,
+            language_prompt: "Sprache:"
         },
         "se": {
             welcome: `<p>Nu vill vi att du ska få en chans att bekanta dig med ganzfeld-miljön. Du kommer att bli ombedd att bära ett par glasögon och hörlurar och lyssna på rosa brus medan du sitter i en bekväm stol i 7 minuter.</p>
@@ -171,16 +174,43 @@
                     <source src="../audio/pinknoise_7min_128.mp3" type="audio/mpeg">
                     Din webbläsare stöder inte ljudelementet.
                 </audio>
-            <p>Sätt på hörlurarna och klicka på "Nästa" när du är redo.</p>`
+            <p>Sätt på hörlurarna och klicka på "Nästa" när du är redo.</p>`,
+            language_prompt: "Språk:"
         }
     };
     var welcome = {
         type: jsPsychInstructions,
         data: { test_part: 'welcome'},
-        pages:[ txt(txt_welcome, lang, "welcome"), txt(txt_welcome, lang, "welcome2")],
+        pages: [
+        function() {
+            return `
+                <div style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding: 20px;">
+                    <label for="language-select">${txt(txt_welcome, lang, 'language_prompt')}</label>
+                    <select id="language-select">
+                        <option value="en" ${lang === 'en' ? 'selected' : ''}>English</option>
+                        <option value="de" ${lang === 'de' ? 'selected' : ''}>Deutsch</option>
+                        <option value="se" ${lang === 'se' ? 'selected' : ''}>Svenska</option>
+                    </select>
+                </div>
+                <div id="instruction-text">
+                    ${txt(txt_welcome, lang, 'welcome')}
+                </div>
+            `;
+        }, txt(txt_welcome, lang, "welcome2")],
         show_clickable_nav: true,
         button_label_previous: txt(txt_survey, lang, "previous"),
-        button_label_next: txt(txt_survey, lang, "next")
+        button_label_next: txt(txt_survey, lang, "next"),
+        on_load: function(){
+        var langSelect = document.getElementById('language-select');
+
+        // Change language and reload the experiment
+        langSelect.addEventListener('change', function() {
+            var newLang = langSelect.value;
+            var url = new URL(window.location.href);
+            url.searchParams.set('lang', newLang);
+            window.location.href = url.href; // Reload with new language parameter
+        });
+    }
     }
 
     /* Relaxation exercise */

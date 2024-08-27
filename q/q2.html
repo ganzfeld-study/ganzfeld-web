@@ -134,6 +134,7 @@
     // subject & Lab ID
     let pid = jsPsych.data.urlVariables()['pid'];
     let lab = jsPsych.data.urlVariables()['l'];
+    let lang = jsPsych.data.urlVariables()['lang'];
     
     // no Pid
     if(!pid){
@@ -157,7 +158,7 @@
     }
 
     // set language
-    let lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
+    if(!lang) lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
 
     console.log(" Lab: " + lab + " Language: " + lang);
 
@@ -260,7 +261,8 @@
                 <p>Please answer honestly about your experiences and attitudes. There are no right or wrong answers. We value your genuine thoughts and opinions.</p>
                 <p>Please fill out your participant ID / make sure that it is correct and click <i>Continue</i> to begin.</p>
             </div>`,
-            "pid": "Participant ID"
+            "pid": "Participant ID",
+            "language_prompt": "Language"
         },
         "de": {
             "preamble": `<h2>Sitzung 2</h2>
@@ -274,7 +276,8 @@
                 </ul>
                 <p>Bitte geben Sie ehrliche Antworten zu Ihren Erfahrungen und Einstellungen. Es gibt keine richtigen oder falschen Antworten. Wir legen Wert auf Ihre ehrlichen Gedanken und Meinungen.</p>
                 <p>Bitte geben Sie Ihre Teilnehmer-ID ein / vergewissern Sie sich, dass sie korrekt ist und klicken Sie auf <i>Weiter</i>, um zu beginnen.</p>`,
-            "pid": "Teilnehmer-ID"
+            "pid": "Teilnehmer-ID",
+            "language_prompt": "Sprache"
         },
         "se": {
             "preamble": `<h2>Session 2</h2>
@@ -288,57 +291,87 @@
                 </ul>
                 <p>Vänligen svara ärligt om dina upplevelser och attityder. Det finns inget rätt eller fel svar, utan vi värdesätter dina genuina tankar och åsikter.</p>
                 <p>Fyll i ditt deltagar-ID / kontrollera att det är korrekt och klicka på <i>Nästa</i> för att börja.</p>`,
-            "pid": "Deltagar-ID"
+            "pid": "Deltagar-ID",
+            "language_prompt": "Språk"
         },
     }
     var welcome = {
-        type: jsPsychSurveyText,
-        data: { test_part: 'welcome'},
-        preamble: txt(txt_welcome, lang, 'preamble'),
-        questions: [
-            {
-                prompt: txt(txt_welcome, lang, 'pid'),
-                name: 'subject_id'
-            }
-        ],
-        button_label: txt(txt_survey, lang, 'next'),
-        on_load: function(){
-            var input = document.getElementById('input-0');
-            var continueBtn = document.getElementById('jspsych-survey-text-next');
-            
-            if(pid){
-                input.setAttribute('value', pid);
-            } else if (lab){
-                input.setAttribute('value', lab + "_");
-                // Set cursor position at the end
+    type: jsPsychSurveyText,
+    data: { test_part: 'welcome'},
+    preamble: function() {
+        return `
+            <div style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding: 20px;">
+                <label for="language-select">${txt(txt_welcome, lang, 'language_prompt')}</label>
+                <select id="language-select">
+                    <option value="en" ${lang === 'en' ? 'selected' : ''}>English</option>
+                    <option value="de" ${lang === 'de' ? 'selected' : ''}>Deutsch</option>
+                    <option value="se" ${lang === 'se' ? 'selected' : ''}>Svenska</option>
+                </select>
+            </div>
+            <div id="preamble-text">
+                ${txt(txt_welcome, lang, 'preamble')}
+            </div>
+        `;
+    },
+    questions: [
+        {
+            prompt: function() { return txt(txt_welcome, lang, 'pid'); },
+            name: 'subject_id'
+        }
+    ],
+    button_label: function() { return txt(txt_survey, lang, 'next'); },
+    on_load: function(){
+        var input = document.getElementById('input-0');
+        var continueBtn = document.getElementById('jspsych-survey-text-next');
+        var langSelect = document.getElementById('language-select');
 
-                input.selectionStart = input.selectionEnd = input.value.length;
+        if (pid) {
+            input.setAttribute('value', pid);
+        } else if (lab) {
+            input.setAttribute('value', lab + "_");
+            input.selectionStart = input.selectionEnd = input.value.length;
+            input.style.border = '2px solid red';
+            input.style.outline = 'none';
+            continueBtn.disabled = true;
+        }
 
-                // Add red border to input
+        input.addEventListener('input', function() {
+            if (input.value.length == 8) {
+                input.style.border = '2px solid #ccc';
+                continueBtn.disabled = false;
+            } else {
                 input.style.border = '2px solid red';
-                input.style.outline = 'none';
                 continueBtn.disabled = true;
             }
+        });
 
-            // Listen for input events to remove red border after 6 characters have been added
-            input.addEventListener('input', function() {
-                if (input.value.length == 8) {
-                    // Remove red border after 8 characters have been entered
-                    input.style.border = '2px solid #ccc';
-                    continueBtn.disabled = false;
-                } else {
-                    input.style.border = '2px solid red';
-                    continueBtn.disabled = true;
-                }
-            });
-        },
-        on_finish: function(data){
-            subject_id = data.response.subject_id;
-            jsPsych.data.addProperties({ 
-                subject: subject_id
-            });
-        }
+        // Change language and reload the experiment
+        langSelect.addEventListener('change', function() {
+            var newLang = langSelect.value;
+            var url = new URL(window.location.href);
+            url.searchParams.set('lang', newLang);
+            window.location.href = url.href; // Reload with new language parameter
+        });
+    },
+    on_finish: function(data){
+        subject_id = data.response.subject_id;
+        jsPsych.data.addProperties({ 
+            subject: subject_id
+        });
     }
+};
+
+function updateLanguage() {
+    // Update the preamble text
+    document.getElementById('preamble-text').innerHTML = txt(txt_welcome, lang, 'preamble');
+
+    // Update the PID prompt text
+    document.querySelector('.jspsych-survey-text').innerHTML = txt(txt_welcome, lang, 'pid');
+
+    // Update the button label
+    document.getElementById('jspsych-survey-text-next').value = txt(txt_survey, lang, 'next');
+}
+
 
 
     /* Surveys */

@@ -30,6 +30,7 @@
 
 
     let lab = jsPsych.data.urlVariables()['l'];
+    let lang = jsPsych.data.urlVariables()['lang'];
 
     // no lab -> go to lab selection
     if(!["1","2","3","4","5","6"].includes(lab)){
@@ -42,7 +43,7 @@
     console.log("Subject ID: " + subject_id);
 
     // set language
-    let lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
+    if(!lang) lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
 
     // specify starting time
     var start_time = new Date();
@@ -110,7 +111,8 @@
             
             <p>Please click Next to answer some questions.</p>`,
             "next": "Next",
-            "previous": "Previous"
+            "previous": "Previous",
+            "language_prompt": "Language:"
         },
         "de": {
             "instruction": `<h1>Hinweise für potenzielle Teilnehmer</h1>
@@ -126,7 +128,8 @@
             
             <p>Bitte klicken Sie auf Weiter, um einige Fragen zu beantworten.</p>`,
             "next": "Weiter",
-            "previous": "Zurück"
+            "previous": "Zurück",
+            "language_prompt": "Sprache:"
         },
         "se": {
             "instruction": `<h1>Instruktioner till potentiella deltagare</h1>
@@ -141,19 +144,45 @@
             <p>Svara på de tre frågorna på nästa skärm. Frågorna handlar om tidigare erfarenheter av olika kreativa aktiviteter och attityder till parapsykologiska fenomen. Om du blir kontaktad kommer du att bli inbjuden att delta i två sessioner på totalt cirka 2-2,5 timmar. Deltagarna får en biobiljett för varje session, dvs totalt 2 st biobiljetter. Under sessionerna kommer deltagarna att bli ombedda att titta på ett rött ljus samtidigt som de lyssnar på rosa brus (det låter som ljudet från en radio när frekvensen ligger mellan olika kanaler), en procedur som kallas ganzfeld (eller sensorisk homogenisering).</p>
             <p>Klicka på Nästa.</p>`,
             "next": "Nästa",
-            "previous": "Föregående"
+            "previous": "Föregående",
+            "language_prompt": "Språk:"
         }
     }
     var welcome = {
-        type: jsPsychInstructions,
-        data: { test_part: "instruction" },
-        pages: [
-                txt(txt_welcome, lang, "instruction")
-            ],
-        show_clickable_nav: true,
-        button_label_previous: txt(txt_welcome, lang, "previous"),
-        button_label_next: txt(txt_welcome, lang, "next")
-    };
+    type: jsPsychInstructions,
+    data: { test_part: "instruction" },
+    pages: [
+        function() {
+            return `
+                <div style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding: 20px;">
+                    <label for="language-select">${txt(txt_welcome, lang, 'language_prompt')}</label>
+                    <select id="language-select">
+                        <option value="en" ${lang === 'en' ? 'selected' : ''}>English</option>
+                        <option value="de" ${lang === 'de' ? 'selected' : ''}>Deutsch</option>
+                        <option value="se" ${lang === 'se' ? 'selected' : ''}>Svenska</option>
+                    </select>
+                </div>
+                <div id="instruction-text">
+                    ${txt(txt_welcome, lang, 'instruction')}
+                </div>
+            `;
+        }
+    ],
+    show_clickable_nav: true,
+    button_label_previous: function() { return txt(txt_welcome, lang, "previous"); },
+    button_label_next: function() { return txt(txt_welcome, lang, "next"); },
+    on_load: function(){
+        var langSelect = document.getElementById('language-select');
+
+        // Change language and reload the experiment
+        langSelect.addEventListener('change', function() {
+            var newLang = langSelect.value;
+            var url = new URL(window.location.href);
+            url.searchParams.set('lang', newLang);
+            window.location.href = url.href; // Reload with new language parameter
+        });
+    }
+};
 
 
     /* Screening */
