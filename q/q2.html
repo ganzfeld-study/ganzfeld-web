@@ -114,6 +114,16 @@
   <script>
 
     /* define parameters */
+    // specify starting time
+    var start_time = new Date();
+
+    //initialize Experiment
+    const jsPsych = initJsPsych({
+        on_trial_finish: saveData("/session2/ganzfeld_2_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv())
+        /* on_finish: function() {
+        jsPsych.data.displayData();
+      } */
+    });
 
     // subject & Lab ID
     let pid = jsPsych.data.urlVariables()['pid'];
@@ -146,16 +156,6 @@
     let lang = ['se', 'en', 'en', 'en', 'de', 'de'][lab - 1];
 
     console.log(" Lab: " + lab + " Language: " + lang);
-    // specify starting time
-    var start_time = new Date();
-
-    //initialize Experiment
-    const jsPsych = initJsPsych({
-        on_trial_finish: saveData("/session2/ganzfeld_2_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv())
-        /* on_finish: function() {
-        jsPsych.data.displayData();
-      } */
-    });
 
     // add to data file
     jsPsych.data.addProperties({ 
