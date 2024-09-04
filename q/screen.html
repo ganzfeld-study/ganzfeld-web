@@ -92,7 +92,10 @@
         type: jsPsychExternalHtml,
         url: "consent/consent" + lab + ".html",
         cont_btn: "start",
-        check_fn: check_consent
+        check_fn: check_consent,
+        on_start: function(trial) {
+            if(lab == 1 && lang != 'se') trial.url = "consent/consent1_en.html";
+        }
     };
 
     /* welcome message & instructions */
