@@ -201,13 +201,16 @@
     // button text
     var txt_survey = {
         "en": {
-            "next": "Continue"
+            "next": "Continue",
+            "previous": "Previous"
         },
         "de": {
-            "next": "Weiter"
+            "next": "Weiter",
+            "previous": "Zurück"
         },
         "se": {
-            "next": "Nästa"
+            "next": "Nästa",
+            "previous": "Föregående"
         }
     };
 
@@ -405,6 +408,61 @@ function updateLanguage() {
         ],
         button_label_finish: 'Next'
     };*/
+    /* Instructions */
+    var txt_instr1 = {
+        "en": {
+            "page1": `<h2>General Guidelines (Ganzfeld)</h2>
+            <p>During the 30 min of ganzfeld experience (after the relaxation), you are asked to say out loud everything that you experience. These experiences are referred to as “mentations”. You will be asked to compare them to a target film clip that will be selected after your ganzfeld experience. <b>Please make the intention to obtain the information of the target film clip.</b></p>
+            <p style="text-align: left;"><b>Read carefully the guidelines below on what to report during the ganzfeld:</b></p>
+            <ol style="text-align: left;">
+                <li>Say out loud everything that you experience: all sensations, mental imagery, auditory impressions, colors, etc.</li>
+                <li>Do not screen anything, say it all, regardless of how trivial it may seem to you. If you have an impression that you would rather not share others, just state it generally.</li>
+                <li>Do not worry if an impression is vague, indistinct, or nonsensical. Describe it as best you can in terms of its shape, form, color, or whatever. DO NOT wait for the image to develop into a recognizable image. Simply describe the initial image as best you can.</li>
+                <li>Try not to be caught up in following your ordinary, normal trains of thought or chains of association, but remain open to whatever may arise in your mind.</li>
+                <li>After stating an impression, let it “go” and wait for another new one to occur. If a particular image occurs again or is very persistent, simply acknowledge that this is happening, and then move on to the next one.</li>
+                <li>Notice if anything coming to your mind stands out for any reason.</li>
+            </ol>`,
+        },
+        "de": {
+            "page1": `<h2>Allgemeine Hinweise (Ganzfeld)</h2>
+            <p>Während der 30-minütigen Ganzfelderfahrung (nach der Entspannung) werden Sie gebeten, alles, was Sie erleben, laut auszusprechen. Sie werden anschließend gebeten, diese Erfahrungen mit einem Ziel-Filmausschnitt zu vergleichen, der nach der Ganzfeld-Übung ausgewählt wird. <b>Bitte nehmen Sie sich vor, Informationen über den Filmausschnitt zu erhalten.</b></p>
+            <p style="text-align: left;"><b>Lesen Sie sorgfältig die nachstehenden Hinweise darüber, was Sie während des Ganzfeldes berichten sollen:</b></p>
+            <ol style="text-align: left;">
+                <li>Sprechen Sie alles laut aus, was Sie erleben: alle Empfindungen, mentalen Bilder, Höreindrücke, Farben, usw.</li>
+                <li>Blenden Sie nichts aus, sagen Sie alles, egal wie trivial es Ihnen erscheinen mag. Wenn Sie einen Eindruck haben, den Sie lieber nicht mit anderen teilen möchten, sprechen Sie ihn einfach ganz allgemein aus.</li>
+                <li>Sorgen Sie sich nicht, wenn ein Eindruck vage, undeutlich oder unsinnig ist. Beschreiben Sie ihn so gut wie möglich in Form von Gestalt, Form, Farbe oder was auch immer. Warten Sie NICHT darauf, dass sich das Bild zu etwas Konkretem, Erkannbarem entwickelt. Beschreiben Sie einfach das ursprüngliche Bild, so gut es geht.</li>
+                <li>Versuchen Sie, nicht Ihren üblichen, normalen Gedankengängen oder Assoziationsketten zu folgen, sondern bleiben Sie offen für alles, was in Ihrem Bewusstsein auftauchen mag.</li>
+                <li>Nachdem Sie einen Eindruck beschrieben haben, lassen Sie ihn „gehen“ und warten Sie darauf, dass ein neuer auftaucht. Wenn ein bestimmtes Bild wieder auftaucht oder sehr hartnäckig ist, erkennen Sie einfach an, dass dies geschieht, und gehen Sie dann zum nächsten über.</li>
+                <li>Beobachten Sie, ob Ihnen etwas bewusst wird, das aus irgendeinem Grund besonders auffällt.</li>
+            </ol>`,
+        },
+        "se": {
+            "page1": `<h2>Instruktioner gällande ganzfeld-rapporten</h2>
+            <p>Under den 30 minuter långa ganzfeld-upplevelsen (efter avslappningen) ombeds du att säga högt allt som rör sig i ditt huvud. Du kommer att bli ombedd att jämföra dem med ett filmklipp som kommer att väljas ut som ”måltavla” (”target”) efter din ganzfeld-upplevelse. <b>Ha för avsikt att inhämta information om det filmklipp som blir din måltavla.</b></p>
+            <p style="text-align: left;"><b>Läs noga igenom riktlinjerna nedan om vad du ska rapportera under ganzfeld:</b></p>
+            <ol style="text-align: left;">
+                <li>Säg högt allt du upplever: alla sinnesintryck, mentala bilder, hörselintryck, färger osv.</li>
+                <li>Filtrera inte bort någonting, säg allt, oavsett hur trivialt det kan verka för dig. Om du har ett intryck som du helst inte vill dela med andra, säg det bara generellt.</li>
+                <li>Oroa dig inte för om ett intryck är vagt, otydligt eller meningslöst. Beskriv det så gott du kan i termer av form, färg eller vad det nu kan vara. VÄNTA INTE på att bilden ska utvecklas till en igenkännbar bild. Beskriv helt enkelt den första bilden så gott du kan.</li>
+                <li>Försök att inte fastna i att följa dina vanliga, normala tankebanor eller associationskedjor, utan var öppen för vad som än kan dyka upp i ditt sinne.</li>
+                <li>När du har berättat om ett intryck, ”släpp det” och vänta på att ett nytt intryck ska uppstå. Om en viss bild återkommer eller är mycket påträngande, konstatera helt enkelt att det händer och gå sedan vidare till nästa.</li>
+                <li>Lägg märke till om något som du kommer att tänka på sticker ut av någon anledning.</li>
+            </ol>`,
+        }
+    }
+
+    var instructions1 = {
+        type: jsPsychInstructions,
+        data: { test_part: "instructions1" },
+        pages: [
+            txt(txt_instr1, lang, 'page1')
+        ],
+        show_clickable_nav: true,
+        button_label_previous: function() { return txt(txt_survey, lang, "previous"); },
+        button_label_next: function() { return txt(txt_survey, lang, "next"); },
+
+    };
+
     var txt_preGanzfeld = {
         "en": {
             "successBelief": `<p>Before we begin, we would like to ask you about your attitude to the experiment.</p>
@@ -1600,6 +1658,7 @@ function updateLanguage() {
     timeline.push(preload);
     timeline.push(testrun);
     timeline.push(welcome);
+    timeline.push(instructions1);
     timeline.push(surveyPreSB);
     timeline.push(surveyPreComf);
     timeline.push(restIntro);
