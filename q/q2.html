@@ -1275,6 +1275,89 @@ function updateLanguage() {
         button_label: txt(txt_survey, lang, 'next')
     };
 
+    /* Instruction 2 */
+    var txt_instr2 = {
+        "en": {
+            "page1": `<h2>General Guidelines (Judging the Videos)</h2>
+            <p>You will be shown two video clips and asked to judge their similarities to your ganzfeld mentation, one of the clips will then be selected as the target and shown to you again.</p>
+            <p style="text-align: left;"><b>Read carefully the guidelines below on how to judge the film clips:</b></p>
+            <ol style="text-align: left;">
+                <li>Take your time during the judging procedure: <b>do not rush</b>.</li>
+                <li>Study each film clip very carefully, noting everything contained in it, down to the smallest detail. Get a <b>general</b> sense of the content of each clip, in terms of its actual content, overall theme, mood, dominant shapes (in considering shapes, you should examine them from different angles; e.g., turn figure upside down), and any personal and/or general association that the clip may have for you or in general.</li>
+                <li>Exact matches between target clip and mentation are <b>very</b> rare.</li>
+                <li>Expect distortions of varying degrees between the target and the mentation (e.g., the building in the clip may be different from the building in the mentation).</li>
+                <li>Correspondences between the mentations and the clips can take different forms:
+                    <ol type="a">
+                        <li><i>Literal correspondences</i> (e.g., you said “dog” during ganzfeld and there is a dog in the clip; it may be a major part of the picture or only a minor detail, and it may not be an exact match).</li>
+                        <li><i>Associative correspondences</i>, either personal or general (e.g., personal association may be where you think of a pipe, and while there is not a “pipe” per se in the picture, there is a father-figure in the picture and your father smokes a pipe).</li>
+                        <li><i>Similarities of shape and/or form</i> (e.g., the mentation refers to a circle and the clip contains an open umbrella).</li>
+                        <li><i>Similarities of meaning, function, purpose, and/or language</i> (e.g., you mention a train and there is a car or some form of transportation in the clip).</li>
+                        <li><i>Mood correspondences</i> (e.g., you mentioned being happy or that something in the clip made you happy, and there is an image of a merry-go-round with happy children on it).</li>
+                        <li><i>Color correspondences</i> (e.g., you mentioned the color purple, and there is a purple object in the clip, which may be a major part or a minor detail).</li>
+                        <li><i>A sensual correspondence</i> (e.g., you mentioned feeling hungry and there is food in the clip).</li>
+                        <li>As best you can, <i>do not be swayed by your personal preference</i> (liking or disliking) for any of the clips.</li>
+                        <li>Similarly, <i>try to consider all clips equally</i>, regardless of how familiar you are with them.</li>
+                    </ol>
+                </li>
+            </ol>`
+        },
+        "de": {
+            "page1": `<h2>Allgemeine Hinweise (Bewerten der Videos)</h2>
+            <p>Es werden Ihnen zwei Videoclips gezeigt und Sie werden gebeten, deren Ähnlichkeit mit Ihrer Ganzfeld-Mentation zu beurteilen. Einer der Clips wird dann als Ziel ausgewählt und Ihnen erneut gezeigt.</p>
+            <p style="text-align: left;"><b>Lesen Sie sorgfältig die folgenden Hinweise zur Bewertung der Filmclips:</b></p>
+            <ol style="text-align: left;">
+                <li>Nehmen Sie sich Zeit für die Beurteilung: <b>Nicht hetzen</b>.</li>
+                <li>Sehen Sie sich jeden Filmclip sehr sorgfältig an und achten Sie auf alles, was darin enthalten ist, bis hin zu den kleinsten Details. Verschaffen Sie sich ein <b>allgemeines</b> Gefühl für den Inhalt jedes Clips, in Bezug auf den tatsächlichen Inhalt, das allgemeine Thema, die Stimmung, die dominanten Formen (bei der Betrachtung der Formen sollten Sie diese aus verschiedenen Blickwinkeln betrachten, drehen Sie z.B. die Figur auf den Kopf) und jede persönliche und/oder allgemeine Assoziation, die der Clip für Sie oder im Allgemeinen haben könnte.</li>
+                <li>Exakte Übereinstimmungen zwischen Zielclip und Eingebung sind <b>sehr</b> selten.</li>
+                <li>Erwarten Sie Verzerrungen unterschiedlichen Ausmaßes zwischen dem Ziel und der Eingebung (z.B. kann das Gebäude im Video anders aussehen als in der Eingebung).</li>
+                <li>Übereinstimmungen zwischen den Eingebungen und den Videos können verschiedene Formen annehmen:
+                    <ol type="a">
+                        <li><i>Buchstäbliche Entsprechungen</i> (z.B. Sie sagten „Hund“ während des Ganzfeldes und im Clip ist ein Hund zu sehen; er kann ein großer Teil des Bildes oder nur ein kleines Detail sein, und es muss keine exakte Übereinstimmung sein).</li>
+                        <li><i>Assoziative Entsprechungen</i>, entweder persönlich oder allgemein (eine persönliche Assoziation kann z. B. darin bestehen, dass Sie an eine Pfeife denken, und obwohl es auf dem Bild keine „Pfeife“ als solche gibt, ist eine Vaterfigur auf dem Bild zu sehen, und Ihr Vater raucht eine Pfeife).</li>
+                        <li><i>Ähnlichkeiten in Form und/oder Gestalt</i> (z. B. bezieht sich die Eingebung auf einen Kreis und der Clip enthält einen offenen Regenschirm).</li>
+                        <li><i>Ähnlichkeiten der Bedeutung, Funktion, des Zwecks und/oder der Sprache</i> (z. B. Sie erwähnen einen Zug, und in dem Clip ist ein Auto oder ein anderes Verkehrsmittel zu sehen).</li>
+                        <li><i>Stimmungsentsprechungen</i> (z.B. Sie erwähnen, dass Sie glücklich sind oder dass etwas Sie glücklich gemacht hat, und es gibt im Video ein Bild von einem Karussell mit glücklichen Kindern darauf).</li>
+                        <li><i>Farbliche Entsprechungen</i> (z.B. haben Sie die Farbe Lila erwähnt, und es gibt ein lila Objekt in dem Video-Clip, das ein wichtiger Bestandteil oder auch nur ein kleines Detail sein kann).</li>
+                        <li><i>Eine sinnliche Entsprechung</i> (z.B. Sie erwähnten, dass Sie Hunger haben, und in dem Filmauschnitt kommt Essen vor).</li>
+                        <li>Lassen Sie sich, so gut es geht, <i>nicht von Ihrer persönlichen Vorliebe</i> (oder Abneigung) für einen der Videoauschnitte beeinflussen.</li>
+                        <li>Versuchen Sie auch, alle Clips gleichermaßen zu berücksichtigen, unabhängig davon, wie vertraut Sie ihnen sind.</li>
+                    </ol>
+                </li>
+            </ol>`
+        },
+        "se": {
+            "page1": `<h2>Deltagarnas bedömning: Allmänna riktlinjer</h2>
+            <p>Du kommer att få se två videoklipp och bli ombedd att bedöma deras likheter med din ganzfeld-mentation, ett av klippen kommer sedan att väljas ut som mål och visas för dig igen.</p>
+            <p style="text-align: left;"><b>Läs noga igenom nedanstående riktlinjer för hur du ska bedöma filmklippen:</b></p>
+            <ol style="text-align: left;">
+                <li>Ta god tid på dig under bedömningsproceduren: <b>stressa inte</b>.</li>
+                <li>Studera varje filmklipp mycket noggrant och notera allt som finns i det, in i minsta detalj. Skaffa dig en <b>generell</b> uppfattning om innehållet i varje klipp, vad gäller det faktiska innehållet, det övergripande temat, stämningen, de dominerande formerna och eventuella personliga och/eller allmänna associationer som klippet kan ha för dig eller i allmänhet.</li>
+                <li>Exakta matchningar mellan måltavle-filmklippet och upplevelsen är <b>mycket</b> sällsynta.</li>
+                <li>Räkna med förvrängningar av varierande grad mellan måltavlan och upplevelsen (t.ex. kan byggnaden i klippet vara en annan än byggnaden i sinnesintrycket).</li>
+                <li>likheten mellan klippet och uppevelsen kan se ut på olika sätt:
+                    <ol type="a">
+                        <li><i>Bokstavliga likheter</i> (t.ex. du sa ”hund” under ganzfeld och det finns en hund i klippet; det kan vara en stor del av bilden eller bara en liten detalj, och det kanske inte är en exakt matchning).</li>
+                        <li><i>Associativa likheter</i>, antingen personliga eller allmänna (t.ex. kan en personlig association vara att du tänker på en pipa, och även om det inte finns någon ”pipa” i sig i bilden, finns det en fadersfigur i bilden och din far röker pipa).</li>
+                        <li><i>Likheter i form</i> (t.ex. mentaliseringen refererar till en cirkel och klippet innehåller ett öppet paraply)./li>
+                        <li><i>Likheter i betydelse, funktion, syfte och/eller språk</i> (t.ex. du nämner ett tåg och det finns en bil eller någon form av transportmedel i klippet).</li>
+                        <li><i>Likheter i humör</i> (t.ex. du nämnde att du var glad eller att något i klippet gjorde dig glad, och det finns en bild av en karusell med glada barn på).</li>
+                        <li><i>Likheter i färg</i> (t.ex. du nämnde färgen lila och det finns ett lila föremål i klippet, som kan vara en större del eller en mindre detalj).</li>
+                        <li><i>En sensorisk likhet</i> (t.ex. du nämnde att du kände dig hungrig och det finns mat i klippet).</li>
+                        <li>Så gott du kan, <i>, låt dig inte påverkas av dina personliga preferenser</i> för något av klippen (gillande eller ogillande).</li>
+                        <li>Försök på samma sätt att <i>betrakta alla klipp lika</i>, oavsett hur bekant du är med dem.</li>
+                    </ol>
+                </li>
+            </ol>`
+        }
+    }
+    var instructions2 = {
+        type: jsPsychInstructions,
+        data: { test_part: "instructions2" },
+        pages: [ txt(txt_instr2, lang, 'page1') ],
+        show_clickable_nav: true,
+        button_label_previous: txt(txt_survey, lang, 'previous'),
+        button_label_next: txt(txt_survey, lang, 'next')
+    }
     /* Play random videos */
     // load video stimuli
     var vidStimuli = [
@@ -1670,6 +1753,7 @@ function updateLanguage() {
     timeline.push(surveyDSSQ);
     timeline.push(timeEstimate1);
     timeline.push(timeEstimate2);
+    timeline.push(instructions2);
     timeline.push(videoIntro);
     timeline.push(preloadVideos);
     timeline.push(videoDisplay);
