@@ -219,17 +219,19 @@
     {
         "en": {
             "testrun": "Trial type?",
-            "choices": ["Experiment", "Pilot (Test run)"]
+            "choices": ["Experiment", "Pilot (Test run)", "Skip to Videos"]
         },
         "de": {
             "testrun": "Versuchstyp?",
-            "choices": ["Experiment", "Pilot (Testlauf)"]
+            "choices": ["Experiment", "Pilot (Testlauf)", "Direkt zu den Videos"]
         },
         "se": {
             "testrun": "Försökstyp?",
-            "choices": ["Experiment", "Pilot (Testkörning)"]
+            "choices": ["Experiment", "Pilot (Testkörning)", "Hoppa till filmerna"]
         }
     }
+
+    var skipToVideos = false;
 
     var testrun = {
         type: jsPsychSurvey,
@@ -247,6 +249,15 @@
                 }
             ]
         },
+        on_finish: (data) => {
+            console.log(data.response.testrun)
+            // Check if the user selected "Skip to Videos"
+            if (data.response.testrun === txt(txt_testrun, lang, 'choices')[2]) {
+                // change timeline to skip to videos
+                console.log("Skipping to videos...");
+                skipToVideos = true;
+            } 
+        }
     }
 
     var txt_welcome = 
@@ -1735,24 +1746,46 @@ function updateLanguage() {
       };*/
 
     /* create timeline */
-    
-    //control condition
+    // pre-video timeline
+    var preVideoTimeline = {
+        timeline: [
+            surveyPreSB,
+            surveyPreComf,
+            restIntro,
+            restPlay,
+            surveyPCIRest,
+            instructions1,
+            ganzfeldIntro,
+            ganzfeldPlay,
+            surveyPCIGanzfeld,
+            surveyDSSQ,
+            timeEstimate1,
+            timeEstimate2
+        ],
+        conditional_function: () => {
+            return !skipToVideos;
+        }
+    };
+
     var timeline = [];
     timeline.push(preload);
     timeline.push(testrun);
     timeline.push(welcome);
-    timeline.push(surveyPreSB);
-    timeline.push(surveyPreComf);
-    timeline.push(restIntro);
-    timeline.push(restPlay);
-    timeline.push(surveyPCIRest);
-    timeline.push(instructions1);
-    timeline.push(ganzfeldIntro);
-    timeline.push(ganzfeldPlay);
-    timeline.push(surveyPCIGanzfeld);
-    timeline.push(surveyDSSQ);
-    timeline.push(timeEstimate1);
-    timeline.push(timeEstimate2);
+    // timeline.push(surveyPreSB);
+    // timeline.push(surveyPreComf);
+    // timeline.push(restIntro);
+    // timeline.push(restPlay);
+    // timeline.push(surveyPCIRest);
+    // timeline.push(instructions1);
+    // timeline.push(ganzfeldIntro);
+    // timeline.push(ganzfeldPlay);
+    // timeline.push(surveyPCIGanzfeld);
+    // timeline.push(surveyDSSQ);
+    // timeline.push(timeEstimate1);
+    // timeline.push(timeEstimate2);
+
+    timeline.push(preVideoTimeline);
+    
     timeline.push(instructions2);
     timeline.push(videoIntro);
     timeline.push(preloadVideos);
