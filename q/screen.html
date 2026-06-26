@@ -20,6 +20,8 @@
   <body></body>
   <script>
 
+    alert("Data collection for this study is now closed. Your data will not be saved. Thank you for your interest in participating!");
+
     /* define parameters */
     //initialize Experiment
     const jsPsych = initJsPsych({
@@ -157,6 +159,7 @@
     pages: [
         function() {
             return `
+            <p style="font-size: 1.2em; font-weight: bold; color: red;">Data collection for this study is now closed. Your data will not be saved. Thank you for your interest in participating!</p>
                 <div style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding: 20px;">
                     <label for="language-select">${txt(txt_welcome, lang, 'language_prompt')}</label>
                     <select id="language-select">
@@ -337,15 +340,15 @@
         choices: "NO_KEYS",
         on_start: function() {
             // save Data
-            saveData("/screening/" + lab + "/ganzfeld_screening_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
+            //saveData("/screening/" + lab + "/ganzfeld_screening_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, jsPsych.data.get().csv());
 
             // anonymized version
             var anonData = jsPsych.data.get();
             delete anonData.trials[2].response.name;
             delete anonData.trials[2].response.email;
             delete anonData.trials[2].response.phone;
-            console.log(anonData);
-            saveData("/screening-anon/" + lab + "/ganzfeld_screening_anon_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, anonData.csv());
+            //console.log(anonData);
+            //saveData("/screening-anon/" + lab + "/ganzfeld_screening_anon_" + start_time.toISOString().replace(/:\s*/g, ".") + "_" + subject_id, anonData.csv());
         }
     }
 
