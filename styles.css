@@ -157,6 +157,7 @@ ul {
     background-color: #24cdb4;
     box-shadow: 0 6px 20px rgb(19 93 111 / 23%);
     transform: scale(1.05); 
+    cursor: not-allowed;
 }
 
 
