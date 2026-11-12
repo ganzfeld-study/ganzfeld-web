@@ -71,9 +71,9 @@ $base = array_pop($segments);
 $dataReal = realpath($DATA_DIR);
 if ($dataReal === false) fail(500, 'data directory missing');
 
-umask(0);                                    // neue Dateien/Ordner auch fuer den Host-User qpsy beschreibbar
+umask(0002);
 $dir = $dataReal . ($segments ? '/' . implode('/', $segments) : '');
-if (!is_dir($dir) && !mkdir($dir, 0777, true) && !is_dir($dir)) {
+if (!is_dir($dir) && !mkdir($dir, 0775, true) && !is_dir($dir)) {
     fail(500, 'cannot create directory ' . substr($dir, strlen($dataReal)));
 }
 $dirReal = realpath($dir);
@@ -91,7 +91,7 @@ if ($fh === false) fail(500, 'cannot write ' . substr($target, strlen($dataReal)
 $ok = fwrite($fh, $data) === strlen($data);
 $ok = fflush($fh) && $ok;
 fclose($fh);
-@chmod($tmp, 0666);
+@chmod($tmp, 0664);
 if (!$ok || !rename($tmp, $target)) {
     @unlink($tmp);
     fail(500, 'write failed ' . substr($target, strlen($dataReal)));
