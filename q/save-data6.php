@@ -13,6 +13,9 @@
  *  - Endung ist immer .csv (keine .php-Dateien moeglich)
  *  - gleicher Name ueberschreibt (z. B. *_autosave.csv nach jedem Trial); geschrieben wird atomar
  *  - fehlende Unterordner werden angelegt
+ *  - "final": true (optional, saveFinal() in qpsy.js): schreibt <name>.csv und loescht danach eine vorhandene
+ *    <name>_autosave.csv im selben Ordner -> bei abgeschlossener Teilnahme bleibt genau eine Datei uebrig,
+ *    bei Abbruch bleibt die _autosave-Datei stehen
  *  - Groessenlimit, nur POST, Fehler landen im Container-Log (docker compose logs php-qpsy)
  */
 declare(strict_types=1);
@@ -47,6 +50,7 @@ if (!is_array($post)) fail(400, 'invalid JSON');
 
 $name = $post['filename'] ?? null;
 $data = $post['filedata'] ?? null;
+$final = !empty($post['final']);
 if (!is_string($name) || trim($name) === '') fail(400, 'filename missing');
 if (!is_string($data)) fail(400, 'filedata missing');
 if (strlen($data) > $MAX_BYTES) fail(413, 'filedata too large');
@@ -97,4 +101,15 @@ if (!$ok || !rename($tmp, $target)) {
     fail(500, 'write failed ' . substr($target, strlen($dataReal)));
 }
 
-echo json_encode(['success' => true, 'file' => 'data' . substr($target, strlen($dataReal))]);
+// Abschluss: Zwischenstand derselben Sitzung entfernen (erst nachdem die endgueltige Datei sicher steht)
+$autosaveRemoved = false;
+if ($final && !str_ends_with($base, '_autosave')) {
+    $autosave = $dirReal . '/' . $base . '_autosave.csv';
+    if (is_file($autosave)) {
+        $autosaveRemoved = @unlink($autosave);
+        if (!$autosaveRemoved) error_log("save-data6: cannot remove " . substr($autosave, strlen($dataReal)));
+    }
+}
+
+echo json_encode(['success' => true, 'file' => 'data' . substr($target, strlen($dataReal)),
+                  'final' => $final, 'autosave_removed' => $autosaveRemoved]);
